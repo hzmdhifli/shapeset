@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "377637374809",
+    "project_id": "shapeset-e5859",
+    "storage_bucket": "shapeset-e5859.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377637374809:android:ee1b1f029aedf002f29a48",
+        "android_client_info": {
+          "package_name": "com.hazem.shapeset"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377637374809-76m2tk9ek11c7ve80luo5ppndiq1b0iv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hazem.shapeset",
+            "certificate_hash": "7808a2c5a8215d29cc9f9d8d2a66dbd3fff039a1"
+          }
+        },
+        {
+          "client_id": "377637374809-gqfdg7dieumscc535r4618u55ahqqh4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgOjdAGzKO1O7YO6XJCJp5CRjATYxf_JE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377637374809-gqfdg7dieumscc535r4618u55ahqqh4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

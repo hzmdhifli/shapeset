@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../models/exercise.dart';
+import '../../main.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
   const WorkoutSessionScreen({super.key});
@@ -78,11 +79,19 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(context),
-            _buildProgressSection(progress),
-            _buildTimerSection(),
-            _buildExerciseCard(exercise),
-            const Spacer(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildHeader(context),
+                    _buildProgressSection(progress),
+                    _buildTimerSection(),
+                    _buildExerciseCard(exercise),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
             _buildNavigationButtons(),
             const SizedBox(height: 20),
           ],
@@ -270,23 +279,25 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Row(
         children: [
-          Expanded(
-            child: OutlinedButton(
-              onPressed: _currentExIndex > 0 ? () => setState(() {
-                _currentExIndex--;
-                _secondsRemaining = 90;
-                _startTimer();
-                for (int i = 0; i < 5; i++) _completedSets[i] = false;
-              }) : null,
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                side: const BorderSide(color: AppColors.border2),
+          if (_currentExIndex > 0)
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => setState(() {
+                  _currentExIndex--;
+                  _secondsRemaining = 90;
+                  _startTimer();
+                  for (int i = 0; i < 5; i++) _completedSets[i] = false;
+                }),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  side: const BorderSide(color: AppColors.border2),
+                ),
+                child: const Text('← PREV', style: TextStyle(color: AppColors.muted)),
               ),
-              child: const Text('← PREV', style: TextStyle(color: AppColors.muted)),
             ),
-          ),
-          const SizedBox(width: 10),
+          if (_currentExIndex > 0)
+            const SizedBox(width: 10),
           Expanded(
             flex: 2,
             child: ElevatedButton(
@@ -309,7 +320,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
               child: Text(
-                _currentExIndex < _exercises.length - 1 ? 'NEXT EXERCISE →' : 'FINISH SESSION ✓',
+                _currentExIndex < _exercises.length - 1 ? 'NEXT EXERCISE →' : 'FINISH SESSION',
                 style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2),
               ),
             ),
@@ -366,7 +377,12 @@ class WorkoutDoneScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                  (route) => false,
+                );
+              },
               child: const Text('Back to Home', style: TextStyle(color: AppColors.muted)),
             ),
           ],

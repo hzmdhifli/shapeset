@@ -57,14 +57,7 @@ class _QuizScreenState extends State<QuizScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.muted),
-          onPressed: () {
-            if (_currentStep > 0) {
-              setState(() => _currentStep--);
-            }
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: const Text('FIND YOUR MATCH', style: TextStyle(fontFamily: 'Bebas Neue', letterSpacing: 2)),
       ),
       body: Padding(

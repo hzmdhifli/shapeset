@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../theme/app_colors.dart';
 import '../../models/mock_data.dart';
 import '../detail/program_detail_screen.dart';
@@ -12,20 +13,21 @@ class ProgressScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(context),
               _buildGreeting(),
               _buildStatsGrid(),
+              const SizedBox(height: 24),
+              _buildSectionLabel('Active Program'),
               _buildActiveProgramCard(context),
-              _buildSectionTitle('Weekly Sessions'),
-              _buildChartCard(),
-              _buildSectionTitle('This Month\'s Streak'),
-              _buildStreakRow(),
-              _buildSectionTitle('Achievements'),
-              _buildAchievements(),
+              _buildSectionLabel('Weekly Activity'),
+              _buildWeeklyActivityChart(),
+              _buildSectionLabel('This Month\'s Streak'),
+              _buildStreakSection(),
+              _buildSectionLabel('Achievements'),
+              _buildAchievementsList(),
               const SizedBox(height: 90),
             ],
           ),
@@ -36,11 +38,18 @@ class ProgressScreen extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22),
+      padding: const EdgeInsets.only(left: 22, right: 22, top: 20, bottom: 18),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('ATHLÈTE', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: AppColors.gold)),
+          Text(
+            'ATHLÈTE',
+            style: GoogleFonts.bebasNeue(
+              fontSize: 24,
+              letterSpacing: 2,
+              color: AppColors.gold,
+            ),
+          ),
           const Icon(Icons.wb_sunny_outlined, color: AppColors.muted, size: 24),
         ],
       ),
@@ -48,15 +57,45 @@ class ProgressScreen extends StatelessWidget {
   }
 
   Widget _buildGreeting() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 22, vertical: 22),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Week 3 of 12 · Ronaldo Program', style: TextStyle(color: AppColors.muted, fontSize: 11, letterSpacing: 1)),
-          SizedBox(height: 3),
-          Text('KEEP\nGOING ALEX', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 28, letterSpacing: 2, height: 1.1, color: AppColors.text)),
+          const Text(
+            'Week 3 of 12 · Ronaldo Program',
+            style: TextStyle(
+              color: AppColors.muted,
+              fontSize: 11,
+              letterSpacing: 1,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'KEEP\nGOING ALEX',
+            style: GoogleFonts.bebasNeue(
+              fontSize: 28,
+              letterSpacing: 2,
+              height: 1.1,
+              color: AppColors.text,
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSectionLabel(String label) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+      child: Text(
+        label.toUpperCase(),
+        style: const TextStyle(
+          color: AppColors.dim,
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 1.8,
+        ),
       ),
     );
   }
@@ -64,24 +103,30 @@ class ProgressScreen extends StatelessWidget {
   Widget _buildStatsGrid() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
-      child: GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: 1.2,
-        children: [
-          _buildStatCard('🔥', '18', 'Sessions Completed', '+3 this week', AppColors.redText),
-          _buildStatCard('⏱️', '34h', 'Total Training Time', '↑ 12% vs last wk', AppColors.text),
-          _buildStatCard('⚡', '12', 'Day Streak', 'Personal best!', AppColors.gold),
-          _buildStatCard('🏋️', '4.2T', 'Total Volume Lifted', '↑ 8% this week', AppColors.text),
-        ],
-      ),
+      child: LayoutBuilder(builder: (context, constraints) {
+        // Use a aspect ratio that provides enough height (at least 135px)
+        double cardWidth = (constraints.maxWidth - 10) / 2;
+        double childAspectRatio = cardWidth / 135;
+        
+        return GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: childAspectRatio,
+          children: [
+            _buildStatCard('🔥', '18', 'Sessions Completed', '+3 this week', AppColors.redText, AppColors.redBg, AppColors.redText),
+            _buildStatCard('⏱️', '34h', 'Total Training Time', '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
+            _buildStatCard('⚡', '12', 'Day Streak', 'Personal best!', AppColors.gold, AppColors.gold3, AppColors.gold2),
+            _buildStatCard('🏋️', '4.2T', 'Total Volume Lifted', '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
+          ],
+        );
+      }),
     );
   }
 
-  Widget _buildStatCard(String emoji, String value, String label, String delta, Color valueColor) {
+  Widget _buildStatCard(String icon, String val, String label, String delta, Color valColor, Color deltaBg, Color deltaText) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -92,15 +137,40 @@ class ProgressScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 18)),
+          Text(icon, style: const TextStyle(fontSize: 18)),
           const SizedBox(height: 8),
-          Text(value, style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 26, color: valueColor, letterSpacing: 1)),
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.muted)),
-          const SizedBox(height: 5),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-            decoration: BoxDecoration(color: AppColors.greenBg, borderRadius: BorderRadius.circular(100)),
-            child: Text(delta, style: const TextStyle(fontSize: 10, color: AppColors.greenText, fontWeight: FontWeight.bold)),
+          Text(
+            val,
+            style: GoogleFonts.bebasNeue(
+              fontSize: 26,
+              letterSpacing: 1,
+              color: valColor,
+              height: 1,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Expanded(
+            child: Text(
+              label,
+              style: const TextStyle(color: AppColors.muted, fontSize: 11),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+              decoration: BoxDecoration(
+                color: deltaBg,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Text(
+                delta,
+                style: TextStyle(color: deltaText, fontSize: 10, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
         ],
       ),
@@ -115,38 +185,127 @@ class ProgressScreen extends StatelessWidget {
           MaterialPageRoute(builder: (context) => ProgramDetailScreen(program: mockPrograms[0])),
         );
       },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 22),
+        child: Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            gradient: const LinearGradient(colors: [Color(0xFF1A1208), Color(0xFF221808)]),
+            border: Border.all(color: AppColors.gold.withOpacity(0.2)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('ACTIVE PROGRAM', style: TextStyle(color: AppColors.gold, fontSize: 10, letterSpacing: 1.5)),
+              const SizedBox(height: 4),
+              const Text('CRISTIANO RONALDO', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 22, color: AppColors.text, letterSpacing: 2)),
+              const SizedBox(height: 10),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: const LinearProgressIndicator(
+                  value: 0.25,
+                  backgroundColor: Color(0x1FC9A84C),
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
+                  minHeight: 4,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    'Week 3 of 12',
+                    style: TextStyle(fontSize: 11, color: AppColors.muted),
+                  ),
+                  Text(
+                    '25% complete',
+                    style: TextStyle(fontSize: 11, color: AppColors.gold2, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWeeklyActivityChart() {
+    final data = [3, 4, 5, 4, 6, 5, 3];
+    final labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'];
+    const maxVal = 6;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Container(
-        margin: const EdgeInsets.all(22),
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(14),
-          gradient: const LinearGradient(colors: [Color(0xFF1A1208), Color(0xFF221808)]),
-          border: Border.all(color: AppColors.gold.withOpacity(0.2)),
+          border: Border.all(color: AppColors.border),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('ACTIVE PROGRAM', style: TextStyle(color: AppColors.gold, fontSize: 10, letterSpacing: 1.5)),
-            const SizedBox(height: 4),
-            const Text('CRISTIANO RONALDO', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 22, color: AppColors.text, letterSpacing: 2)),
-            const SizedBox(height: 10),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: const LinearProgressIndicator(
-                value: 0.25,
-                backgroundColor: Color(0x1FC9A84C),
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
-                minHeight: 4,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Sessions per week',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.text),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'Last 7 weeks · goal: 6/week',
+                      style: TextStyle(color: AppColors.muted, fontSize: 11),
+                    ),
+                  ],
+                ),
+                _buildLegendItem('Done', AppColors.gold),
+              ],
             ),
-            const SizedBox(height: 5),
-            const Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(text: 'Week ', style: TextStyle(fontSize: 11, color: AppColors.muted)),
-                  TextSpan(text: '3', style: TextStyle(fontSize: 11, color: AppColors.gold2, fontWeight: FontWeight.bold)),
-                  TextSpan(text: ' of 12 · 25% complete', style: TextStyle(fontSize: 11, color: AppColors.muted)),
-                ],
+            const SizedBox(height: 16),
+            SizedBox(
+              height: 80,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: List.generate(data.length, (index) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2.5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.bottomCenter,
+                              decoration: BoxDecoration(
+                                color: AppColors.background3,
+                                borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                              ),
+                              child: FractionallySizedBox(
+                                heightFactor: data[index] / maxVal,
+                                widthFactor: 1.0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: index == 6 ? AppColors.gold : AppColors.gold.withOpacity(0.35),
+                                    borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(labels[index], style: const TextStyle(color: AppColors.muted, fontSize: 9)),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
             ),
           ],
@@ -155,157 +314,126 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-      child: Text(title.toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 19, letterSpacing: 2, color: AppColors.text)),
-    );
-  }
-
-  Widget _buildChartCard() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 22),
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.border)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Sessions per week', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.text)),
-          const Text('Last 7 weeks · goal: 6/week', style: TextStyle(fontSize: 11, color: AppColors.muted)),
-          const SizedBox(height: 18),
-          SizedBox(
-            height: 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                _buildBar(0.5, 'W1'),
-                _buildBar(0.66, 'W2'),
-                _buildBar(0.83, 'W3'),
-                _buildBar(0.66, 'W4'),
-                _buildBar(1.0, 'W5'),
-                _buildBar(0.83, 'W6'),
-                _buildBar(0.5, 'W7', isHighlight: true),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBar(double pct, String label, {bool isHighlight = false}) {
-    return Column(
+  Widget _buildLegendItem(String label, Color color) {
+    return Row(
       children: [
-        Expanded(
-          child: Container(
-            width: 15,
-            decoration: BoxDecoration(color: AppColors.background3, borderRadius: const BorderRadius.vertical(top: Radius.circular(4))),
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 80 * pct,
-              decoration: BoxDecoration(
-                color: isHighlight ? AppColors.gold : AppColors.gold.withOpacity(0.35),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
-              ),
-            ),
-          ),
+        Container(
+          width: 7,
+          height: 7,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        const SizedBox(height: 5),
-        Text(label, style: const TextStyle(fontSize: 9, color: AppColors.muted)),
+        const SizedBox(width: 4),
+        Text(label, style: const TextStyle(color: AppColors.muted, fontSize: 10)),
       ],
     );
   }
 
-  Widget _buildStreakRow() {
-    final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  Widget _buildStreakSection() {
+    final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    final status = List.generate(28, (i) => i % 7 == 4 ? 'skip' : (i == 27 ? 'today' : 'done'));
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
-      child: Wrap(
-        spacing: 6,
-        runSpacing: 6,
-        children: List.generate(28, (index) {
-          String status = 'done';
-          if (index % 7 == 4) status = 'skip';
-          if (index == 27) status = 'today';
-          return _buildStreakDay(days[index % 7], status);
-        }),
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: AppColors.border),
+        ),
+        child: Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: List.generate(days.length, (index) {
+            final isDone = status[index] == 'done';
+            final isToday = status[index] == 'today';
+
+            return Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: isToday
+                    ? AppColors.gold
+                    : isDone
+                        ? AppColors.gold3
+                        : AppColors.background3,
+                border: isToday
+                    ? null
+                    : Border.all(color: isDone ? AppColors.gold.withOpacity(0.25) : AppColors.border),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                days[index],
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: isToday
+                      ? Colors.black
+                      : isDone
+                          ? AppColors.gold2
+                          : AppColors.dim,
+                ),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }
 
-  Widget _buildStreakDay(String day, String status) {
-    Color bg = AppColors.background;
-    Color text = AppColors.dim;
-    BoxBorder? border = Border.all(color: AppColors.border);
-
-    if (status == 'done') {
-      bg = AppColors.gold3;
-      text = AppColors.gold2;
-      border = Border.all(color: AppColors.gold.withOpacity(0.3));
-    } else if (status == 'today') {
-      bg = AppColors.gold;
-      text = Colors.black;
-      border = null;
-    } else if (status == 'skip') {
-      bg = AppColors.background3;
-    }
-
-    return Container(
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(6), border: border),
-      alignment: Alignment.center,
-      child: Text(day, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: text)),
-    );
-  }
-
-  Widget _buildAchievements() {
+  Widget _buildAchievementsList() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Column(
         children: [
-          _buildAchItem('🏆', 'First Sweat', 'Completed your first session', true),
-          _buildAchItem('🔥', 'On Fire', '7-day training streak', true),
-          _buildAchItem('💪', 'Ironclad', 'Lifted 1 tonne in a week', true),
-          _buildAchItem('🥇', 'Champion', 'Complete a full 12-week program', false),
+          _buildAchievementItem('🏆', 'First Sweat', 'Completed your first session', true),
+          _buildAchievementItem('🔥', 'On Fire', '7-day training streak', true),
+          _buildAchievementItem('💪', 'Ironclad', 'Lifted 1 tonne in a week', true),
+          _buildAchievementItem('🥇', 'Champion', 'Complete a full 12-week program', false),
         ],
       ),
     );
   }
 
-  Widget _buildAchItem(String icon, String title, String desc, bool isUnlocked) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 9),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.border),
-      ),
+  Widget _buildAchievementItem(String icon, String title, String desc, bool isUnlocked) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 9),
       child: Opacity(
         opacity: isUnlocked ? 1.0 : 0.5,
-        child: Row(
-          children: [
-            Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(color: isUnlocked ? AppColors.gold3 : AppColors.background3, borderRadius: BorderRadius.circular(10)),
-              alignment: Alignment.center,
-              child: Text(icon, style: const TextStyle(fontSize: 18)),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.text)),
-                  Text(desc, style: const TextStyle(fontSize: 11, color: AppColors.muted)),
-                ],
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.border),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: isUnlocked ? AppColors.gold3 : AppColors.background3,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                alignment: Alignment.center,
+                child: Text(icon, style: const TextStyle(fontSize: 18)),
               ),
-            ),
-            if (!isUnlocked) const Icon(Icons.lock_outline, size: 14, color: AppColors.dim),
-          ],
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.text)),
+                    Text(desc, style: const TextStyle(fontSize: 11, color: AppColors.muted)),
+                  ],
+                ),
+              ),
+              if (!isUnlocked) 
+                const Icon(Icons.lock_outline, size: 14, color: AppColors.dim),
+            ],
+          ),
         ),
       ),
     );

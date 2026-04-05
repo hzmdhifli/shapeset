@@ -158,6 +158,8 @@ class AthleteCard extends StatelessWidget {
               height: 1,
               color: AppColors.text,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 2),
           Text(
