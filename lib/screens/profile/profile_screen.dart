@@ -10,6 +10,7 @@ import '../../theme/app_colors.dart';
 import '../auth/login_screen.dart';
 import 'widgets/edit_profile_sheet.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import '../../services/localization_service.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -109,17 +110,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _buildHeader(context),
               _buildAvatarSection(),
               _buildXPBar(),
-              _buildSectionLabel('YOUR STATS'),
+              _buildSectionLabel(L10n.s(context, 'your_stats')),
               _buildStatsGrid(),
-              _buildSectionLabel('ACTIVE PROGRAM'),
+              _buildSectionLabel(L10n.s(context, 'active_program')),
               _buildActiveProgramRing(),
-              _buildSectionLabel('WEEKLY ACTIVITY'),
+              _buildSectionLabel(L10n.s(context, 'weekly_activity')),
               _buildWeeklyActivityChart(),
-              _buildSectionLabel('THIS WEEK\'S STREAK'),
+              _buildSectionLabel(L10n.s(context, 'streak')),
               _buildStreakSection(),
-              _buildSectionLabel('ACHIEVEMENTS'),
+              _buildSectionLabel(L10n.s(context, 'achievements')),
               _buildAchievementsList(),
-              _buildSectionLabel('ACCOUNT'),
+              _buildSectionLabel(L10n.s(context, 'account')),
               _buildSettingsGroup([
                 _buildSettingRow(
                   onTap: () async {
@@ -176,11 +177,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ]),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
                 child: Text(
-                  'PREFERENCES',
-                  style: TextStyle(
+                  L10n.s(context, 'preferences').toUpperCase(),
+                  style: const TextStyle(
                     color: AppColors.dim,
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
@@ -219,6 +220,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   subtitle: 'kg / lbs · cm / ft',
                 ),
                 _buildSettingRow(
+                  onTap: () {
+                    final settings = Provider.of<SettingsProvider>(context, listen: false);
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: AppColors.surface,
+                        title: const Text('SELECT LANGUAGE', style: TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              title: const Text('English', style: TextStyle(color: AppColors.text)),
+                              trailing: settings.locale.languageCode == 'en' ? const Icon(Icons.check, color: AppColors.gold) : null,
+                              onTap: () {
+                                settings.setLocale(const Locale('en'));
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text('Français', style: TextStyle(color: AppColors.text)),
+                              trailing: settings.locale.languageCode == 'fr' ? const Icon(Icons.check, color: AppColors.gold) : null,
+                              onTap: () {
+                                settings.setLocale(const Locale('fr'));
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  icon: Icons.language,
+                  iconColor: AppColors.blueText,
+                  iconBg: AppColors.blueBg,
+                  title: 'Language',
+                  subtitle: 'English / Français',
+                ),
+                _buildSettingRow(
                   icon: Icons.timer_outlined,
                   iconColor: AppColors.blueText,
                   iconBg: AppColors.blueBg,
@@ -230,7 +269,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.notifications_none,
                   iconColor: AppColors.muted,
                   iconBg: AppColors.background3,
-                  title: 'Notifications',
+                  title: L10n.s(context, 'notifications'),
                   subtitle: 'Workout reminders & streaks',
                   trailing: Consumer<SettingsProvider>(
                     builder: (context, settings, _) => _buildToggle(
@@ -246,7 +285,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.dark_mode_outlined,
                   iconColor: AppColors.muted,
                   iconBg: AppColors.background3,
-                  title: 'Dark Mode',
+                  title: L10n.s(context, 'dark_mode'),
                   subtitle: 'Switch theme',
                   trailing: Consumer<SettingsProvider>(
                     builder: (context, settings, _) => _buildToggle(
@@ -270,15 +309,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.lock_outline,
                   iconColor: AppColors.greenText,
                   iconBg: AppColors.greenBg,
-                  title: 'Privacy',
+                  title: L10n.s(context, 'privacy'),
                   subtitle: 'Who can see your progress',
                 ),
               ]),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
                 child: Text(
-                  'SUPPORT',
-                  style: TextStyle(
+                  L10n.s(context, 'support').toUpperCase(),
+                  style: const TextStyle(
                     color: AppColors.dim,
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
@@ -349,7 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.description_outlined,
                   iconColor: AppColors.muted,
                   iconBg: AppColors.background3,
-                  title: 'Terms & Privacy',
+                  title: L10n.s(context, 'terms'),
                   subtitle: 'Legal & data policy',
                 ),
               ]),
@@ -376,44 +415,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 22, right: 22, top: 20, bottom: 18),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Text(
-            'MY PROFILE',
-            style: GoogleFonts.bebasNeue(
-              fontSize: 22,
-              letterSpacing: 2.5,
-              color: AppColors.text,
-            ),
-          ),
-          InkWell(
-            onTap: () async {
-              final result = await showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (context) => const EditProfileSheet(),
-              );
-              if (result == true) {
-                _refreshData();
-              }
-            },
-            borderRadius: BorderRadius.circular(100),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.gold.withOpacity(0.25)),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: const Text(
-                'Edit Profile',
-                style: TextStyle(
-                  color: AppColors.gold,
-                  fontSize: 12,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                L10n.s(context, 'my_profile'),
+                style: GoogleFonts.bebasNeue(
+                  fontSize: 22,
+                  letterSpacing: 2.5,
+                  color: AppColors.text,
                 ),
               ),
-            ),
+              InkWell(
+                onTap: () async {
+                  final result = await showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) => const EditProfileSheet(),
+                  );
+                  if (result == true) {
+                    _refreshData();
+                  }
+                },
+                borderRadius: BorderRadius.circular(100),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.gold.withOpacity(0.25)),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: const Text(
+                    'Edit Profile',
+                    style: TextStyle(
+                      color: AppColors.gold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Image.asset(
+            'assets/images/widgi.png',
+            height: 32,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) => const SizedBox(height: 32),
           ),
         ],
       ),

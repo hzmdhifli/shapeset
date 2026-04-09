@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../theme/app_colors.dart';
-import '../../main.dart'; // To navigate to MainScreen
+import '../../main.dart'; 
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../services/localization_service.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -80,101 +80,100 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildStepHeader(String step, String title, String sub) {
+  Widget _buildStepHeader(int stepNum, String titleKey, String subKey) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(step.toUpperCase(), style: const TextStyle(color: AppColors.muted, fontSize: 11, letterSpacing: 1)),
+          Text('${L10n.s(context, 'step')} $stepNum ${L10n.s(context, 'of')} 4'.toUpperCase(), style: const TextStyle(color: AppColors.muted, fontSize: 11, letterSpacing: 1)),
           const SizedBox(height: 12),
           Text(
-            title,
+            L10n.s(context, titleKey),
             style: GoogleFonts.bebasNeue(fontSize: 30, letterSpacing: 2, height: 1.1, color: AppColors.text),
           ),
           const SizedBox(height: 6),
-          Text(sub, style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.65)),
+          Text(L10n.s(context, subKey), style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.65)),
         ],
       ),
     );
   }
 
-  // --- Step 1: Goal ---
   Widget _buildGoalStep() {
     final goals = [
-      {'icon': '💪', 'name': 'Build Muscle', 'desc': 'Mass & strength gain'},
-      {'icon': '🔥', 'name': 'Lose Fat', 'desc': 'Cut & get shredded'},
-      {'icon': '🏃', 'name': 'Endurance', 'desc': 'Cardio & stamina'},
-      {'icon': '⚡', 'name': 'Performance', 'desc': 'Speed & athleticism'},
+      {'icon': '💪', 'nameKey': 'build_muscle', 'descKey': 'build_muscle_desc'},
+      {'icon': '🔥', 'nameKey': 'lose_fat', 'descKey': 'lose_fat_desc'},
+      {'icon': '🏃', 'nameKey': 'endurance', 'descKey': 'endurance_desc'},
+      {'icon': '⚡', 'nameKey': 'performance', 'descKey': 'performance_desc'},
     ];
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildStepHeader('Step 1 of 4', 'WHAT\'S YOUR\nMAIN GOAL?', 'We\'ll personalize your program recommendations around this.'),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1.2,
+        children: [
+          _buildStepHeader(1, 'goal_title', 'goal_sub'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 1.2,
+              ),
+              itemCount: goals.length,
+              itemBuilder: (context, index) {
+                final g = goals[index];
+                final name = L10n.s(context, g['nameKey']!);
+                final isSelected = _selectedGoal == name;
+                return _buildOptCard(g['icon']!, name, L10n.s(context, g['descKey']!), isSelected, () {
+                  setState(() => _selectedGoal = name);
+                });
+              },
             ),
-            itemCount: goals.length,
-            itemBuilder: (context, index) {
-              final g = goals[index];
-              final isSelected = _selectedGoal == g['name'];
-              return _buildOptCard(g['icon']!, g['name']!, g['desc']!, isSelected, () {
-                setState(() => _selectedGoal = g['name']);
-              });
-            },
           ),
-        ),
-      ],
+        ],
       ),
     );
   }
 
-  // --- Step 2: Level ---
   Widget _buildLevelStep() {
     final levels = [
-      {'icon': '🌱', 'name': 'Beginner', 'sub': 'Under 1 year of training', 'color': const Color(0x1F5AAD7E)},
-      {'icon': '🏋️', 'name': 'Intermediate', 'sub': '1–3 years of consistent training', 'color': AppColors.gold3},
-      {'icon': '🦾', 'name': 'Advanced', 'sub': '3+ years — serious athlete', 'color': const Color(0x1FE85C4A)},
+      {'icon': '🌱', 'nameKey': 'beginner', 'subKey': 'beginner_sub', 'color': const Color(0x1F5AAD7E)},
+      {'icon': '🏋️', 'nameKey': 'intermediate', 'subKey': 'intermediate_sub', 'color': AppColors.gold3},
+      {'icon': '🦾', 'nameKey': 'advanced', 'subKey': 'advanced_sub', 'color': const Color(0x1FE85C4A)},
     ];
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildStepHeader('Step 2 of 4', 'YOUR TRAINING\nEXPERIENCE', 'This sets the intensity and complexity of your program.'),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: levels.map((l) {
-              final isSelected = _selectedLevel == l['name'];
-              return _buildLevelItem(l['icon'] as String, l['name'] as String, l['sub'] as String, l['color'] as Color, isSelected, () {
-                setState(() => _selectedLevel = l['name'] as String);
-              });
-            }).toList(),
+        children: [
+          _buildStepHeader(2, 'level_title', 'level_sub'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: levels.map((l) {
+                final name = L10n.s(context, l['nameKey'] as String);
+                final isSelected = _selectedLevel == name;
+                return _buildLevelItem(l['icon'] as String, name, L10n.s(context, l['subKey'] as String), l['color'] as Color, isSelected, () {
+                  setState(() => _selectedLevel = name);
+                });
+              }).toList(),
+            ),
           ),
-        ),
-      ],
+        ],
       ),
     );
   }
 
-  // --- Step 3: Metrics ---
   Widget _buildMetricsStep() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildStepHeader('Step 3 of 4', 'YOUR BODY\nMETRICS', 'Used to tailor your nutrition plan and track your transformation.'),
+          _buildStepHeader(3, 'metrics_title', 'metrics_sub'),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
@@ -184,15 +183,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    Expanded(child: _buildMetricInput('Weight (${_isMetric ? 'kg' : 'lbs'})', _isMetric ? '75' : '165', _weightCtrl)),
+                    Expanded(child: _buildMetricInput('${L10n.s(context, 'weight')} (${_isMetric ? 'kg' : 'lbs'})', _isMetric ? '75' : '165', _weightCtrl)),
                     const SizedBox(width: 12),
-                    Expanded(child: _buildMetricInput('Height (${_isMetric ? 'cm' : 'ft'})', _isMetric ? '180' : '5\'11', _heightCtrl)),
+                    Expanded(child: _buildMetricInput('${L10n.s(context, 'height')} (${_isMetric ? 'cm' : 'ft'})', _isMetric ? '180' : '5\'11', _heightCtrl)),
                   ],
                 ),
                 const SizedBox(height: 16),
-                _buildMetricInput('Age', '25', _ageCtrl),
+                _buildMetricInput(L10n.s(context, 'age'), '25', _ageCtrl),
                 const SizedBox(height: 16),
-                const Text('Biological Sex', style: TextStyle(color: AppColors.muted, fontSize: 11, letterSpacing: 0.5)),
+                Text(L10n.s(context, 'sex'), style: const TextStyle(color: AppColors.muted, fontSize: 11, letterSpacing: 0.5)),
                 const SizedBox(height: 6),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -206,11 +205,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       value: _selectedGender,
                       isExpanded: true,
                       dropdownColor: AppColors.surface,
-                      hint: const Text('Select...', style: TextStyle(color: AppColors.dim, fontSize: 14)),
+                      hint: Text(L10n.s(context, 'select'), style: const TextStyle(color: AppColors.dim, fontSize: 14)),
                       icon: const Icon(Icons.expand_more, color: AppColors.dim),
-                      items: const [
-                        DropdownMenuItem(value: 'Male', child: Text('Male', style: TextStyle(color: AppColors.text, fontSize: 14))),
-                        DropdownMenuItem(value: 'Female', child: Text('Female', style: TextStyle(color: AppColors.text, fontSize: 14))),
+                      items: [
+                        DropdownMenuItem(value: 'Male', child: Text(L10n.s(context, 'male'), style: const TextStyle(color: AppColors.text, fontSize: 14))),
+                        DropdownMenuItem(value: 'Female', child: Text(L10n.s(context, 'female'), style: const TextStyle(color: AppColors.text, fontSize: 14))),
                       ],
                       onChanged: (v) => setState(() => _selectedGender = v),
                     ),
@@ -224,47 +223,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  // --- Step 4: Days ---
   Widget _buildDaysStep() {
     final days = [
-      {'icon': '📅', 'name': '3 Days', 'desc': 'Full body focus'},
-      {'icon': '📆', 'name': '4 Days', 'desc': 'Upper/lower split'},
-      {'icon': '🗓️', 'name': '5 Days', 'desc': 'Classic PPL split'},
-      {'icon': '🔥', 'name': '6 Days', 'desc': 'Full commitment'},
+      {'icon': '📅', 'nameKey': 'days_3', 'descKey': 'days_3_desc'},
+      {'icon': '📆', 'nameKey': 'days_4', 'descKey': 'days_4_desc'},
+      {'icon': '🗓️', 'nameKey': 'days_5', 'descKey': 'days_5_desc'},
+      {'icon': '🔥', 'nameKey': 'days_6', 'descKey': 'days_6_desc'},
     ];
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildStepHeader('Step 4 of 4', 'HOW MANY DAYS\nPER WEEK?', 'Consistency beats intensity. Choose what you can realistically commit to.'),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1.2,
+        children: [
+          _buildStepHeader(4, 'days_title', 'days_sub'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 1.2,
+              ),
+              itemCount: days.length,
+              itemBuilder: (context, index) {
+                final d = days[index];
+                final name = L10n.s(context, d['nameKey']!);
+                final isSelected = _selectedDays == name;
+                return _buildOptCard(d['icon']!, name, L10n.s(context, d['descKey']!), isSelected, () {
+                  setState(() => _selectedDays = name);
+                });
+              },
             ),
-            itemCount: days.length,
-            itemBuilder: (context, index) {
-              final d = days[index];
-              final isSelected = _selectedDays == d['name'];
-              return _buildOptCard(d['icon']!, d['name']!, d['desc']!, isSelected, () {
-                setState(() => _selectedDays = d['name']);
-              });
-            },
           ),
-        ),
-      ],
+        ],
       ),
     );
   }
 
-  // --- Sub-widgets ---
   Widget _buildOptCard(String icon, String name, String desc, bool selected, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
@@ -277,7 +275,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
         child: Column(
           children: [
-            Text(icon, style: TextStyle(fontSize: 26, color: selected ? AppColors.gold : AppColors.muted)),
+            Text(icon, style: TextStyle(fontSize: 26)),
             const SizedBox(height: 8),
             Text(name, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
             const SizedBox(height: 2),
@@ -406,7 +404,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             elevation: 0,
           ),
           child: Text(
-            _currentPage < 3 ? 'CONTINUE →' : 'FINISH SETUP →',
+            _currentPage < 3 ? L10n.s(context, 'continue') : L10n.s(context, 'finish_setup'),
             style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3, color: Colors.black),
           ),
         ),
@@ -416,8 +414,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _finishSetup() async {
     final prefs = await SharedPreferences.getInstance();
-    
-    // Save onboarding data
     await prefs.setString('userGoal', _selectedGoal ?? '');
     await prefs.setString('userLevel', _selectedLevel ?? '');
     await prefs.setString('userGender', _selectedGender ?? '');
@@ -465,16 +461,16 @@ class SuccessScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   final name = snapshot.data?.getString('userName')?.toUpperCase() ?? 'ALEX';
                   return Text(
-                    'WELCOME,\n$name',
+                    '${L10n.s(context, 'welcome_user')}$name',
                     style: GoogleFonts.bebasNeue(fontSize: 36, letterSpacing: 3, height: 1.1, color: AppColors.text),
                     textAlign: TextAlign.center,
                   );
                 },
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Your profile is set up and your personalized\nprogram recommendations are ready.',
-                style: TextStyle(color: AppColors.muted, fontSize: 13, height: 1.7),
+              Text(
+                L10n.s(context, 'success_sub'),
+                style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.7),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 36),
@@ -494,20 +490,21 @@ class SuccessScreen extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   height: 54,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const MainScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.gold,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => const MainScreen()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.gold,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    ),
+                    child: Text(L10n.s(context, 'start_training'), 
+                        style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3, color: Colors.black)),
                   ),
-                  child: const Text('START TRAINING →', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3, color: Colors.black)),
                 ),
               ),
-            ),
             ],
           ),
         ),

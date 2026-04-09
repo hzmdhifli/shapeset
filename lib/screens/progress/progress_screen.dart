@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../theme/app_colors.dart';
 import '../../models/mock_data.dart';
 import '../detail/program_detail_screen.dart';
+import '../../services/localization_service.dart';
 
 class ProgressScreen extends StatelessWidget {
   const ProgressScreen({super.key});
@@ -17,17 +18,17 @@ class ProgressScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(context),
-              _buildGreeting(),
-              _buildStatsGrid(),
+              _buildGreeting(context),
+              _buildStatsGrid(context),
               const SizedBox(height: 24),
-              _buildSectionLabel('Active Program'),
+              _buildSectionLabel(context, 'active_program_label'),
               _buildActiveProgramCard(context),
-              _buildSectionLabel('Weekly Activity'),
-              _buildWeeklyActivityChart(),
-              _buildSectionLabel('This Month\'s Streak'),
-              _buildStreakSection(),
-              _buildSectionLabel('Achievements'),
-              _buildAchievementsList(),
+              _buildSectionLabel(context, 'weekly_activity'),
+              _buildWeeklyActivityChart(context),
+              _buildSectionLabel(context, 'month_streak'),
+              _buildStreakSection(context),
+              _buildSectionLabel(context, 'achievements'),
+              _buildAchievementsList(context),
               const SizedBox(height: 90),
             ],
           ),
@@ -43,7 +44,7 @@ class ProgressScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'ATHLÈTE',
+            L10n.s(context, 'home_title'),
             style: GoogleFonts.bebasNeue(
               fontSize: 24,
               letterSpacing: 2,
@@ -56,15 +57,15 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGreeting() {
+  Widget _buildGreeting(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Week 3 of 12 · Ronaldo Program',
-            style: TextStyle(
+          Text(
+            '${L10n.s(context, 'week')} 3 ${L10n.s(context, 'of')} 12 · Ronaldo Program',
+            style: const TextStyle(
               color: AppColors.muted,
               fontSize: 11,
               letterSpacing: 1,
@@ -85,11 +86,11 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionLabel(String label) {
+  Widget _buildSectionLabel(BuildContext context, String key) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
       child: Text(
-        label.toUpperCase(),
+        L10n.s(context, key).toUpperCase(),
         style: const TextStyle(
           color: AppColors.dim,
           fontSize: 10,
@@ -100,7 +101,7 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatsGrid() {
+  Widget _buildStatsGrid(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: LayoutBuilder(builder: (context, constraints) {
@@ -116,10 +117,10 @@ class ProgressScreen extends StatelessWidget {
           crossAxisSpacing: 10,
           childAspectRatio: childAspectRatio,
           children: [
-            _buildStatCard('🔥', '18', 'Sessions Completed', '+3 this week', AppColors.redText, AppColors.redBg, AppColors.redText),
-            _buildStatCard('⏱️', '34h', 'Total Training Time', '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
-            _buildStatCard('⚡', '12', 'Day Streak', 'Personal best!', AppColors.gold, AppColors.gold3, AppColors.gold2),
-            _buildStatCard('🏋️', '4.2T', 'Total Volume Lifted', '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
+            _buildStatCard('🔥', '18', L10n.s(context, 'sessions_completed'), '+3 this week', AppColors.redText, AppColors.redBg, AppColors.redText),
+            _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
+            _buildStatCard('⚡', '12', L10n.s(context, 'streak'), 'Personal best!', AppColors.gold, AppColors.gold3, AppColors.gold2),
+            _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
           ],
         );
       }),
@@ -197,7 +198,7 @@ class ProgressScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('ACTIVE PROGRAM', style: TextStyle(color: AppColors.gold, fontSize: 10, letterSpacing: 1.5)),
+              Text(L10n.s(context, 'active_program_label'), style: const TextStyle(color: AppColors.gold, fontSize: 10, letterSpacing: 1.5)),
               const SizedBox(height: 4),
               const Text('CRISTIANO RONALDO', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 22, color: AppColors.text, letterSpacing: 2)),
               const SizedBox(height: 10),
@@ -213,14 +214,14 @@ class ProgressScreen extends StatelessWidget {
               const SizedBox(height: 6),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
-                    'Week 3 of 12',
-                    style: TextStyle(fontSize: 11, color: AppColors.muted),
+                    '${L10n.s(context, 'week')} 3 ${L10n.s(context, 'of')} 12',
+                    style: const TextStyle(fontSize: 11, color: AppColors.muted),
                   ),
                   Text(
-                    '25% complete',
-                    style: TextStyle(fontSize: 11, color: AppColors.gold2, fontWeight: FontWeight.bold),
+                    '25% ${L10n.s(context, 'complete_label')}',
+                    style: const TextStyle(fontSize: 11, color: AppColors.gold2, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -231,7 +232,7 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildWeeklyActivityChart() {
+  Widget _buildWeeklyActivityChart(BuildContext context) {
     final data = [3, 4, 5, 4, 6, 5, 3];
     final labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'];
     const maxVal = 6;
@@ -253,19 +254,19 @@ class ProgressScreen extends StatelessWidget {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Sessions per week',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.text),
+                      L10n.s(context, 'sessions_per_week'),
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.text),
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Text(
-                      'Last 7 weeks · goal: 6/week',
-                      style: TextStyle(color: AppColors.muted, fontSize: 11),
+                      L10n.s(context, 'sessions_goal'),
+                      style: const TextStyle(color: AppColors.muted, fontSize: 11),
                     ),
                   ],
                 ),
-                _buildLegendItem('Done', AppColors.gold),
+                _buildLegendItem(L10n.s(context, 'done'), AppColors.gold),
               ],
             ),
             const SizedBox(height: 16),
@@ -328,7 +329,7 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStreakSection() {
+   Widget _buildStreakSection(BuildContext context) {
     final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'];
     final status = List.generate(28, (i) => i % 7 == 4 ? 'skip' : (i == 27 ? 'today' : 'done'));
 
@@ -382,7 +383,7 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAchievementsList() {
+   Widget _buildAchievementsList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Column(

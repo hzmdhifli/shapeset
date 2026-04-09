@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../models/exercise.dart';
 import '../../main.dart';
+import '../../services/localization_service.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
   const WorkoutSessionScreen({super.key});
@@ -15,28 +16,28 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
   int _currentExIndex = 0;
   int _secondsRemaining = 90;
   Timer? _timer;
-  final List<bool> _completedSets = List.filled(5, false); // For the current exercise
+  final List<bool> _completedSets = List.filled(5, false);
 
-  final List<Exercise> _exercises = [
+  List<Exercise> _getExercises(BuildContext context) => [
     Exercise(
-      category: 'Compound · Upper Body',
-      name: 'BENCH PRESS',
+      category: L10n.s(context, 'chest_day'),
+      name: L10n.s(context, 'bench_press'),
       sets: 4,
       reps: '8–10',
       rest: '90s',
       tip: 'Keep shoulder blades retracted. Drive through the heels, elbows at 45°.',
     ),
     Exercise(
-      category: 'Isolation · Shoulders',
-      name: 'OVERHEAD PRESS',
+      category: L10n.s(context, 'fitness_profile'),
+      name: L10n.s(context, 'overhead_press'),
       sets: 4,
       reps: '6–8',
       rest: '2min',
       tip: 'Brace your core. Avoid flaring elbows; press the bar slightly back overhead.',
     ),
     Exercise(
-      category: 'Compound · Back',
-      name: 'BARBELL ROW',
+      category: L10n.s(context, 'active_program_label'),
+      name: L10n.s(context, 'barbell_row'),
       sets: 4,
       reps: '8–10',
       rest: '90s',
@@ -69,10 +70,11 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentExIndex >= _exercises.length) return const SizedBox.shrink();
+    final exercises = _getExercises(context);
+    if (_currentExIndex >= exercises.length) return const SizedBox.shrink();
     
-    final exercise = _exercises[_currentExIndex];
-    final progress = (_currentExIndex + 1) / _exercises.length;
+    final exercise = exercises[_currentExIndex];
+    final progress = (_currentExIndex + 1) / exercises.length;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -84,15 +86,15 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
                 child: Column(
                   children: [
                     _buildHeader(context),
-                    _buildProgressSection(progress),
+                    _buildProgressSection(context, progress, exercises.length),
                     _buildTimerSection(),
-                    _buildExerciseCard(exercise),
+                    _buildExerciseCard(context, exercise),
                     const SizedBox(height: 20),
                   ],
                 ),
               ),
             ),
-            _buildNavigationButtons(),
+            _buildNavigationButtons(context, exercises.length),
             const SizedBox(height: 20),
           ],
         ),
@@ -108,17 +110,17 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
         children: [
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.arrow_back, color: AppColors.muted, size: 20),
-                SizedBox(width: 6),
-                Text('END SESSION', style: TextStyle(color: AppColors.muted, fontSize: 13)),
+                const Icon(Icons.arrow_back, color: AppColors.muted, size: 20),
+                const SizedBox(width: 6),
+                Text(L10n.s(context, 'end_session'), style: const TextStyle(color: AppColors.muted, fontSize: 13)),
               ],
             ),
           ),
-          const Text(
-            'TRAINING',
-            style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 2, color: AppColors.text),
+          Text(
+            L10n.s(context, 'training'),
+            style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 2, color: AppColors.text),
           ),
           const SizedBox(width: 80),
         ],
@@ -126,7 +128,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
     );
   }
 
-  Widget _buildProgressSection(double progress) {
+  Widget _buildProgressSection(BuildContext context, double progress, int total) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Column(
@@ -144,8 +146,8 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Exercise ${_currentExIndex + 1} of ${_exercises.length}', style: const TextStyle(color: AppColors.muted, fontSize: 11)),
-              const Text('0:00 elapsed', style: TextStyle(color: AppColors.muted, fontSize: 11)),
+              Text('${L10n.s(context, 'exercise')} ${_currentExIndex + 1} ${L10n.s(context, 'of')} $total', style: const TextStyle(color: AppColors.muted, fontSize: 11)),
+              Text('0:00 ${L10n.s(context, 'elapsed')}', style: const TextStyle(color: AppColors.muted, fontSize: 11)),
             ],
           ),
         ],
@@ -178,7 +180,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
     );
   }
 
-  Widget _buildExerciseCard(Exercise exercise) {
+  Widget _buildExerciseCard(BuildContext context, Exercise exercise) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 22),
       padding: const EdgeInsets.all(22),
@@ -194,9 +196,9 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
           const SizedBox(height: 4),
           Text(exercise.name, style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 28, color: AppColors.text, letterSpacing: 2)),
           const SizedBox(height: 14),
-          _buildExerciseStats(exercise),
+          _buildExerciseStats(context, exercise),
           const SizedBox(height: 18),
-          _buildSetsList(exercise),
+          _buildSetsList(context, exercise),
           const SizedBox(height: 18),
           _buildTip(exercise.tip),
         ],
@@ -204,14 +206,14 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
     );
   }
 
-  Widget _buildExerciseStats(Exercise exercise) {
+  Widget _buildExerciseStats(BuildContext context, Exercise exercise) {
     return Row(
       children: [
-        Expanded(child: _buildExStatBox(exercise.sets.toString(), 'SETS')),
+        Expanded(child: _buildExStatBox(exercise.sets.toString(), L10n.s(context, 'sets'))),
         const SizedBox(width: 8),
-        Expanded(child: _buildExStatBox(exercise.reps, 'REPS')),
+        Expanded(child: _buildExStatBox(exercise.reps, L10n.s(context, 'reps'))),
         const SizedBox(width: 8),
-        Expanded(child: _buildExStatBox(exercise.rest, 'REST')),
+        Expanded(child: _buildExStatBox(exercise.rest, L10n.s(context, 'rest'))),
       ],
     );
   }
@@ -230,7 +232,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
     );
   }
 
-  Widget _buildSetsList(Exercise exercise) {
+  Widget _buildSetsList(BuildContext context, Exercise exercise) {
     return Column(
       children: List.generate(exercise.sets, (index) {
         return Container(
@@ -239,9 +241,9 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
           decoration: BoxDecoration(color: AppColors.background3, borderRadius: BorderRadius.circular(8)),
           child: Row(
             children: [
-              Text('Set ${index + 1}', style: const TextStyle(fontSize: 11, color: AppColors.dim)),
+              Text('${L10n.s(context, 'set')} ${index + 1}', style: const TextStyle(fontSize: 11, color: AppColors.dim)),
               const SizedBox(width: 10),
-              Expanded(child: Text('${exercise.reps} reps', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.text))),
+              Expanded(child: Text('${exercise.reps} ${L10n.s(context, 'reps').toLowerCase()}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.text))),
               GestureDetector(
                 onTap: () => setState(() => _completedSets[index] = !_completedSets[index]),
                 child: Container(
@@ -274,7 +276,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
     );
   }
 
-  Widget _buildNavigationButtons() {
+  Widget _buildNavigationButtons(BuildContext context, int totalCount) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Row(
@@ -293,7 +295,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   side: const BorderSide(color: AppColors.border2),
                 ),
-                child: const Text('← PREV', style: TextStyle(color: AppColors.muted)),
+                child: Text('← ${L10n.s(context, 'prev')}', style: const TextStyle(color: AppColors.muted)),
               ),
             ),
           if (_currentExIndex > 0)
@@ -302,7 +304,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
             flex: 2,
             child: ElevatedButton(
               onPressed: () {
-                if (_currentExIndex < _exercises.length - 1) {
+                if (_currentExIndex < totalCount - 1) {
                   setState(() {
                     _currentExIndex++;
                     _secondsRemaining = 90;
@@ -320,7 +322,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
               child: Text(
-                _currentExIndex < _exercises.length - 1 ? 'NEXT EXERCISE →' : 'FINISH SESSION',
+                _currentExIndex < totalCount - 1 ? '${L10n.s(context, 'next_exercise')} →' : L10n.s(context, 'finish_session'),
                 style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2),
               ),
             ),
@@ -351,15 +353,15 @@ class WorkoutDoneScreen extends StatelessWidget {
           children: [
             const Text('🏆', style: TextStyle(fontSize: 64)),
             const SizedBox(height: 16),
-            const Text(
-              'SESSION COMPLETE',
-              style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 32, letterSpacing: 3, color: AppColors.text),
+            Text(
+              L10n.s(context, 'session_complete'),
+              style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 32, letterSpacing: 3, color: AppColors.text),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Great work. Rest, refuel, and come back stronger.',
+            Text(
+              L10n.s(context, 'session_done_msg'),
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColors.muted, fontSize: 13, height: 1.7),
+              style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.7),
             ),
             const Spacer(),
             SizedBox(
@@ -372,7 +374,7 @@ class WorkoutDoneScreen extends StatelessWidget {
                   foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 ),
-                child: const Text('VIEW MY PROGRESS', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3)),
+                child: Text(L10n.s(context, 'view_my_progress'), style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3)),
               ),
             ),
             const SizedBox(height: 10),
@@ -383,7 +385,7 @@ class WorkoutDoneScreen extends StatelessWidget {
                   (route) => false,
                 );
               },
-              child: const Text('Back to Home', style: TextStyle(color: AppColors.muted)),
+              child: Text(L10n.s(context, 'back_to_home'), style: const TextStyle(color: AppColors.muted)),
             ),
           ],
         ),

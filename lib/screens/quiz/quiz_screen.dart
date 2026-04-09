@@ -3,6 +3,7 @@ import '../../theme/app_colors.dart';
 import '../../models/program.dart';
 import '../../models/mock_data.dart';
 import '../detail/program_detail_screen.dart';
+import '../../services/localization_service.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -15,57 +16,58 @@ class _QuizScreenState extends State<QuizScreen> {
   int _currentStep = 0;
   final Map<int, String> _answers = {};
 
-  final List<QuizStep> _steps = [
+  List<QuizStep> _getSteps(BuildContext context) => [
     QuizStep(
-      question: "WHAT'S YOUR MAIN GOAL?",
-      subtext: "This helps us match you with the athlete whose training philosophy fits you best.",
+      question: L10n.s(context, 'quiz_title'),
+      subtext: L10n.s(context, 'goal_sub'),
       options: [
-        QuizOption(title: "Build Muscle & Strength", sub: "Hypertrophy, power, mass", icon: "💪", value: "muscle"),
-        QuizOption(title: "Lose Fat & Get Lean", sub: "Burn calories, cut body fat", icon: "🔥", value: "loss"),
-        QuizOption(title: "Build Endurance & Stamina", sub: "Cardio, running, long distance", icon: "🏃", value: "endurance"),
-        QuizOption(title: "Athletic Performance", sub: "Speed, agility, sport-specific", icon: "⚡", value: "muscle"),
+        QuizOption(title: L10n.s(context, 'goal_muscle'), sub: L10n.s(context, 'goal_muscle_sub'), icon: "💪", value: "muscle"),
+        QuizOption(title: L10n.s(context, 'goal_fat'), sub: L10n.s(context, 'goal_fat_sub'), icon: "🔥", value: "loss"),
+        QuizOption(title: L10n.s(context, 'goal_endurance'), sub: L10n.s(context, 'goal_endurance_sub'), icon: "🏃", value: "endurance"),
+        QuizOption(title: L10n.s(context, 'goal_performance'), sub: L10n.s(context, 'goal_performance_sub'), icon: "⚡", value: "muscle"),
       ],
     ),
     QuizStep(
-      question: "HOW DO YOU TRAIN NOW?",
-      subtext: "Your current experience level shapes the intensity of your program.",
+      question: L10n.s(context, 'level_title'),
+      subtext: L10n.s(context, 'level_sub'),
       options: [
-        QuizOption(title: "Beginner", sub: "Under 1 year of training", icon: "🌱", value: "beg"),
-        QuizOption(title: "Intermediate", sub: "1–3 years of consistent training", icon: "🏋️", value: "int"),
-        QuizOption(title: "Advanced", sub: "3+ years, serious athlete", icon: "🦾", value: "adv"),
+        QuizOption(title: L10n.s(context, 'exp_beg'), sub: L10n.s(context, 'exp_beg_sub'), icon: "🌱", value: "beg"),
+        QuizOption(title: L10n.s(context, 'exp_int'), sub: L10n.s(context, 'exp_int_sub'), icon: "🏋️", value: "int"),
+        QuizOption(title: L10n.s(context, 'exp_adv'), sub: L10n.s(context, 'exp_adv_sub'), icon: "🦾", value: "adv"),
       ],
     ),
     QuizStep(
-      question: "HOW MUCH TIME DO YOU HAVE?",
-      subtext: "Be realistic. Consistency beats intensity every time.",
+      question: L10n.s(context, 'days_title'),
+      subtext: L10n.s(context, 'days_sub'),
       options: [
-        QuizOption(title: "3 Days a Week", sub: "Compact, efficient sessions", icon: "📅", value: "3"),
-        QuizOption(title: "4–5 Days a Week", sub: "Balanced split training", icon: "📆", value: "5"),
-        QuizOption(title: "6 Days a Week", sub: "Full commitment mode", icon: "🔥", value: "6"),
+        QuizOption(title: L10n.s(context, 'time_3'), sub: L10n.s(context, 'time_3_sub'), icon: "📅", value: "3"),
+        QuizOption(title: L10n.s(context, 'time_5'), sub: L10n.s(context, 'time_5_sub'), icon: "📆", value: "5"),
+        QuizOption(title: L10n.s(context, 'time_6'), sub: L10n.s(context, 'time_6_sub'), icon: "🔥", value: "6"),
       ],
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
-    if (_currentStep >= _steps.length) {
+    final steps = _getSteps(context);
+    if (_currentStep >= steps.length) {
       return _buildResult();
     }
 
-    final step = _steps[_currentStep];
+    final step = steps[_currentStep];
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('FIND YOUR MATCH', style: TextStyle(fontFamily: 'Bebas Neue', letterSpacing: 2)),
+        title: Text(L10n.s(context, 'quiz_title'), style: const TextStyle(fontFamily: 'Bebas Neue', letterSpacing: 2)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(22.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildProgressBar(),
+            _buildProgressBar(steps.length),
             const SizedBox(height: 28),
             Text(step.question, style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 26, letterSpacing: 2, height: 1.15)),
             const SizedBox(height: 6),
@@ -95,7 +97,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   disabledBackgroundColor: AppColors.gold.withOpacity(0.3),
                 ),
                 child: Text(
-                  _currentStep == _steps.length - 1 ? 'SEE MY MATCH →' : 'CONTINUE →',
+                  _currentStep == steps.length - 1 ? L10n.s(context, 'quiz_match') : L10n.s(context, 'quiz_continue'),
                   style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3),
                 ),
               ),
@@ -106,9 +108,9 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
-  Widget _buildProgressBar() {
+  Widget _buildProgressBar(int totalSteps) {
     return Row(
-      children: List.generate(_steps.length + 1, (index) {
+      children: List.generate(totalSteps + 1, (index) {
         final isDone = index <= _currentStep;
         return Expanded(
           child: Container(
@@ -180,7 +182,7 @@ class _QuizScreenState extends State<QuizScreen> {
             children: [
               const Text('💪', style: TextStyle(fontSize: 48)),
               const SizedBox(height: 12),
-              const Text('YOUR PERFECT MATCH', style: TextStyle(fontSize: 11, color: AppColors.muted, letterSpacing: 1.5)),
+              Text(L10n.s(context, 'quiz_result_label'), style: const TextStyle(fontSize: 11, color: AppColors.muted, letterSpacing: 1.5)),
               const SizedBox(height: 4),
               Text(
                 match.name,
@@ -189,7 +191,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
               const SizedBox(height: 24),
               Text(
-                "Your drive for performance and muscle perfectly matches ${match.name}'s methodology.",
+                L10n.s(context, 'quiz_result_desc').replaceAll('{name}', match.name),
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.7),
               ),
@@ -209,7 +211,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     foregroundColor: Colors.black,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   ),
-                  child: const Text('VIEW FULL PROGRAM →', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3)),
+                  child: Text(L10n.s(context, 'view_program'), style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3)),
                 ),
               ),
               const SizedBox(height: 10),
@@ -218,7 +220,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   _currentStep = 0;
                   _answers.clear();
                 }),
-                child: const Text('Retake the Quiz', style: TextStyle(color: AppColors.muted)),
+                child: Text(L10n.s(context, 'retake_quiz'), style: const TextStyle(color: AppColors.muted)),
               ),
             ],
           ),

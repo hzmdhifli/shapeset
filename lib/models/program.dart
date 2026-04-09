@@ -1,7 +1,7 @@
 import 'exercise.dart';
 import 'meal.dart';
 
-enum ProgramType { muscle, loss, endurance }
+enum ProgramType { muscle, loss, endurance, wellness, figure }
 
 class ScheduleDay {
   final String dayNumber;

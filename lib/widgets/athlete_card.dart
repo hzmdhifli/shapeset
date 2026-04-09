@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import '../models/program.dart';
 import '../screens/detail/program_detail_screen.dart';
+import '../services/localization_service.dart';
 
 class AthleteCard extends StatelessWidget {
   final Program program;
@@ -49,7 +50,7 @@ class AthleteCard extends StatelessWidget {
                 _buildGoldAccent(),
                 
                 // Content
-                _buildContent(),
+                _buildContent(context),
                 
                 // Arrow Indicator
                 _buildArrow(),
@@ -129,7 +130,7 @@ class AthleteCard extends StatelessWidget {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return Positioned(
       bottom: 0,
       left: 0,
@@ -180,7 +181,7 @@ class AthleteCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
             child: Text(
-              program.badge.split('·').first.trim(), // Short badge
+              L10n.s(context, program.badge.toLowerCase().contains('muscle') ? 'goal_muscle' : 'goal_performance').split('·').first.trim(), // Short badge translation fallback
               style: const TextStyle(
                 fontSize: 9,
                 color: AppColors.gold2,

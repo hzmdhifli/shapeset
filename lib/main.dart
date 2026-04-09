@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -10,6 +11,7 @@ import 'screens/progress/progress_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'theme/app_colors.dart';
 import 'screens/auth/splash_screen.dart';
+import 'services/localization_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,9 +47,11 @@ void main() async {
 class SettingsProvider with ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.dark;
   bool _notificationsEnabled = true;
+  Locale _locale = const Locale('en');
 
   ThemeMode get themeMode => _themeMode;
   bool get notificationsEnabled => _notificationsEnabled;
+  Locale get locale => _locale;
 
   SettingsProvider() {
     _loadSettings();
@@ -58,6 +62,8 @@ class SettingsProvider with ChangeNotifier {
     final isDark = prefs.getBool('darkMode') ?? true;
     _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     _notificationsEnabled = prefs.getBool('notifications') ?? true;
+    final langCode = prefs.getString('languageCode') ?? 'en';
+    _locale = Locale(langCode);
     notifyListeners();
   }
 
@@ -81,6 +87,13 @@ class SettingsProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<void> setLocale(Locale locale) async {
+    _locale = locale;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('languageCode', locale.languageCode);
+    notifyListeners();
+  }
 }
 
 class AthleteApp extends StatelessWidget {
@@ -93,9 +106,23 @@ class AthleteApp extends StatelessWidget {
     return MaterialApp(
       title: 'Athlete',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme, // You'd need to define lightTheme in AppTheme
+      theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: settings.themeMode,
+      locale: settings.locale,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('fr'),
+        Locale('ar'),
+        Locale('es'),
+        Locale('hi'),
+        Locale('zh'),
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: const SplashScreen(),
     );
   }
@@ -133,11 +160,11 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined, size: 22), activeIcon: Icon(Icons.home, size: 22), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.help_outline, size: 22), activeIcon: Icon(Icons.help, size: 22), label: 'Quiz'),
-          BottomNavigationBarItem(icon: Icon(Icons.bar_chart_outlined, size: 22), activeIcon: Icon(Icons.bar_chart, size: 22), label: 'Progress'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline, size: 22), activeIcon: Icon(Icons.person, size: 22), label: 'Profile'),
+        items: [
+          BottomNavigationBarItem(icon: const Icon(Icons.home_outlined, size: 22), activeIcon: const Icon(Icons.home, size: 22), label: L10n.s(context, 'nav_home')),
+          BottomNavigationBarItem(icon: const Icon(Icons.help_outline, size: 22), activeIcon: const Icon(Icons.help, size: 22), label: L10n.s(context, 'nav_quiz')),
+          BottomNavigationBarItem(icon: const Icon(Icons.bar_chart_outlined, size: 22), activeIcon: const Icon(Icons.bar_chart, size: 22), label: L10n.s(context, 'nav_progress')),
+          BottomNavigationBarItem(icon: const Icon(Icons.person_outline, size: 22), activeIcon: const Icon(Icons.person, size: 22), label: L10n.s(context, 'nav_profile')),
         ],
       ),
     );

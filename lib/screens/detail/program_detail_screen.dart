@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../theme/app_colors.dart';
 import '../../models/program.dart';
 import '../workout/workout_session_screen.dart';
+import '../../services/localization_service.dart';
 
 class ProgramDetailScreen extends StatelessWidget {
   final Program program;
@@ -24,17 +25,17 @@ class ProgramDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildStatsRow(),
+                   _buildStatsRow(context),
                   const SizedBox(height: 12),
                   _buildStyleBadge(),
                   const SizedBox(height: 8),
                   _buildQuote(),
                   const SizedBox(height: 24),
-                  _buildSectionTitle('Training Program'),
+                  _buildSectionTitle(context, 'training_program'),
                   const SizedBox(height: 12),
                   _buildExerciseList(),
                   const SizedBox(height: 28),
-                  _buildSectionTitle('Focus Areas'),
+                  _buildSectionTitle(context, 'focus_areas'),
                   const SizedBox(height: 12),
                   _buildTags(),
                   const SizedBox(height: 32),
@@ -103,21 +104,25 @@ class ProgramDetailScreen extends StatelessWidget {
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 20, top: 12),
-            child: GestureDetector(
+            child: InkWell(
               onTap: () => Navigator.pop(context),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.arrow_back, color: AppColors.muted, size: 16),
-                  const SizedBox(width: 6),
-                  Text(
-                    'Back',
-                    style: GoogleFonts.dmSans(
-                      color: AppColors.muted,
-                      fontSize: 13,
+              borderRadius: BorderRadius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.arrow_back, color: AppColors.muted, size: 16),
+                    const SizedBox(width: 6),
+                    Text(
+                      L10n.s(context, 'back'),
+                      style: GoogleFonts.dmSans(
+                        color: AppColors.muted,
+                        fontSize: 13,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -165,14 +170,14 @@ class ProgramDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatsRow() {
+  Widget _buildStatsRow(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: _buildStatBox(program.schedule.isNotEmpty ? program.schedule[0].exercises.length.toString() : '0', 'Exercises')),
+        Expanded(child: _buildStatBox(program.schedule.isNotEmpty ? program.schedule[0].exercises.length.toString() : '0', L10n.s(context, 'exercises'))),
         const SizedBox(width: 8),
-        Expanded(child: _buildStatBox(program.style, 'Style')),
+        Expanded(child: _buildStatBox(program.style, L10n.s(context, 'style'))),
         const SizedBox(width: 8),
-        Expanded(child: _buildStatBox(program.intensity, 'Intensity')),
+        Expanded(child: _buildStatBox(program.intensity, L10n.s(context, 'intensity'))),
       ],
     );
   }
@@ -248,11 +253,11 @@ class ProgramDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(BuildContext context, String key) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Text(
-        title.toUpperCase(),
+        L10n.s(context, key).toUpperCase(),
         style: GoogleFonts.dmSans(
           fontSize: 10,
           color: AppColors.dim,
@@ -379,7 +384,7 @@ class ProgramDetailScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         ),
         child: Text(
-          'START THIS PROGRAM',
+          L10n.s(context, 'start_this_program'),
           style: GoogleFonts.bebasNeue(
             fontSize: 17,
             letterSpacing: 3,

@@ -83,12 +83,17 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(flex: 3),
-                Text(
-                  'ATHLÈTE',
-                  style: GoogleFonts.bebasNeue(
-                    fontSize: 52,
-                    letterSpacing: 6,
-                    color: AppColors.gold,
+                Image.asset(
+                  'assets/images/widgi.png',
+                  height: 120,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => Text(
+                    'SHAPESET',
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 52,
+                      letterSpacing: 6,
+                      color: AppColors.gold,
+                    ),
                   ),
                 ),
                 Text(

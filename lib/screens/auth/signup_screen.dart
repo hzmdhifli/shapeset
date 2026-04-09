@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../theme/app_colors.dart';
 import 'widgets/social_button.dart';
 import 'login_screen.dart';
 import '../onboarding/onboarding_screen.dart';
+import '../../main.dart';
 import '../../services/auth_service.dart';
+import '../../services/localization_service.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -24,10 +27,28 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildBackButton(context),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildBackButton(context),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/widgi.png',
+                        height: 32,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) => const SizedBox(height: 32),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  _buildLanguagePicker(context),
+                ],
+              ),
               const SizedBox(height: 36),
               Text(
-                'CREATE YOUR\nACCOUNT',
+                L10n.s(context, 'create_account'),
                 style: GoogleFonts.bebasNeue(
                   fontSize: 36,
                   letterSpacing: 3,
@@ -36,26 +57,26 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const SizedBox(height: 6),
-              const Text(
-                'Join thousands of athletes training with the world\'s best programs.',
-                style: TextStyle(color: AppColors.muted, fontSize: 13, height: 1.65),
+              Text(
+                L10n.s(context, 'join_thousands'),
+                style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.65),
               ),
               const SizedBox(height: 48),
               
               // Social Signup
               SocialButton(
                 icon: Image.asset('assets/images/gmail-logo.png', height: 24),
-                label: 'Sign in with Google',
+                label: L10n.s(context, 'sign_in_google'),
                 onTap: _handleGoogleSignup,
                 iconBackgroundColor: Colors.transparent,
               ),
               const SizedBox(height: 20),
               
-              const Center(
+              Center(
                 child: Text(
-                  'Your name, email, and profile photo will be automatically synced from your Google account.',
+                  L10n.s(context, 'sync_info'),
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: AppColors.dim, fontSize: 12, height: 1.5),
+                  style: const TextStyle(color: AppColors.dim, fontSize: 12, height: 1.5),
                 ),
               ),
               
@@ -69,11 +90,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     );
                   },
                   child: RichText(
-                    text: const TextSpan(
-                      style: TextStyle(color: AppColors.muted, fontSize: 13),
+                    text: TextSpan(
+                      style: const TextStyle(color: AppColors.muted, fontSize: 13),
                       children: [
-                        TextSpan(text: "Already have an account? "),
-                        TextSpan(text: 'Sign in', style: TextStyle(color: AppColors.gold, fontWeight: FontWeight.bold)),
+                        TextSpan(text: L10n.s(context, 'have_account')),
+                        TextSpan(text: L10n.s(context, 'sign_in'), style: const TextStyle(color: AppColors.gold, fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
@@ -97,15 +118,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
-                            'GET STARTED FAST',
-                            style: TextStyle(color: AppColors.gold, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1),
+                            L10n.s(context, 'get_started_fast'),
+                            style: const TextStyle(color: AppColors.gold, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
-                            'One-tap login means you can start your first workout in less than 30 seconds.',
-                            style: TextStyle(color: AppColors.muted, fontSize: 10, height: 1.4),
+                            L10n.s(context, 'one_tap_login'),
+                            style: const TextStyle(color: AppColors.muted, fontSize: 10, height: 1.4),
                           ),
                         ],
                       ),
@@ -135,6 +156,69 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
+  Widget _buildLanguagePicker(BuildContext context) {
+    return Consumer<SettingsProvider>(
+      builder: (context, settings, _) => InkWell(
+        onTap: () => _showLanguageDialog(context, settings),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.gold.withOpacity(0.3)),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.language, size: 14, color: AppColors.gold),
+              const SizedBox(width: 6),
+              Text(
+                settings.locale.languageCode.toUpperCase(),
+                style: const TextStyle(color: AppColors.gold, fontSize: 11, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context, SettingsProvider settings) {
+    final languages = [
+      {'code': 'en', 'name': 'English'},
+      {'code': 'fr', 'name': 'Français'},
+      {'code': 'ar', 'name': 'العربية (Arabic)'},
+      {'code': 'es', 'name': 'Español (Spanish)'},
+      {'code': 'hi', 'name': 'हिन्दी (Hindi)'},
+      {'code': 'zh', 'name': '中文 (Chinese)'},
+    ];
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        title: Text(L10n.s(context, 'select_language').toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text, letterSpacing: 1.5)),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: languages.length,
+            itemBuilder: (context, index) {
+              final lang = languages[index];
+              final isSelected = settings.locale.languageCode == lang['code'];
+              return ListTile(
+                title: Text(lang['name']!, style: TextStyle(color: isSelected ? AppColors.gold : AppColors.text, fontSize: 14)),
+                trailing: isSelected ? const Icon(Icons.check, color: AppColors.gold, size: 18) : null,
+                onTap: () {
+                  settings.setLocale(Locale(lang['code']!));
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildBackButton(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.pop(context),
@@ -142,10 +226,10 @@ class _SignupScreenState extends State<SignupScreen> {
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(Icons.arrow_back, color: AppColors.muted, size: 16),
-            SizedBox(width: 8),
-            Text('Back', style: TextStyle(color: AppColors.muted, fontSize: 13)),
+          children: [
+            const Icon(Icons.arrow_back, color: AppColors.muted, size: 16),
+            const SizedBox(width: 8),
+            Text(L10n.s(context, 'back'), style: const TextStyle(color: AppColors.muted, fontSize: 13)),
           ],
         ),
       ),

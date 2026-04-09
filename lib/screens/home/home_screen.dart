@@ -4,6 +4,11 @@ import '../../theme/app_colors.dart';
 import '../../models/program.dart';
 import '../../models/mock_data.dart';
 import '../../widgets/athlete_card.dart';
+import '../../widgets/special_program_card.dart';
+import '../../services/localization_service.dart';
+import '../../main.dart'; // For SettingsProvider if needed
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,12 +31,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final query = _searchQuery.toLowerCase();
+    // Main legends for the grid
     final programs = mockPrograms.where((p) {
       if (query.isEmpty) return true;
       final matchName = p.name.toLowerCase().contains(query);
       final matchStyle = p.style.toLowerCase().contains(query);
       final matchTags = p.tags.any((tag) => tag.toLowerCase().contains(query));
       return matchName || matchStyle || matchTags;
+    }).toList();
+
+    // Archetypes for the special section
+    final archetypes = mockFemalePrograms.where((p) {
+      if (query.isEmpty) return true;
+      final matchName = p.name.toLowerCase().contains(query);
+      return matchName;
     }).toList();
 
     return Scaffold(
@@ -48,11 +61,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 38),
                 _buildHero(),
                 const SizedBox(height: 32),
+                if (_searchQuery.isEmpty) ...[
+                  _buildSectionTitle('Female special program', true),
+                  const SizedBox(height: 18),
+                  _buildArchetypeScroll(),
+                  const SizedBox(height: 38),
+                  _buildSectionTitle('LEGENDARY ATHLETES', false),
+                  const SizedBox(height: 16),
+                ],
                 programs.isEmpty 
-                    ? const Center(
+                    ? Center(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 40),
-                          child: Text('No athletes found', style: TextStyle(color: AppColors.muted)),
+                          padding: const EdgeInsets.only(top: 40),
+                          child: Text(L10n.s(context, 'no_athletes'), style: const TextStyle(color: AppColors.muted)),
                         ),
                       )
                     : _buildAthleteGrid(programs),
@@ -77,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     autofocus: true,
                     style: const TextStyle(color: AppColors.text, fontSize: 14),
                     decoration: InputDecoration(
-                      hintText: 'Search athlete, style...',
+                      hintText: L10n.s(context, 'search_hint'),
                       hintStyle: const TextStyle(color: AppColors.muted),
                       filled: true,
                       fillColor: AppColors.surface,
@@ -124,33 +145,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          : Stack(
+              alignment: Alignment.center,
               children: [
-                Text(
-                  'ATHLÈTE',
-                  style: GoogleFonts.bebasNeue(
-                    fontSize: 24,
-                    letterSpacing: 2,
-                    color: AppColors.gold,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isSearchActive = true;
-                    });
-                  },
-                  child: Container(
-                    width: 34,
-                    height: 34,
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.border2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      L10n.s(context, 'home_title'),
+                      style: GoogleFonts.bebasNeue(
+                        fontSize: 22,
+                        letterSpacing: 2,
+                        color: AppColors.gold,
+                      ),
                     ),
-                    child: const Icon(Icons.search, color: AppColors.muted, size: 16),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isSearchActive = true;
+                        });
+                      },
+                      child: Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.border2),
+                        ),
+                        child: const Icon(Icons.search, color: AppColors.muted, size: 16),
+                      ),
+                    ),
+                  ],
+                ),
+                Image.asset(
+                  'assets/images/widgi.png',
+                  height: 32,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => const SizedBox(height: 32),
                 ),
               ],
             ),
@@ -164,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'BODYBUILDING LEGENDS',
+            L10n.s(context, 'hero_category'),
             style: GoogleFonts.dmSans(
               fontSize: 10,
               color: AppColors.gold,
@@ -174,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            'CHOOSE YOUR\nPROGRAM',
+            L10n.s(context, 'hero_title'),
             style: GoogleFonts.bebasNeue(
               fontSize: 38,
               letterSpacing: 3,
@@ -184,11 +216,63 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            'Select an athlete to explore their full training system.',
+            L10n.s(context, 'hero_subtitle'),
             style: GoogleFonts.dmSans(
               fontSize: 12,
               color: AppColors.muted,
               height: 1.6,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildArchetypeScroll() {
+    return SizedBox(
+      height: 220,
+      child: ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 22),
+        scrollDirection: Axis.horizontal,
+        itemCount: mockFemalePrograms.length,
+        itemBuilder: (context, index) {
+          final program = mockFemalePrograms[index];
+          return Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: SizedBox(
+              width: 280,
+              child: SpecialProgramCard(
+                program: program,
+                title: program.name,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title, bool isSpecial) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22),
+      child: Row(
+        children: [
+          Container(
+            width: 3,
+            height: 16,
+            decoration: BoxDecoration(
+              color: isSpecial ? const Color(0xFFE1F5EE) : AppColors.gold,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            title.toUpperCase(),
+            style: GoogleFonts.dmSans(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.5,
+              color: isSpecial ? const Color(0xFFE1F5EE) : AppColors.text,
             ),
           ),
         ],
