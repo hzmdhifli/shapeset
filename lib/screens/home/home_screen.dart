@@ -52,34 +52,46 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(),
-                const SizedBox(height: 38),
-                _buildHero(),
-                const SizedBox(height: 32),
-                if (_searchQuery.isEmpty) ...[
-                  _buildSectionTitle('Female special program', true),
-                  const SizedBox(height: 18),
-                  _buildArchetypeScroll(),
-                  const SizedBox(height: 38),
-                  _buildSectionTitle('LEGENDARY ATHLETES', false),
-                  const SizedBox(height: 16),
-                ],
-                programs.isEmpty 
-                    ? Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 40),
-                          child: Text(L10n.s(context, 'no_athletes'), style: const TextStyle(color: AppColors.muted)),
-                        ),
-                      )
-                    : _buildAthleteGrid(programs),
-                const SizedBox(height: 100), // Bottom nav space
-              ],
-            ),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildHeader(),
+                      const SizedBox(height: 38),
+                      _buildHero(),
+                      const SizedBox(height: 32),
+                      if (_searchQuery.isEmpty) ...[
+                        _buildSectionTitle('Female special program', true),
+                        const SizedBox(height: 18),
+                        _buildArchetypeScroll(),
+                        const SizedBox(height: 38),
+                        _buildSectionTitle('LEGENDARY ATHLETES', false),
+                        const SizedBox(height: 16),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              if (programs.isEmpty)
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: Text(L10n.s(context, 'no_athletes'), style: const TextStyle(color: AppColors.muted)),
+                    ),
+                  ),
+                )
+              else
+                _buildAthleteGrid(programs),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 100),
+              ),
+            ],
           ),
         ),
       ),
@@ -237,6 +249,19 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: mockFemalePrograms.length,
         itemBuilder: (context, index) {
           final program = mockFemalePrograms[index];
+          String? subtitle;
+          if (program.name == 'Athletic & Lean') {
+            subtitle = 'Hypertrophy, conditioning, definition';
+          } else if (program.name == 'Bikini/Competition') {
+            subtitle = 'Sculpt, symmetry, stage-readiness';
+          } else if (program.name == 'Powerlifter') {
+            subtitle = 'Strength, technique';
+          } else if (program.name == 'Sculpt & Cardio') {
+            subtitle = 'Glute isolation, core stability & cardio';
+          } else {
+            subtitle = program.alias;
+          }
+
           return Padding(
             padding: const EdgeInsets.only(right: 16),
             child: SizedBox(
@@ -244,6 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SpecialProgramCard(
                 program: program,
                 title: program.name,
+                subtitle: subtitle,
               ),
             ),
           );
@@ -281,11 +307,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildAthleteGrid(List<Program> programs) {
-    return Padding(
+    return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+      sliver: SliverGrid.builder(
         itemCount: programs.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,

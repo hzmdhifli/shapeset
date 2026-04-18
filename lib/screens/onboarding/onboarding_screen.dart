@@ -386,28 +386,49 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildFooter() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 20, 24, 36),
-      child: SizedBox(
-        width: double.infinity,
-        height: 54,
-        child: ElevatedButton(
-          onPressed: () {
-            if (_currentPage < 3) {
-              _pageController.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
-            } else {
-              _finishSetup();
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.gold,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-            elevation: 0,
+      padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 54,
+            child: ElevatedButton(
+              onPressed: () {
+                if (_currentPage < 3) {
+                  _pageController.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+                } else {
+                  _finishSetup();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.gold,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                elevation: 0,
+              ),
+              child: Text(
+                _currentPage < 3 ? L10n.s(context, 'continue') : L10n.s(context, 'finish_setup'),
+                style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3, color: Colors.black),
+              ),
+            ),
           ),
-          child: Text(
-            _currentPage < 3 ? L10n.s(context, 'continue') : L10n.s(context, 'finish_setup'),
-            style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3, color: Colors.black),
+          const SizedBox(height: 12),
+          TextButton(
+            onPressed: _skipSetup,
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.dim,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+            ),
+            child: Text(
+              L10n.s(context, 'skip_setup').toUpperCase(),
+              style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.2,
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -427,6 +448,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const SuccessScreen()),
+      );
+    }
+  }
+
+  void _skipSetup() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboardingComplete', true);
+    
+    if (mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const MainScreen()),
       );
     }
   }

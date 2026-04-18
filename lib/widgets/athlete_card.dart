@@ -64,27 +64,24 @@ class AthleteCard extends StatelessWidget {
 
   Widget _buildBackgroundImage() {
     final bool isNetwork = program.imagePath.startsWith('http');
-    return ImageFiltered(
-      imageFilter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5), // Subtle "Poster" blur
-      child: ColorFiltered(
-        colorFilter: ColorFilter.mode(
-          Colors.black.withOpacity(0.25),
-          BlendMode.darken,
-        ),
-        child: isNetwork
-            ? Image.network(
-                program.imagePath,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-                errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
-              )
-            : Image.asset(
-                program.imagePath,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-                errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
-              ),
+    return ColorFiltered(
+      colorFilter: ColorFilter.mode(
+        Colors.black.withOpacity(0.25),
+        BlendMode.darken,
       ),
+      child: isNetwork
+          ? Image.network(
+              program.imagePath,
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
+              errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+            )
+          : Image.asset(
+              program.imagePath,
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
+              errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+            ),
     );
   }
 
@@ -188,6 +185,8 @@ class AthleteCard extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.5,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

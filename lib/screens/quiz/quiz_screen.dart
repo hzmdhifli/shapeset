@@ -24,7 +24,17 @@ class _QuizScreenState extends State<QuizScreen> {
         QuizOption(title: L10n.s(context, 'goal_muscle'), sub: L10n.s(context, 'goal_muscle_sub'), icon: "💪", value: "muscle"),
         QuizOption(title: L10n.s(context, 'goal_fat'), sub: L10n.s(context, 'goal_fat_sub'), icon: "🔥", value: "loss"),
         QuizOption(title: L10n.s(context, 'goal_endurance'), sub: L10n.s(context, 'goal_endurance_sub'), icon: "🏃", value: "endurance"),
-        QuizOption(title: L10n.s(context, 'goal_performance'), sub: L10n.s(context, 'goal_performance_sub'), icon: "⚡", value: "muscle"),
+        QuizOption(title: L10n.s(context, 'goal_performance'), sub: L10n.s(context, 'goal_performance_sub'), icon: "⚡", value: "performance"),
+      ],
+    ),
+    QuizStep(
+      question: L10n.s(context, 'focus_areas'),
+      subtext: L10n.s(context, 'hero_subtitle'),
+      options: [
+        QuizOption(title: L10n.s(context, 'chest_day'), sub: "Maximum push power", icon: "👕", value: "Chest"),
+        QuizOption(title: L10n.s(context, 'back'), sub: "The V-taper look", icon: "🎒", value: "Back"),
+        QuizOption(title: L10n.s(context, 'exercises'), sub: "Explosive movement", icon: "🦵", value: "Legs"),
+        QuizOption(title: "Arms", sub: "Peak bicep & tricep", icon: "🦾", value: "Arms"),
       ],
     ),
     QuizStep(
@@ -85,22 +95,48 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
             ),
             const SizedBox(height: 22),
-            SizedBox(
-              width: double.infinity,
-              height: 54,
-              child: ElevatedButton(
-                onPressed: _answers.containsKey(_currentStep) ? () => setState(() => _currentStep++) : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.gold,
-                  foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  disabledBackgroundColor: AppColors.gold.withOpacity(0.3),
+            Row(
+              children: [
+                if (_currentStep > 0)
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: SizedBox(
+                        height: 54,
+                        child: OutlinedButton(
+                          onPressed: () => setState(() => _currentStep--),
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: AppColors.border2),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          ),
+                          child: Text(
+                            L10n.s(context, 'back').toUpperCase(),
+                            style: const TextStyle(color: AppColors.muted, fontFamily: 'Bebas Neue', fontSize: 13, letterSpacing: 2),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                Expanded(
+                  flex: 2,
+                  child: SizedBox(
+                    height: 54,
+                    child: ElevatedButton(
+                      onPressed: _answers.containsKey(_currentStep) ? () => setState(() => _currentStep++) : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.gold,
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                        disabledBackgroundColor: AppColors.gold.withOpacity(0.3),
+                      ),
+                      child: Text(
+                        _currentStep == steps.length - 1 ? L10n.s(context, 'quiz_match') : L10n.s(context, 'quiz_continue'),
+                        style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3),
+                      ),
+                    ),
+                  ),
                 ),
-                child: Text(
-                  _currentStep == steps.length - 1 ? L10n.s(context, 'quiz_match') : L10n.s(context, 'quiz_continue'),
-                  style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3),
-                ),
-              ),
+              ],
             ),
           ],
         ),
@@ -167,9 +203,18 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Widget _buildResult() {
     final goal = _answers[0] ?? 'muscle';
-    final Program match = mockPrograms.firstWhere(
-      (p) => p.type.toString().split('.').last == goal,
-      orElse: () => mockPrograms[0],
+    final focus = _answers[1] ?? 'Chest';
+    
+    // First try to match by Tags (Muscle Focus)
+    Program match = mockPrograms.firstWhere(
+      (p) => p.tags.any((tag) => tag.toLowerCase().contains(focus.toLowerCase())),
+      orElse: () {
+        // Fallback to Goal match
+        return mockPrograms.firstWhere(
+          (p) => p.type.toString().split('.').last == goal,
+          orElse: () => mockPrograms[0],
+        );
+      },
     );
 
     return Scaffold(

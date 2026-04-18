@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../theme/app_colors.dart';
@@ -65,11 +68,25 @@ class _SignupScreenState extends State<SignupScreen> {
               
               // Social Signup
               SocialButton(
-                icon: Image.asset('assets/images/gmail-logo.png', height: 24),
+                icon: Image.asset('assets/images/goog.png', height: 24),
                 label: L10n.s(context, 'sign_in_google'),
                 onTap: _handleGoogleSignup,
                 iconBackgroundColor: Colors.transparent,
               ),
+              if (Platform.isIOS) ...[
+                const SizedBox(height: 12),
+                SocialButton(
+                  icon: const Center(
+                    child: Text(
+                      '',
+                      style: TextStyle(color: Colors.white, fontSize: 26, height: 1.25),
+                    ),
+                  ),
+                  label: L10n.s(context, 'sign_in_apple'),
+                  onTap: _handleAppleSignup,
+                  iconBackgroundColor: Colors.black,
+                ),
+              ],
               const SizedBox(height: 20),
               
               Center(
@@ -185,6 +202,8 @@ class _SignupScreenState extends State<SignupScreen> {
     final languages = [
       {'code': 'en', 'name': 'English'},
       {'code': 'fr', 'name': 'Français'},
+      {'code': 'pt', 'name': 'Português'},
+      {'code': 'de', 'name': 'Deutsch'},
       {'code': 'ar', 'name': 'العربية (Arabic)'},
       {'code': 'es', 'name': 'Español (Spanish)'},
       {'code': 'hi', 'name': 'हिन्दी (Hindi)'},
@@ -251,6 +270,29 @@ class _SignupScreenState extends State<SignupScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Sign-in failed: ${error.toString()}'),
+            backgroundColor: Colors.redAccent,
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _handleAppleSignup() async {
+    try {
+      final user = await AuthService.signInWithApple();
+      if (user != null && mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+        );
+      }
+    } catch (error) {
+      debugPrint('Apple signup error: $error');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Apple sign-in failed: ${error.toString()}'),
             backgroundColor: Colors.redAccent,
             duration: const Duration(seconds: 5),
           ),

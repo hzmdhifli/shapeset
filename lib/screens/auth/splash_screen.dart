@@ -13,25 +13,73 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   bool _isLoading = true;
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.8, curve: Curves.easeOutBack),
+      ),
+    );
+
+    _controller.forward();
     _checkLoginStatus();
   }
 
-  Future<void> _checkLoginStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
-    if (isLoggedIn && mounted) {
-      // If already logged in, skip splash buttons and go home
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const MainScreen()),
-      );
-    } else {
+  Future<void> _checkLoginStatus() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+      // Safe image precaching
+      if (mounted) {
+        precacheImage(const AssetImage('assets/images/widgi.png'), context).catchError((_) {});
+        precacheImage(const AssetImage('assets/images/whito.png'), context).catchError((_) {});
+      }
+
+      // Ensure the animation has time to at least show the logo
+      await Future.delayed(const Duration(milliseconds: 1500));
+
+      if (isLoggedIn && mounted) {
+        Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const MainScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+            transitionDuration: const Duration(milliseconds: 800),
+          ),
+        );
+      } else {
+        if (mounted) {
+          setState(() => _isLoading = false);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error in splash screen check: $e');
       if (mounted) {
         setState(() => _isLoading = false);
       }
@@ -40,157 +88,177 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const Scaffold(
-        backgroundColor: AppColors.background,
-        body: Center(child: CircularProgressIndicator(color: AppColors.gold)),
-      );
-    }
-
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Stack(
         fit: StackFit.expand,
         children: [
           // Background Glow
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.1,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                width: 400,
-                height: 400,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      AppColors.gold.withOpacity(0.08),
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Decorative Rings
-          _buildRing(context, 500, 0.04),
-          _buildRing(context, 340, 0.06),
-          // Content
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(flex: 3),
-                Image.asset(
-                  'assets/images/widgi.png',
-                  height: 120,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) => Text(
-                    'SHAPESET',
-                    style: GoogleFonts.bebasNeue(
-                      fontSize: 52,
-                      letterSpacing: 6,
-                      color: AppColors.gold,
+          _buildBackgroundEffects(),
+          
+          // Animated Content
+          Center(
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: ScaleTransition(
+                    scale: _scaleAnimation,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/widgi.png',
+                          height: 140,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) => Text(
+                            'SHAPESET',
+                            style: GoogleFonts.bebasNeue(
+                              fontSize: 64,
+                              letterSpacing: 8,
+                              color: AppColors.gold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'TRAIN LIKE A LEGEND',
+                          style: GoogleFonts.dmSans(
+                            fontSize: 14,
+                            color: AppColors.gold.withOpacity(0.7),
+                            letterSpacing: 4,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        if (_isLoading) ...[
+                          const SizedBox(height: 60),
+                          const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: AppColors.gold,
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                   ),
-                ),
-                Text(
-                  'TRAIN LIKE A LEGEND',
-                  style: GoogleFonts.dmSans(
-                    fontSize: 12,
-                    color: AppColors.muted,
-                    letterSpacing: 2,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const Spacer(flex: 2),
-                _buildButtons(context),
-                const SizedBox(height: 20),
-                const Text.rich(
-                  TextSpan(
-                    style: TextStyle(color: AppColors.dim, fontSize: 10, height: 1.6),
-                    children: [
-                      TextSpan(text: 'By continuing you agree to our '),
-                      TextSpan(text: 'Terms of Service', style: TextStyle(color: AppColors.muted, decoration: TextDecoration.underline)),
-                      TextSpan(text: '\nand '),
-                      TextSpan(text: 'Privacy Policy', style: TextStyle(color: AppColors.muted, decoration: TextDecoration.underline)),
-                    ],
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 36),
-              ],
+                );
+              },
             ),
           ),
+
+          // Action Buttons (shown only after loading)
+          if (!_isLoading)
+            Positioned(
+              bottom: 40,
+              left: 32,
+              right: 32,
+              child: FadeTransition(
+                opacity: AlwaysStoppedAnimation(1.0),
+                child: _buildWelcomeContent(),
+              ),
+            ),
         ],
       ),
     );
   }
 
-  Widget _buildRing(BuildContext context, double size, double opacity) {
-    return Positioned(
-      top: MediaQuery.of(context).size.height * 0.45 - (size / 2),
-      left: MediaQuery.of(context).size.width * 0.5 - (size / 2),
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: AppColors.gold.withOpacity(opacity)),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildButtons(BuildContext context) {
-    return Column(
+  Widget _buildBackgroundEffects() {
+    return Stack(
       children: [
-        SizedBox(
-          width: double.infinity,
-          height: 54,
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SignupScreen()),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.gold,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-              elevation: 0,
-            ),
-            child: const Text(
-              'GET STARTED →',
-              style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3, color: Colors.black),
-            ),
-          ),
+        Positioned(
+          top: -100,
+          right: -100,
+          child: _buildGlowSphere(300, AppColors.gold.withOpacity(0.05)),
         ),
-        const SizedBox(height: 16),
-        SizedBox(
-          width: double.infinity,
-          height: 54,
-          child: OutlinedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
-              );
-            },
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: AppColors.border2),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-              padding: const EdgeInsets.symmetric(vertical: 0),
-            ),
-            child: const Text(
-              'LOG IN',
-              style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3, color: AppColors.text),
+        Positioned(
+          bottom: -150,
+          left: -100,
+          child: _buildGlowSphere(400, AppColors.gold.withOpacity(0.03)),
+        ),
+        Center(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                colors: [
+                  AppColors.gold.withOpacity(0.03),
+                  Colors.transparent,
+                ],
+                radius: 1.0,
+              ),
             ),
           ),
         ),
       ],
     );
   }
+
+  Widget _buildGlowSphere(double size, Color color) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: color,
+            blurRadius: 100,
+            spreadRadius: 50,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWelcomeContent() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 56,
+          child: ElevatedButton(
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupScreen())),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.gold,
+              foregroundColor: Colors.black,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              elevation: 0,
+            ),
+            child: const Text(
+              'GET STARTED →',
+              style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 18, letterSpacing: 2),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          width: double.infinity,
+          height: 56,
+          child: OutlinedButton(
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen())),
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: AppColors.gold.withOpacity(0.3)),
+              foregroundColor: AppColors.text,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+            child: const Text(
+              'LOG IN',
+              style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 18, letterSpacing: 2),
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          'By continuing you agree to our Terms and Privacy Policy',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: AppColors.muted.withOpacity(0.5), fontSize: 11),
+        ),
+      ],
+    );
+  }
 }
+

@@ -11,6 +11,9 @@ import '../auth/login_screen.dart';
 import 'widgets/edit_profile_sheet.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import '../../services/localization_service.dart';
+import '../../services/auth_service.dart';
+import '../../models/program.dart';
+import '../../models/mock_data.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -21,6 +24,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   SharedPreferences? _prefs;
+  Program? _activeProgram;
 
   @override
   void initState() {
@@ -34,6 +38,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _prefs = prefs;
         _restTimer = prefs.getBool('restTimer') ?? true;
+        
+        // Pick an active program - consistent with Progress Screen
+        final gender = prefs.getString('userGender')?.toLowerCase();
+        if (gender == 'female' || gender == 'woman') {
+          _activeProgram = mockFemalePrograms[0];
+        } else {
+          _activeProgram = mockPrograms[0];
+        }
       });
     }
   }
@@ -103,25 +115,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(context),
-              _buildAvatarSection(),
-              _buildXPBar(),
-              _buildSectionLabel(L10n.s(context, 'your_stats')),
-              _buildStatsGrid(),
-              _buildSectionLabel(L10n.s(context, 'active_program')),
-              _buildActiveProgramRing(),
-              _buildSectionLabel(L10n.s(context, 'weekly_activity')),
-              _buildWeeklyActivityChart(),
-              _buildSectionLabel(L10n.s(context, 'streak')),
-              _buildStreakSection(),
-              _buildSectionLabel(L10n.s(context, 'achievements')),
-              _buildAchievementsList(),
-              _buildSectionLabel(L10n.s(context, 'account')),
-              _buildSettingsGroup([
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: _buildHeader(context)),
+            SliverToBoxAdapter(child: _buildAvatarSection()),
+            SliverToBoxAdapter(child: _buildXPBar()),
+            SliverToBoxAdapter(child: _buildSectionLabel(L10n.s(context, 'your_stats'))),
+            _buildStatsGrid(),
+            SliverToBoxAdapter(child: _buildSectionLabel(L10n.s(context, 'active_program'))),
+            SliverToBoxAdapter(child: _buildActiveProgramRing()),
+            SliverToBoxAdapter(child: _buildSectionLabel(L10n.s(context, 'weekly_activity'))),
+            SliverToBoxAdapter(child: _buildWeeklyActivityChart()),
+            SliverToBoxAdapter(child: _buildSectionLabel(L10n.s(context, 'streak'))),
+            SliverToBoxAdapter(child: _buildStreakSection()),
+            SliverToBoxAdapter(child: _buildSectionLabel(L10n.s(context, 'achievements'))),
+            SliverToBoxAdapter(child: _buildAchievementsList()),
+            SliverToBoxAdapter(child: _buildSectionLabel(L10n.s(context, 'account'))),
+            SliverToBoxAdapter(
+              child: _buildSettingsGroup([
                 _buildSettingRow(
                   onTap: () async {
                     final result = await showModalBottomSheet(
@@ -177,7 +188,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ]),
-              Padding(
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
                 child: Text(
                   L10n.s(context, 'preferences').toUpperCase(),
@@ -189,7 +202,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              _buildSettingsGroup([
+            ),
+            SliverToBoxAdapter(
+              child: _buildSettingsGroup([
                 _buildSettingRow(
                   onTap: () {
                     showDialog(
@@ -216,7 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.straighten,
                   iconColor: AppColors.gold,
                   iconBg: AppColors.gold3,
-                  title: 'Units',
+                  title: L10n.s(context, 'units'),
                   subtitle: 'kg / lbs · cm / ft',
                 ),
                 _buildSettingRow(
@@ -226,27 +241,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         backgroundColor: AppColors.surface,
-                        title: const Text('SELECT LANGUAGE', style: TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                              title: const Text('English', style: TextStyle(color: AppColors.text)),
-                              trailing: settings.locale.languageCode == 'en' ? const Icon(Icons.check, color: AppColors.gold) : null,
-                              onTap: () {
-                                settings.setLocale(const Locale('en'));
-                                Navigator.pop(context);
-                              },
-                            ),
-                            ListTile(
-                              title: const Text('Français', style: TextStyle(color: AppColors.text)),
-                              trailing: settings.locale.languageCode == 'fr' ? const Icon(Icons.check, color: AppColors.gold) : null,
-                              onTap: () {
-                                settings.setLocale(const Locale('fr'));
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
+                        title: Text(L10n.s(context, 'select_language').toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text, letterSpacing: 1.5)),
+                        content: SizedBox(
+                          width: double.maxFinite,
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: [
+                              _buildLangItem(context, settings, 'English', 'en'),
+                              _buildLangItem(context, settings, 'Français', 'fr'),
+                              _buildLangItem(context, settings, 'العربية', 'ar'),
+                              _buildLangItem(context, settings, 'Español', 'es'),
+                              _buildLangItem(context, settings, 'Português', 'pt'),
+                              _buildLangItem(context, settings, 'Deutsch', 'de'),
+                              _buildLangItem(context, settings, 'हिन्दी', 'hi'),
+                              _buildLangItem(context, settings, '中文', 'zh'),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -254,8 +264,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.language,
                   iconColor: AppColors.blueText,
                   iconBg: AppColors.blueBg,
-                  title: 'Language',
-                  subtitle: 'English / Français',
+                  title: L10n.s(context, 'language'),
+                  subtitle: _getCurrentLangName(context),
                 ),
                 _buildSettingRow(
                   icon: Icons.timer_outlined,
@@ -313,7 +323,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   subtitle: 'Who can see your progress',
                 ),
               ]),
-              Padding(
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
                 child: Text(
                   L10n.s(context, 'support').toUpperCase(),
@@ -325,7 +337,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              _buildSettingsGroup([
+            ),
+            SliverToBoxAdapter(
+              child: _buildSettingsGroup([
                 _buildSettingRow(
                   onTap: () {
                     showDialog(
@@ -392,10 +406,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   subtitle: 'Legal & data policy',
                 ),
               ]),
-              const SizedBox(height: 24),
-              _buildLogoutButton(),
-              const SizedBox(height: 16),
-              const Center(
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
+            SliverToBoxAdapter(child: _buildLogoutButton()),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            const SliverToBoxAdapter(
+              child: Center(
                 child: Text(
                   'ATHLÈTE v1.0.0 · © 2025',
                   style: TextStyle(
@@ -404,9 +420,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 80),
-            ],
-          ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 80)),
+          ],
         ),
       ),
     );
@@ -674,30 +690,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildStatsGrid() {
-    return Padding(
+    return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
-      child: LayoutBuilder(builder: (context, constraints) {
-        return GridView.count(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: (constraints.maxWidth / 2 - 5) / 140,
-          children: [
-            _buildStatCard('🔥', '42', 'Sessions Done', '+6 this month', AppColors.redText, AppColors.redBg, AppColors.redText),
-            _buildStatCard('⚡', '18', 'Day Streak', 'Personal best', AppColors.gold, AppColors.gold3, AppColors.gold2),
-            _buildStatCard('⏱️', '76h', 'Total Training', '↑ 14% vs last mo.', AppColors.text, AppColors.blueBg, AppColors.blueText),
-            _buildStatCard('🏋️', '9.4T', 'Volume Lifted', '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
-          ],
-        );
-      }),
+      sliver: SliverGrid.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 1.15,
+        children: [
+          _buildStatCard('🔥', '18', L10n.s(context, 'sessions_completed'), '+3 this week', AppColors.redText, AppColors.redBg, AppColors.redText),
+          _buildStatCard('⚡', '12', L10n.s(context, 'streak'), 'Personal best', AppColors.gold, AppColors.gold3, AppColors.gold2),
+          _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), '↑ 14% vs last mo.', AppColors.text, AppColors.blueBg, AppColors.blueText),
+          _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
+        ],
+      ),
     );
   }
 
   Widget _buildStatCard(String icon, String val, String label, String delta, Color valColor, Color deltaBg, Color deltaText) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(14),
@@ -764,7 +776,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 68,
                       height: 68,
                       child: CircularProgressIndicator(
-                        value: 0.75,
+                        value: 0.38,
                         strokeWidth: 7,
                         color: AppColors.gold,
                         backgroundColor: AppColors.gold.withOpacity(0.1),
@@ -777,16 +789,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          '75%',
+                          '38%',
                           style: GoogleFonts.bebasNeue(
                             fontSize: 16,
                             color: AppColors.gold2,
                             letterSpacing: 1,
                           ),
                         ),
-                        const Text(
-                          'done',
-                          style: TextStyle(color: AppColors.muted, fontSize: 8),
+                        Text(
+                          L10n.s(context, 'done'),
+                          style: const TextStyle(color: AppColors.muted, fontSize: 8),
                         ),
                       ],
                     ),
@@ -799,24 +811,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Cristiano Ronaldo Program',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                  Text(
+                    _activeProgram?.name ?? 'Training',
+                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 3),
-                  const Text(
-                    'Week 9 of 12 · Full Body Performance & Conditioning',
-                    style: TextStyle(color: AppColors.muted, fontSize: 11, height: 1.55),
+                  Text(
+                    'Week 5 of 12 · ${_activeProgram?.badge ?? "Full Volume"}',
+                    style: const TextStyle(color: AppColors.muted, fontSize: 11, height: 1.55),
                   ),
                   const SizedBox(height: 10),
                   Wrap(
                     spacing: 14,
                     runSpacing: 4,
                     children: [
-                      _buildRingMetaItem('Week', '9/12'),
-                      _buildRingMetaItem('Sessions', '54/72'),
-                      _buildRingMetaItem('Left', '3 wks'),
+                      _buildRingMetaItem(L10n.s(context, 'week'), '5/12'),
+                      _buildRingMetaItem(L10n.s(context, 'sessions_completed'), '18/48'),
+                      _buildRingMetaItem('Left', '7 wks'),
                     ],
                   ),
                 ],
@@ -844,9 +856,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildWeeklyActivityChart() {
-    final data = [3, 5, 4, 6, 5, 6, 4];
+    final data = [4, 5, 2, 6, 4, 7, 5];
     final labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'];
-    const maxVal = 6;
+    const maxVal = 7;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -1059,7 +1071,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _buildAchievementItem('💪', 'Ironclad', 'Lifted 1 tonne in a single week', 'Feb 18', true),
           _buildAchievementItem('⚡', 'Half Way There', 'Completed 50% of a program', 'Mar 5', true),
           _buildAchievementItem('🥇', 'Champion', 'Complete a full 12-week program', '', false),
-          _buildAchievementItem('🌟', 'Ronaldo Mode', 'Train 6 days in a row', '', false),
+          _buildAchievementItem('🌟', 'Beast Mode', 'Train 6 days in a row', '', false),
         ],
       ),
     );
@@ -1202,15 +1214,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: InkWell(
-        onTap: () async {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.clear(); // Clear local data on logout
-          if (mounted) {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-              (route) => false,
-            );
-          }
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              backgroundColor: AppColors.surface,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              title: Text(
+                L10n.s(context, 'log_out').toUpperCase(),
+                style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text, letterSpacing: 1.5),
+              ),
+              content: const Text(
+                'Are you sure you want to log out of your account?',
+                style: TextStyle(color: AppColors.muted, fontSize: 14),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    "CANCEL",
+                    style: const TextStyle(color: AppColors.muted, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    await AuthService.signOut();
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.clear();
+                    if (mounted) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                         MaterialPageRoute(builder: (context) => const LoginScreen()),
+                        (route) => false,
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'YES, LOG OUT',
+                    style: TextStyle(color: AppColors.redText, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          );
         },
         borderRadius: BorderRadius.circular(14),
         child: Container(
@@ -1221,9 +1267,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             borderRadius: BorderRadius.circular(14),
           ),
           alignment: Alignment.center,
-          child: const Text(
-            'Log Out',
-            style: TextStyle(
+          child: Text(
+            L10n.s(context, 'log_out'),
+            style: const TextStyle(
               color: AppColors.redText,
               fontSize: 13,
             ),
@@ -1232,4 +1278,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  String _getCurrentLangName(BuildContext context) {
+    final code = Localizations.localeOf(context).languageCode;
+    switch (code) {
+      case 'fr': return 'Français';
+      case 'ar': return 'العربية';
+      case 'es': return 'Español';
+      case 'pt': return 'Português';
+      case 'de': return 'Deutsch';
+      case 'hi': return 'हिन्दी';
+      case 'zh': return '中文';
+      default: return 'English';
+    }
+  }
+
+  Widget _buildLangItem(BuildContext context, SettingsProvider settings, String name, String code) {
+    final isSelected = settings.locale.languageCode == code;
+    return ListTile(
+      title: Text(name, style: TextStyle(color: isSelected ? AppColors.gold : AppColors.text, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+      trailing: isSelected ? const Icon(Icons.check, color: AppColors.gold) : null,
+      onTap: () {
+        settings.setLocale(Locale(code));
+        Navigator.pop(context);
+      },
+    );
+  }
 }
+

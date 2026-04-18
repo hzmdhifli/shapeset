@@ -7,11 +7,13 @@ import '../screens/detail/program_detail_screen.dart';
 class SpecialProgramCard extends StatelessWidget {
   final Program program;
   final String title;
+  final String? subtitle;
 
   const SpecialProgramCard({
     super.key, 
     required this.program,
     required this.title,
+    this.subtitle,
   });
 
   @override
@@ -108,14 +110,18 @@ class SpecialProgramCard extends StatelessWidget {
                         color: AppColors.text,
                         height: 1,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '5 Specialized Physique Archetypes',
+                      subtitle ?? '5 Specialized Physique Archetypes',
                       style: GoogleFonts.dmSans(
                         fontSize: 13,
                         color: AppColors.muted,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),

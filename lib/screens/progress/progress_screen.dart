@@ -5,33 +5,77 @@ import '../../models/mock_data.dart';
 import '../detail/program_detail_screen.dart';
 import '../../services/localization_service.dart';
 
-class ProgressScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../theme/app_colors.dart';
+import '../../models/mock_data.dart';
+import '../../models/program.dart';
+import '../detail/program_detail_screen.dart';
+import '../../services/localization_service.dart';
+
+class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
 
   @override
+  State<ProgressScreen> createState() => _ProgressScreenState();
+}
+
+class _ProgressScreenState extends State<ProgressScreen> {
+  SharedPreferences? _prefs;
+  String _userName = 'CHAMP';
+  Program? _activeProgram;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _prefs = prefs;
+      _userName = prefs.getString('userName')?.toUpperCase() ?? 'ALEX';
+      
+      // Pick an active program - for now we'll pick Arnold (0) or first female (if gender is female)
+      final gender = prefs.getString('userGender')?.toLowerCase();
+      if (gender == 'female' || gender == 'woman') {
+        _activeProgram = mockFemalePrograms[0];
+      } else {
+        _activeProgram = mockPrograms[0];
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_prefs == null) {
+      return const Scaffold(
+        backgroundColor: AppColors.background,
+        body: Center(child: CircularProgressIndicator(color: AppColors.gold)),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(context),
-              _buildGreeting(context),
-              _buildStatsGrid(context),
-              const SizedBox(height: 24),
-              _buildSectionLabel(context, 'active_program_label'),
-              _buildActiveProgramCard(context),
-              _buildSectionLabel(context, 'weekly_activity'),
-              _buildWeeklyActivityChart(context),
-              _buildSectionLabel(context, 'month_streak'),
-              _buildStreakSection(context),
-              _buildSectionLabel(context, 'achievements'),
-              _buildAchievementsList(context),
-              const SizedBox(height: 90),
-            ],
-          ),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: _buildHeader(context)),
+            SliverToBoxAdapter(child: _buildGreeting(context)),
+            _buildStatsGrid(context),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
+            SliverToBoxAdapter(child: _buildSectionLabel(context, 'active_program_label')),
+            SliverToBoxAdapter(child: _buildActiveProgramCard(context)),
+            SliverToBoxAdapter(child: _buildSectionLabel(context, 'weekly_activity')),
+            SliverToBoxAdapter(child: _buildWeeklyActivityChart(context)),
+            SliverToBoxAdapter(child: _buildSectionLabel(context, 'month_streak')),
+            SliverToBoxAdapter(child: _buildStreakSection(context)),
+            SliverToBoxAdapter(child: _buildSectionLabel(context, 'achievements')),
+            SliverToBoxAdapter(child: _buildAchievementsList(context)),
+            const SliverToBoxAdapter(child: SizedBox(height: 90)),
+          ],
         ),
       ),
     );
@@ -58,13 +102,14 @@ class ProgressScreen extends StatelessWidget {
   }
 
   Widget _buildGreeting(BuildContext context) {
+    final programName = _activeProgram?.name ?? 'Training';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${L10n.s(context, 'week')} 3 ${L10n.s(context, 'of')} 12 · Ronaldo Program',
+            '${L10n.s(context, 'week')} 3 ${L10n.s(context, 'of')} 12 · $programName',
             style: const TextStyle(
               color: AppColors.muted,
               fontSize: 11,
@@ -73,7 +118,7 @@ class ProgressScreen extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'KEEP\nGOING ALEX',
+            'KEEP\nGOING $_userName',
             style: GoogleFonts.bebasNeue(
               fontSize: 28,
               letterSpacing: 2,
@@ -102,28 +147,20 @@ class ProgressScreen extends StatelessWidget {
   }
 
   Widget _buildStatsGrid(BuildContext context) {
-    return Padding(
+    return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
-      child: LayoutBuilder(builder: (context, constraints) {
-        // Use a aspect ratio that provides enough height (at least 135px)
-        double cardWidth = (constraints.maxWidth - 10) / 2;
-        double childAspectRatio = cardWidth / 135;
-        
-        return GridView.count(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: childAspectRatio,
-          children: [
-            _buildStatCard('🔥', '18', L10n.s(context, 'sessions_completed'), '+3 this week', AppColors.redText, AppColors.redBg, AppColors.redText),
-            _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
-            _buildStatCard('⚡', '12', L10n.s(context, 'streak'), 'Personal best!', AppColors.gold, AppColors.gold3, AppColors.gold2),
-            _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
-          ],
-        );
-      }),
+      sliver: SliverGrid.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 1.4,
+        children: [
+          _buildStatCard('🔥', '18', L10n.s(context, 'sessions_completed'), '+3 this week', AppColors.redText, AppColors.redBg, AppColors.redText),
+          _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
+          _buildStatCard('⚡', '12', L10n.s(context, 'streak'), 'Personal best!', AppColors.gold, AppColors.gold3, AppColors.gold2),
+          _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
+        ],
+      ),
     );
   }
 
@@ -179,11 +216,13 @@ class ProgressScreen extends StatelessWidget {
   }
 
   Widget _buildActiveProgramCard(BuildContext context) {
+    if (_activeProgram == null) return const SizedBox();
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProgramDetailScreen(program: mockPrograms[0])),
+          MaterialPageRoute(builder: (context) => ProgramDetailScreen(program: _activeProgram!)),
         );
       },
       child: Padding(
@@ -200,12 +239,12 @@ class ProgressScreen extends StatelessWidget {
             children: [
               Text(L10n.s(context, 'active_program_label'), style: const TextStyle(color: AppColors.gold, fontSize: 10, letterSpacing: 1.5)),
               const SizedBox(height: 4),
-              const Text('CRISTIANO RONALDO', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 22, color: AppColors.text, letterSpacing: 2)),
+              Text(_activeProgram!.name.toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 22, color: AppColors.text, letterSpacing: 2)),
               const SizedBox(height: 10),
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: const LinearProgressIndicator(
-                  value: 0.25,
+                  value: 0.38, // Dynamic or mock progress
                   backgroundColor: Color(0x1FC9A84C),
                   valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
                   minHeight: 4,
@@ -216,11 +255,11 @@ class ProgressScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${L10n.s(context, 'week')} 3 ${L10n.s(context, 'of')} 12',
+                    '${L10n.s(context, 'week')} 5 ${L10n.s(context, 'of')} 12',
                     style: const TextStyle(fontSize: 11, color: AppColors.muted),
                   ),
                   Text(
-                    '25% ${L10n.s(context, 'complete_label')}',
+                    '38% ${L10n.s(context, 'complete_label')}',
                     style: const TextStyle(fontSize: 11, color: AppColors.gold2, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -233,9 +272,9 @@ class ProgressScreen extends StatelessWidget {
   }
 
   Widget _buildWeeklyActivityChart(BuildContext context) {
-    final data = [3, 4, 5, 4, 6, 5, 3];
+    final data = [4, 5, 2, 6, 4, 7, 5]; // Mock but feel realistic
     final labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'];
-    const maxVal = 6;
+    const maxVal = 7;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -329,7 +368,7 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-   Widget _buildStreakSection(BuildContext context) {
+  Widget _buildStreakSection(BuildContext context) {
     final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'];
     final status = List.generate(28, (i) => i % 7 == 4 ? 'skip' : (i == 27 ? 'today' : 'done'));
 
@@ -383,7 +422,7 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 
-   Widget _buildAchievementsList(BuildContext context) {
+  Widget _buildAchievementsList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Column(
@@ -431,7 +470,7 @@ class ProgressScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              if (!isUnlocked) 
+              if (!isUnlocked)
                 const Icon(Icons.lock_outline, size: 14, color: AppColors.dim),
             ],
           ),
