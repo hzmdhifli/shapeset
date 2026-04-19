@@ -7,6 +7,9 @@ import '../../models/program.dart';
 import '../workout/workout_session_screen.dart';
 import '../../services/localization_service.dart';
 import '../../models/mock_data.dart';
+import '../../services/workout_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ProgramDetailScreen extends StatefulWidget {
   final Program program;
@@ -160,7 +163,8 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
       child: Scaffold(
         backgroundColor: AppColors.background,
         body: CustomScrollView(
-        slivers: [
+          physics: const BouncingScrollPhysics(),
+          slivers: [
           // Hero Header
           SliverToBoxAdapter(
             child: _buildHero(context),
@@ -270,7 +274,19 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => _buildDayCard(days[index]),
+                  (context, index) {
+                    final day = days[index];
+                    final workoutProvider = Provider.of<WorkoutProvider>(context);
+                    final isCompleted = workoutProvider.isDayCompleted(widget.program.id, day.dayNumber);
+                    
+                    // For splits, we can still highlight the next uncompleted training day if we want
+                    bool isActive = false;
+                    if (day.isTraining && !isCompleted) {
+                      final firstUncompleted = days.firstWhere((d) => d.isTraining && !workoutProvider.isDayCompleted(widget.program.id, d.dayNumber), orElse: () => days.last);
+                      isActive = (firstUncompleted.dayNumber == day.dayNumber);
+                    }
+                    return _buildDayCard(day, isActive, isCompleted);
+                  },
                   childCount: days.length,
                 ),
               ),
@@ -280,7 +296,22 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => _buildDayCard(days[index]),
+                  (context, index) {
+                    final day = days[index];
+                    final workoutProvider = Provider.of<WorkoutProvider>(context);
+                    final isCompleted = workoutProvider.isDayCompleted(widget.program.id, day.dayNumber);
+                    
+                    // The "active" day is the first training day that is not completed
+                    bool isActive = false;
+                    if (day.isTraining && !isCompleted) {
+                      final firstUncompleted = days.firstWhere((d) => d.isTraining && !workoutProvider.isDayCompleted(widget.program.id, d.dayNumber), orElse: () => days.last);
+                      if (firstUncompleted.dayNumber == day.dayNumber) {
+                        isActive = true;
+                      }
+                    }
+
+                    return _buildDayCard(day, isActive, isCompleted);
+                  },
                   childCount: days.length,
                 ),
               ),
@@ -365,195 +396,22 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
           itemCount: split.days.length,
           itemBuilder: (context, index) {
             final day = split.days[index];
-            return _buildDayCard(day);
+            final workoutProvider = Provider.of<WorkoutProvider>(context);
+            final isCompleted = workoutProvider.isDayCompleted(widget.program.id, day.dayNumber);
+            
+            bool isActive = false;
+            if (day.isTraining && !isCompleted) {
+              final firstUncompleted = split.days.firstWhere((d) => d.isTraining && !workoutProvider.isDayCompleted(widget.program.id, d.dayNumber), orElse: () => split.days.last);
+              isActive = (firstUncompleted.dayNumber == day.dayNumber);
+            }
+            return _buildDayCard(day, isActive, isCompleted);
           },
         ),
       ],
     );
   }
 
-  Widget _buildDayCard(ScheduleDay day) {
-    // Group exercises by muscle group using pre-calculated map for O(1) lookup
-    final Map<String, List<WorkoutExercise>> groupedExercises = {};
-    for (var ex in day.exercises) {
-      final muscleGroup = _getMuscleForExercise(ex.name);
-      groupedExercises.putIfAbsent(muscleGroup, () => []).add(ex);
-    }
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Day Header
-          Padding(
-            padding: const EdgeInsets.all(18),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: AppColors.gold.withOpacity(0.12),
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: AppColors.gold.withOpacity(0.2)),
-                  ),
-                  child: Text(
-                    day.dayNumber.toUpperCase(),
-                    style: GoogleFonts.bebasNeue(
-                      fontSize: 15,
-                      color: AppColors.gold,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Text(
-                    day.name.toUpperCase(),
-                    style: GoogleFonts.bebasNeue(
-                      fontSize: 20,
-                      color: AppColors.text,
-                      letterSpacing: 1.5,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(height: 1, color: AppColors.border),
-          
-          if (day.isTraining) ...[
-            // Muscles and Exercises
-            ...groupedExercises.entries.map((group) {
-              final muscle = group.key;
-              final exercises = group.value;
-              final Color muscleBg = _getMuscleColor(muscle);
-              final Color muscleText = _getMuscleTextColor(muscle);
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 18, 18, 12),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: muscleBg,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        muscle.toUpperCase(),
-                        style: GoogleFonts.dmSans(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                          color: muscleText,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ...exercises.asMap().entries.map((entry) {
-                    final idx = entry.key;
-                    final ex = entry.value;
-                    final pool = exercisePools[muscle] ?? [ex.name];
-
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                      child: Row(
-                        children: [
-                          Text(
-                            '${idx + 1}',
-                            style: GoogleFonts.bebasNeue(
-                              fontSize: 14,
-                              color: AppColors.dim,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              ex.name,
-                              style: GoogleFonts.dmSans(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.text,
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: exerciseFormGifs.containsKey(ex.name) ? () => _launchURL(exerciseFormGifs[ex.name]!) : null,
-                            borderRadius: BorderRadius.circular(4),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    ex.detail,
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 12,
-                                      color: AppColors.muted,
-                                    ),
-                                  ),
-                                  if (exerciseFormGifs.containsKey(ex.name))
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(Icons.play_circle_outline, color: AppColors.gold, size: 12),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          'FORM',
-                                          style: GoogleFonts.bebasNeue(
-                                            color: AppColors.gold,
-                                            fontSize: 11,
-                                            letterSpacing: 1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                  const SizedBox(height: 10),
-                  if (groupedExercises.entries.last.key != muscle)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 18),
-                      child: Divider(height: 1, color: AppColors.border),
-                    ),
-                ],
-              );
-            }).toList(),
-          ] else 
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Center(
-                child: Text(
-                  'REST DAY',
-                  style: GoogleFonts.dmSans(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.muted,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ),
-            ),
-          const SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
+  // Legacy _buildDayCard removed
 
   Color _getMuscleColor(String muscle) {
     switch (muscle) {
@@ -946,49 +804,264 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   }
 
   Widget _buildCTA(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        onPressed: () {
-          final List<WorkoutExercise> exercises;
-          final String title;
-          
-          if (widget.program.splits != null && widget.program.splits!.isNotEmpty) {
-            final split = widget.program.splits![_selectedSplitIndex];
-            exercises = split.days[0].exercises;
-            title = '${split.name} - Day 1';
-          } else if (widget.program.schedule.isNotEmpty) {
-            exercises = widget.program.schedule[0].exercises;
-            title = widget.program.name;
-          } else {
-            exercises = [];
-            title = widget.program.name;
-          }
+    return const SizedBox.shrink(); // Per-day buttons used instead
+  }
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => WorkoutSessionScreen(
-                exercises: exercises,
-                sessionTitle: title,
+  Widget _buildDayCard(ScheduleDay day, bool isActive, bool isCompleted) {
+    // Group exercises by muscle group using pre-calculated map for O(1) lookup
+    final Map<String, List<WorkoutExercise>> groupedExercises = {};
+    for (var ex in day.exercises) {
+      final muscleGroup = _getMuscleForExercise(ex.name);
+      groupedExercises.putIfAbsent(muscleGroup, () => []).add(ex);
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isActive ? AppColors.gold.withOpacity(0.5) : AppColors.border,
+          width: isActive ? 1.5 : 1.0,
+        ),
+        boxShadow: isActive ? [
+          BoxShadow(
+            color: AppColors.gold.withOpacity(0.05),
+            blurRadius: 15,
+            spreadRadius: 2,
+          )
+        ] : null,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Day Header
+          Padding(
+            padding: const EdgeInsets.all(18),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: isCompleted ? AppColors.muted.withOpacity(0.1) : (isActive ? AppColors.gold : AppColors.gold.withOpacity(0.12)),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: isActive ? Colors.transparent : AppColors.gold.withOpacity(0.2)),
+                  ),
+                  child: Text(
+                    day.dayNumber.toUpperCase(),
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 15,
+                      color: isCompleted ? AppColors.muted : (isActive ? Colors.black : AppColors.gold),
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        day.name.toUpperCase(),
+                        style: GoogleFonts.bebasNeue(
+                          fontSize: 20,
+                          color: isCompleted ? AppColors.muted : AppColors.text,
+                          letterSpacing: 1.5,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (isActive)
+                        Text(
+                          L10n.s(context, 'ready_next_session'),
+                          style: GoogleFonts.dmSans(
+                            fontSize: 9,
+                            color: AppColors.gold,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                if (isCompleted)
+                  const Icon(Icons.check_circle, color: AppColors.gold, size: 20),
+              ],
+            ),
+          ),
+          const Divider(height: 1, color: AppColors.border),
+          
+          if (day.isTraining) ...[
+            // Muscles and Exercises
+            ...groupedExercises.entries.map((group) {
+              final muscle = group.key;
+              final exercises = group.value;
+              final Color muscleBg = _getMuscleColor(muscle);
+              final Color muscleText = _getMuscleTextColor(muscle);
+
+              return Opacity(
+                opacity: isCompleted ? 0.6 : 1.0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(18, 18, 18, 12),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: muscleBg,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          muscle.toUpperCase(),
+                          style: GoogleFonts.dmSans(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            color: muscleText,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    ...exercises.asMap().entries.map((entry) {
+                      final idx = entry.key;
+                      final ex = entry.value;
+
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                        child: Row(
+                          children: [
+                            Text(
+                              '${idx + 1}',
+                              style: GoogleFonts.bebasNeue(
+                                fontSize: 14,
+                                color: AppColors.dim,
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Text(
+                                ex.name,
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.text,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  ex.detail,
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.muted,
+                                  ),
+                                ),
+                                if (exerciseFormGifs.containsKey(ex.name))
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: InkWell(
+                                      onTap: () => _launchURL(exerciseFormGifs[ex.name]!),
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.gold.withOpacity(0.12),
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                            color: AppColors.gold.withOpacity(0.3),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.play_arrow_rounded,
+                                          color: AppColors.gold,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ],
+                ),
+              );
+            }).toList(),
+            
+            // Per-day Action Button
+            Padding(
+              padding: const EdgeInsets.all(18),
+              child: SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: isCompleted ? null : () {
+                    // Set this program as active
+                    Provider.of<WorkoutProvider>(context, listen: false)
+                        .setActiveProgram(widget.program.id);
+                        
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WorkoutSessionScreen(
+                          exercises: day.exercises,
+                          sessionTitle: day.name,
+                          programId: widget.program.id,
+                          dayId: day.dayNumber,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: isCompleted ? AppColors.muted.withOpacity(0.1) : AppColors.gold,
+                    foregroundColor: isCompleted ? AppColors.muted : Colors.black,
+                    elevation: isActive ? 4 : 0,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    disabledBackgroundColor: AppColors.muted.withOpacity(0.1),
+                    disabledForegroundColor: AppColors.muted,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (isCompleted) ...[
+                        const Icon(Icons.check_circle_outline, size: 18),
+                        const SizedBox(width: 8),
+                      ],
+                      Text(
+                        isCompleted ? L10n.s(context, 'done') : (isActive ? 'START SESSION' : L10n.s(context, 'start_set')),
+                        style: GoogleFonts.bebasNeue(
+                          fontSize: 18,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.gold,
-          foregroundColor: Colors.black,
-          elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        ),
-        child: Text(
-          L10n.s(context, 'start_this_program'),
-          style: GoogleFonts.bebasNeue(
-            fontSize: 17,
-            letterSpacing: 3,
-          ),
-        ),
+          ] else 
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Center(
+                child: Text(
+                  'REST DAY',
+                  style: GoogleFonts.dmSans(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.muted,
+                    letterSpacing: 1,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

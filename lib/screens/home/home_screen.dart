@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(

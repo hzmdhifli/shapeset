@@ -173,6 +173,9 @@ class L10n {
       'yes_start_set': 'YES, START SET',
       'start_set': 'START SET',
       'paused': 'PAUSED',
+      'ready_next_session': 'READY FOR YOUR NEXT SESSION',
+      'last_completed_session': 'LAST COMPLETED SESSION',
+      'overall_completion': 'OVERALL WEEK COMPLETION',
     },
     'fr': {
       'welcome_user': 'BIENVENUE,\n',
@@ -263,6 +266,9 @@ class L10n {
       'yes_start_set': 'OUI, DÉMARRER',
       'start_set': 'DÉMARRER',
       'paused': 'EN PAUSE',
+      'ready_next_session': 'PRÊT POUR LA PROCHAINE SESSION',
+      'last_completed_session': 'DERNIÈRE SESSION TERMINÉE',
+      'overall_completion': 'PROGRESSION HEBDOMADAIRE',
     },
     'ar': {
       'welcome_user': 'أهلاً بك،\n',
@@ -346,6 +352,9 @@ class L10n {
       'nav_progress': 'التقدم',
       'nav_profile': 'حسابي',
       'paused': 'متوقف مؤقتاً',
+      'ready_next_session': 'جاهز للجلسة القادمة',
+      'last_completed_session': 'آخر جلسة مكتملة',
+      'overall_completion': 'إكمال الأسبوع الإجمالي',
     },
     'es': {
       'welcome_user': 'BIENVENIDO/A,\n',

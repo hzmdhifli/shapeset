@@ -7,22 +7,28 @@ import '../../models/program.dart';
 import '../../main.dart';
 import '../../services/localization_service.dart';
 import '../../models/mock_data.dart';
+import '../../services/workout_provider.dart';
+import 'package:provider/provider.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
   final List<WorkoutExercise> exercises;
   final String sessionTitle;
+  final String programId;
+  final String dayId;
 
   const WorkoutSessionScreen({
     super.key, 
     required this.exercises,
     required this.sessionTitle,
+    required this.programId,
+    required this.dayId,
   });
 
   @override
   State<WorkoutSessionScreen> createState() => _WorkoutSessionScreenState();
 }
 
-class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with SingleTickerProviderStateMixin {
+class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   int _currentExIndex = 0;
   int _secondsRemaining = 0;
   int _maxSeconds = 60;
@@ -50,6 +56,16 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
           _flashController.forward();
         }
       });
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      if (!_isPaused && (_isExerciseRunning || _isResting)) {
+        _togglePause();
+      }
+    }
   }
 
   void _startTimer() {
@@ -195,6 +211,11 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
   }
 
   Future<void> _launchURL(String url) async {
+    // Pause timer before launching URL
+    if (!_isPaused && (_isExerciseRunning || _isResting)) {
+      _togglePause();
+    }
+
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       if (mounted) {
@@ -207,6 +228,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     _flashController.dispose();
     super.dispose();
@@ -555,26 +577,23 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
 
   Widget _buildSimpleFormButton(String url) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: AppColors.gold.withOpacity(0.1),
+        color: AppColors.gold.withOpacity(0.12),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.gold.withOpacity(0.3)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.play_circle_fill, color: AppColors.gold, size: 14),
-          const SizedBox(width: 6),
-          Text(
-            'FORM',
-            style: GoogleFonts.bebasNeue(
-              color: AppColors.gold,
-              fontSize: 13,
-              letterSpacing: 1.2,
-            ),
+        border: Border.all(color: AppColors.gold.withOpacity(0.3), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.gold.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
+      ),
+      child: const Icon(
+        Icons.play_arrow_rounded,
+        color: AppColors.gold,
+        size: 22,
       ),
     );
   }
@@ -730,6 +749,23 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
   }
 
   void _showWorkoutDone() {
+    // Save completion data
+    final workoutProvider = Provider.of<WorkoutProvider>(context, listen: false);
+    
+    // Extract program and day info if possible (might need to pass these to the screen)
+    // For now, we'll assume we have enough context or we can pass it from ProgramDetailScreen
+    
+    // Attempt to find muscles trained
+    final Set<String> muscles = widget.exercises.map((ex) => _getMuscleGroup(ex.name)).toSet();
+
+    workoutProvider.completeSession(CompletedSession(
+      programId: widget.programId,
+      dayId: widget.dayId,
+      dayName: widget.sessionTitle,
+      date: DateTime.now(),
+      musclesTrained: muscles.toList(),
+    ));
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const WorkoutDoneScreen()),

@@ -12,6 +12,7 @@ import 'screens/profile/profile_screen.dart';
 import 'theme/app_colors.dart';
 import 'screens/auth/splash_screen.dart';
 import 'services/localization_service.dart';
+import 'services/workout_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +38,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
+        ChangeNotifierProvider(create: (_) => WorkoutProvider()),
       ],
       child: const AthleteApp(),
     ),
@@ -95,6 +97,18 @@ class SettingsProvider with ChangeNotifier {
   }
 }
 
+class SmoothScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics());
+  }
+}
+
 class AthleteApp extends StatelessWidget {
   const AthleteApp({super.key});
 
@@ -109,6 +123,7 @@ class AthleteApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: settings.themeMode,
       locale: settings.locale,
+      scrollBehavior: SmoothScrollBehavior(),
       supportedLocales: const [
         Locale('en'),
         Locale('fr'),

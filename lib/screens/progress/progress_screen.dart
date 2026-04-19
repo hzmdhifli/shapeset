@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../theme/app_colors.dart';
-import '../../models/mock_data.dart';
-import '../detail/program_detail_screen.dart';
-import '../../services/localization_service.dart';
-
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import '../../theme/app_colors.dart';
 import '../../models/mock_data.dart';
 import '../../models/program.dart';
 import '../detail/program_detail_screen.dart';
 import '../../services/localization_service.dart';
+import '../../services/workout_provider.dart';
 
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
@@ -24,7 +20,6 @@ class ProgressScreen extends StatefulWidget {
 class _ProgressScreenState extends State<ProgressScreen> {
   SharedPreferences? _prefs;
   String _userName = 'CHAMP';
-  Program? _activeProgram;
 
   @override
   void initState() {
@@ -37,14 +32,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
     setState(() {
       _prefs = prefs;
       _userName = prefs.getString('userName')?.toUpperCase() ?? 'ALEX';
-      
-      // Pick an active program - for now we'll pick Arnold (0) or first female (if gender is female)
-      final gender = prefs.getString('userGender')?.toLowerCase();
-      if (gender == 'female' || gender == 'woman') {
-        _activeProgram = mockFemalePrograms[0];
-      } else {
-        _activeProgram = mockPrograms[0];
-      }
     });
   }
 
@@ -61,11 +48,16 @@ class _ProgressScreenState extends State<ProgressScreen> {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(child: _buildHeader(context)),
             SliverToBoxAdapter(child: _buildGreeting(context)),
             _buildStatsGrid(context),
             const SliverToBoxAdapter(child: SizedBox(height: 24)),
+            
+            // Last Completed Session (New Section)
+            _buildLastSessionSection(context),
+            
             SliverToBoxAdapter(child: _buildSectionLabel(context, 'active_program_label')),
             SliverToBoxAdapter(child: _buildActiveProgramCard(context)),
             SliverToBoxAdapter(child: _buildSectionLabel(context, 'weekly_activity')),
@@ -102,7 +94,20 @@ class _ProgressScreenState extends State<ProgressScreen> {
   }
 
   Widget _buildGreeting(BuildContext context) {
-    final programName = _activeProgram?.name ?? 'Training';
+    final workoutProvider = Provider.of<WorkoutProvider>(context);
+    Program? activeProgram;
+    final gender = _prefs?.getString('userGender')?.toLowerCase();
+    
+    if (workoutProvider.activeProgramId != null) {
+      activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+        (p) => p.id == workoutProvider.activeProgramId,
+        orElse: () => (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0]
+      );
+    } else {
+      activeProgram = (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0];
+    }
+
+    final programName = activeProgram?.name ?? 'Training';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
       child: Column(
@@ -131,22 +136,51 @@ class _ProgressScreenState extends State<ProgressScreen> {
     );
   }
 
-  Widget _buildSectionLabel(BuildContext context, String key) {
+  Widget _buildSectionLabel(BuildContext context, String key, {String? trailing}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-      child: Text(
-        L10n.s(context, key).toUpperCase(),
-        style: const TextStyle(
-          color: AppColors.dim,
-          fontSize: 10,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 1.8,
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            L10n.s(context, key).toUpperCase(),
+            style: const TextStyle(
+              color: AppColors.dim,
+              fontSize: 10,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 1.8,
+            ),
+          ),
+          if (trailing != null)
+            Text(
+              trailing.toUpperCase(),
+              style: const TextStyle(
+                color: AppColors.gold,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1,
+              ),
+            ),
+        ],
       ),
     );
   }
 
   Widget _buildStatsGrid(BuildContext context) {
+    final workoutProvider = Provider.of<WorkoutProvider>(context);
+    final historyCount = workoutProvider.history.length;
+    
+    Program? activeProgram;
+    final gender = _prefs?.getString('userGender')?.toLowerCase();
+    if (workoutProvider.activeProgramId != null) {
+      activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+        (p) => p.id == workoutProvider.activeProgramId,
+        orElse: () => (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0]
+      );
+    } else {
+      activeProgram = (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0];
+    }
+    
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       sliver: SliverGrid.count(
@@ -155,7 +189,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         crossAxisSpacing: 10,
         childAspectRatio: 1.4,
         children: [
-          _buildStatCard('🔥', '18', L10n.s(context, 'sessions_completed'), '+3 this week', AppColors.redText, AppColors.redBg, AppColors.redText),
+          _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+${workoutProvider.getWeekCompletionCount(activeProgram?.id ?? "")} this week', AppColors.redText, AppColors.redBg, AppColors.redText),
           _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
           _buildStatCard('⚡', '12', L10n.s(context, 'streak'), 'Personal best!', AppColors.gold, AppColors.gold3, AppColors.gold2),
           _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
@@ -216,13 +250,30 @@ class _ProgressScreenState extends State<ProgressScreen> {
   }
 
   Widget _buildActiveProgramCard(BuildContext context) {
-    if (_activeProgram == null) return const SizedBox();
+    final workoutProvider = Provider.of<WorkoutProvider>(context);
+    
+    Program? activeProgram;
+    final gender = _prefs?.getString('userGender')?.toLowerCase();
+    if (workoutProvider.activeProgramId != null) {
+      activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+        (p) => p.id == workoutProvider.activeProgramId,
+        orElse: () => (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0]
+      );
+    } else {
+      activeProgram = (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0];
+    }
+
+    if (activeProgram == null) return const SizedBox();
+    
+    final completedCount = activeProgram.schedule.where((day) => workoutProvider.isDayCompleted(activeProgram!.id, day.dayNumber)).length;
+    final totalDays = activeProgram.schedule.where((day) => day.isTraining).length;
+    final progress = totalDays > 0 ? completedCount / totalDays : 0.0;
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProgramDetailScreen(program: _activeProgram!)),
+          MaterialPageRoute(builder: (context) => ProgramDetailScreen(program: activeProgram!)),
         );
       },
       child: Padding(
@@ -239,14 +290,14 @@ class _ProgressScreenState extends State<ProgressScreen> {
             children: [
               Text(L10n.s(context, 'active_program_label'), style: const TextStyle(color: AppColors.gold, fontSize: 10, letterSpacing: 1.5)),
               const SizedBox(height: 4),
-              Text(_activeProgram!.name.toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 22, color: AppColors.text, letterSpacing: 2)),
+              Text(activeProgram.name.toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 22, color: AppColors.text, letterSpacing: 2)),
               const SizedBox(height: 10),
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: const LinearProgressIndicator(
-                  value: 0.38, // Dynamic or mock progress
-                  backgroundColor: Color(0x1FC9A84C),
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold),
+                child: LinearProgressIndicator(
+                  value: progress,
+                  backgroundColor: const Color(0x1FC9A84C),
+                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.gold),
                   minHeight: 4,
                 ),
               ),
@@ -254,12 +305,12 @@ class _ProgressScreenState extends State<ProgressScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '${L10n.s(context, 'week')} 5 ${L10n.s(context, 'of')} 12',
+                   Text(
+                    L10n.s(context, 'overall_completion'),
                     style: const TextStyle(fontSize: 11, color: AppColors.muted),
                   ),
                   Text(
-                    '38% ${L10n.s(context, 'complete_label')}',
+                    'Day $completedCount/${activeProgram.schedule.length} ✓',
                     style: const TextStyle(fontSize: 11, color: AppColors.gold2, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -267,6 +318,105 @@ class _ProgressScreenState extends State<ProgressScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLastSessionSection(BuildContext context) {
+    final workoutProvider = Provider.of<WorkoutProvider>(context);
+    final lastSession = workoutProvider.getLastCompletedSession();
+    
+    if (lastSession == null) return const SliverToBoxAdapter(child: SizedBox.shrink());
+
+    return SliverToBoxAdapter(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionLabel(context, 'last_completed_session'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.border),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              lastSession.dayName.toUpperCase(),
+                              style: GoogleFonts.bebasNeue(
+                                fontSize: 24,
+                                color: AppColors.text,
+                                letterSpacing: 1.5,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              DateFormat('EEEE, MMMM d').format(lastSession.date),
+                              style: const TextStyle(color: AppColors.muted, fontSize: 11),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: AppColors.gold.withOpacity(0.12),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.check_circle_rounded, color: AppColors.gold, size: 24),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Divider(color: AppColors.border, height: 1),
+                  const SizedBox(height: 16),
+                  Text(
+                    'MUSCLES TRAINED',
+                    style: GoogleFonts.dmSans(
+                      fontSize: 9,
+                      color: AppColors.muted,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: lastSession.musclesTrained.map((m) => Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppColors.gold.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: AppColors.gold.withOpacity(0.2)),
+                      ),
+                      child: Text(
+                        m.toUpperCase(),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 10,
+                          color: AppColors.gold,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )).toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+        ],
       ),
     );
   }
