@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../models/program.dart';
+import '../models/mock_data.dart';
 
 class CompletedSession {
   final String programId;
@@ -38,9 +39,11 @@ class CompletedSession {
 class WorkoutProvider with ChangeNotifier {
   List<CompletedSession> _history = [];
   String? _activeProgramId;
+  Map<String, int> _programRepetitions = {};
 
   List<CompletedSession> get history => _history;
   String? get activeProgramId => _activeProgramId;
+  Map<String, int> get programRepetitions => _programRepetitions;
 
   WorkoutProvider() {
     _loadData();
@@ -54,6 +57,13 @@ class WorkoutProvider with ChangeNotifier {
       _history = decoded.map((item) => CompletedSession.fromJson(item)).toList();
     }
     _activeProgramId = prefs.getString('active_program_id');
+    
+    final repsJson = prefs.getString('program_repetitions');
+    if (repsJson != null) {
+      final Map<String, dynamic> decoded = json.decode(repsJson);
+      _programRepetitions = decoded.map((key, value) => MapEntry(key, value as int));
+    }
+    
     notifyListeners();
   }
 
@@ -71,6 +81,24 @@ class WorkoutProvider with ChangeNotifier {
     _activeProgramId = session.programId;
     
     final prefs = await SharedPreferences.getInstance();
+    
+    // Check if program is fully completed
+    final program = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+      (p) => p.id == session.programId,
+      orElse: () => mockPrograms[0]
+    );
+    
+    final trainingDays = program.schedule.where((day) => day.isTraining).toList();
+    final completedDaysCount = _history.where((s) => s.programId == session.programId).length;
+    
+    if (completedDaysCount >= trainingDays.length) {
+      // Program finished! Increment reps and clear history for this program
+      _programRepetitions[session.programId] = (_programRepetitions[session.programId] ?? 0) + 1;
+      _history.removeWhere((s) => s.programId == session.programId);
+      
+      await prefs.setString('program_repetitions', json.encode(_programRepetitions));
+    }
+    
     await prefs.setString('workout_history', json.encode(_history.map((s) => s.toJson()).toList()));
     await prefs.setString('active_program_id', _activeProgramId!);
     
@@ -79,6 +107,13 @@ class WorkoutProvider with ChangeNotifier {
 
   bool isDayCompleted(String programId, String dayId) {
     return _history.any((s) => s.programId == programId && s.dayId == dayId);
+  }
+
+  Future<void> resetSession(String programId, String dayId) async {
+    _history.removeWhere((s) => s.programId == programId && s.dayId == dayId);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('workout_history', json.encode(_history.map((s) => s.toJson()).toList()));
+    notifyListeners();
   }
 
   CompletedSession? getLastCompletedSession() {

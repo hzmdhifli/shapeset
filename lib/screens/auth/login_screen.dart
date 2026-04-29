@@ -88,11 +88,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
               const SizedBox(height: 20),
               
-              const Center(
+              Center(
                 child: Text(
-                  'Your progress will be automatically saved to your account.',
+                  L10n.s(context, 'progress_auto_save'),
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: AppColors.dim, fontSize: 12, height: 1.5),
+                  style: const TextStyle(color: AppColors.dim, fontSize: 12, height: 1.5),
                 ),
               ),
               
@@ -253,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Sign-in failed: ${error.toString()}'),
+            content: Text(L10n.s(context, 'signin_failed').replaceAll('{error}', error.toString())),
             backgroundColor: Colors.redAccent,
             duration: const Duration(seconds: 5),
           ),
@@ -276,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Apple sign-in failed: ${error.toString()}'),
+            content: Text(L10n.s(context, 'apple_signin_failed').replaceAll('{error}', error.toString())),
             backgroundColor: Colors.redAccent,
             duration: const Duration(seconds: 5),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
+import 'dart:ui' as ui;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../theme/app_colors.dart';
@@ -41,7 +41,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   }
 
   String _getMuscleForExercise(String exName) {
-    return exerciseToMuscle[exName] ?? 'Other';
+    return exerciseToMuscle[exName] ?? 'other';
   }
 
   Future<void> _launchURL(String url) async {
@@ -55,7 +55,86 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
     }
   }
 
-  void _showFST7Explanation() {
+  String _getLocalizedDetail(String detail) {
+    if (Localizations.localeOf(context).languageCode != 'ar') return detail;
+    
+    String result = detail;
+
+    // Special handling for Franco's "shamel" (comprehensive) style
+    if (widget.program.id == 'franco') {
+      result = result.replaceAll(RegExp(r'supersets?:?\s*', caseSensitive: false), 'مجموعة شاملة من\n');
+    } else {
+      // Standard simple terminology for other programs
+      result = result.replaceAll(RegExp(r'supersets?:?\s*', caseSensitive: false), 'مجموعات ');
+    }
+    
+    result = result.replaceAll(RegExp(r'\bsets?\b', caseSensitive: false), 'مجموعات');
+    result = result.replaceAll(RegExp(r'\breps?\b', caseSensitive: false), 'تكرارًا');
+    result = result.replaceAll(RegExp(r'\bto\b', caseSensitive: false), 'إلى');
+    result = result.replaceAll(RegExp(r'failure', caseSensitive: false), 'فشل عضلي');
+    result = result.replaceAll(RegExp(r'static hold', caseSensitive: false), 'ثبات استاتيكي');
+    result = result.replaceAll(RegExp(r'dropset|drop set', caseSensitive: false), 'مجموعة تناقصية');
+    result = result.replaceAll(RegExp(r'active recovery', caseSensitive: false), 'استشفاء نشط');
+    result = result.replaceAll(RegExp(r'recovery', caseSensitive: false), 'استشفاء');
+    result = result.replaceAll(RegExp(r'each side', caseSensitive: false), 'لكل جانب');
+    result = result.replaceAll(RegExp(r'per side', caseSensitive: false), 'لكل جانب');
+    result = result.replaceAll(RegExp(r'bodyweight', caseSensitive: false), 'وزن الجسم');
+    result = result.replaceAll(RegExp(r'sec\.?', caseSensitive: false), 'ثانية');
+    result = result.replaceAll(RegExp(r'\bmins?\b|minutes?', caseSensitive: false), 'دقيقة');
+    result = result.replaceAll(RegExp(r'\brounds?\b', caseSensitive: false), 'جولات');
+    result = result.replaceAll(RegExp(r'cardio', caseSensitive: false), 'كارديو');
+    result = result.replaceAll(RegExp(r'to max', caseSensitive: false), 'إلى الحد الأقصى');
+    
+    // Localize the 'x' in 4x12
+    if (result.contains(RegExp(r'\d+x\d+'))) {
+      result = result.replaceAll('x', ' × ');
+    }
+    
+    return result;
+  }
+
+  void _showBadgeExplanation() {
+    final badge = widget.program.badge;
+    String title = badge.toUpperCase();
+    String description = "";
+
+    // Training Style Dictionary
+    final Map<String, String> styleDescriptions = {
+      'FST-7': "Fascia Stretch Training 7: A hypertrophy-focused style involving 7 high-volume sets with minimal rest (30-45s) at the end of a workout to stretch muscle fascia and promote growth.",
+      'High Intensity': "Mike Mentzer's 'Heavy Duty' philosophy. Training with maximum effort on a single set to absolute failure, followed by extended recovery periods to trigger explosive growth.",
+      'Longevity & Detail': "The Dexter Jackson approach: using precise machine movements and high-tension isolation to maintain joint health while carving out deep muscle separation.",
+      'Flow & Symmetry': "Flex Wheeler's aesthetic priority: balancing all muscle groups proportionally to create a flowing, artful silhouette rather than just chasing sheer mass.",
+      'Golden Era / Mass': "The 1970s Arnold style: high-frequency, high-volume sessions using basic heavy compound movements to build classic thickness and density.",
+      'Modern Classic': "Ramon Dino's contemporary standard: focusing on the vacuum-ready midsection, deep separation, and full, rounded muscles required for modern Classic Physique.",
+      'Hardcore Power': "Ronnie Coleman's methodology: mixing limit-strength powerlifting with high-volume bodybuilding. Maximum weight for maximum results.",
+      'High Volume': "Jay Cutler's workload strategy: using high set counts and intense volume to force muscle expansion through sheer metabolic stress and endurance.",
+      'Squat King': "Tom Platz's legendary leg training: extreme rep ranges and unmatched intensity on squats to forge lower body size and mental resilience.",
+      'Dual Split · Power-Physique': "Franco Columbu's double-split: training twice per day to separate heavy strength sessions from higher-volume aesthetic refinement.",
+      'V-Taper': "The aesthetic ideal: heavy focus on shoulder width and back thickness combined with a tight waist to create the ultimate V-shaped frame.",
+      'DUP Mastery': "Daily Undulating Periodization: shifting rep ranges and intensity throughout the week to train strength, power, and hypertrophy in one cycle.",
+      'Classic Bodybuilding / PPL': "Steve Cook's hybrid: using Push-Pull-Legs organization combined with classic aesthetic principles for a balanced, functional physique.",
+      'Modern Aesthetic / PPL': "The contemporary standard: high-frequency refined PPL training focused on social-media-ready aesthetics and natural muscle maturity.",
+      'Powerbuilding': "Larry Wheels' hybrid approach: focusing on raw powerlifting strength (Big 3) combined with high-volume bodybuilding isolation to maximize both size and performance.",
+      'Classic Physique / High Volume': "Terrence Ruffin's methodology: high-volume training focused on muscle maturity, flawless presentation, and peak contractions to maintain an artful classic silhouette.",
+      'Men\'s Physique / High Volume': "Ryan Terry's world-class routine: high-volume training with heavy emphasis on core stability and V-taper aesthetics through intense frequency.",
+    };
+
+    description = styleDescriptions[badge] ?? widget.program.description;
+
+    if (Localizations.localeOf(context).languageCode == 'ar') {
+      final key = 'desc_$badge';
+      final localizedDesc = L10n.s(context, key);
+      if (localizedDesc != key) {
+        description = localizedDesc;
+      }
+      
+      final badgeKey = 'badge_${widget.program.id}';
+      final localizedTitle = L10n.s(context, badgeKey);
+      if (localizedTitle != badgeKey) {
+        title = localizedTitle.toUpperCase();
+      }
+    }
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -100,7 +179,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    'FST-7 EXPLAINED',
+                    title,
                     style: GoogleFonts.bebasNeue(
                       fontSize: 28,
                       color: AppColors.text,
@@ -112,7 +191,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
             ),
             const SizedBox(height: 24),
             Text(
-              "FST-7 (Fascia Stretch Training) is a hypertrophy-focused training style designed by trainer Hany Rambod, involving 7 high-volume sets of 8–12 reps at the end of a workout. It uses minimal rest (30–45 seconds) to create a maximal muscle pump, stretching the muscle fascia from the inside out to promote growth and nutrient delivery.",
+              description,
               style: GoogleFonts.dmSans(
                 fontSize: 15,
                 color: AppColors.text.withOpacity(0.8),
@@ -133,7 +212,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'GOT IT',
+                    L10n.s(context, 'got_it'),
                     style: GoogleFonts.bebasNeue(
                       fontSize: 18,
                       color: AppColors.gold,
@@ -238,7 +317,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'TRAINING TIP',
+                                  L10n.s(context, 'training_tip'),
                                   style: GoogleFonts.bebasNeue(
                                     fontSize: 14,
                                     color: AppColors.gold,
@@ -247,7 +326,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  '"3x8-12" means 3 sets, each one between 8 (min) and 12 (max) repetitions.',
+                                  L10n.s(context, 'tip_details'),
                                   style: GoogleFonts.dmSans(
                                     fontSize: 11,
                                     color: AppColors.text.withOpacity(0.8),
@@ -327,6 +406,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                   _buildSectionTitle(context, 'focus_areas'),
                   const SizedBox(height: 12),
                   _buildTags(),
+                  _buildMentzerSpecialButton(context),
                   const SizedBox(height: 32),
                   _buildCTA(context),
                 ],
@@ -468,6 +548,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   Widget _buildHero(BuildContext context) {
     final bool isNetwork = widget.program.imagePath.startsWith('http');
     return Stack(
+      alignment: Alignment.topLeft,
       children: [
         // Background Image with Blur
         Container(
@@ -475,9 +556,9 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
           width: double.infinity,
           decoration: const BoxDecoration(color: AppColors.surface),
           child: ColorFiltered(
-            colorFilter: ColorFilter.mode(
+            colorFilter: ui.ColorFilter.mode(
               Colors.black.withOpacity(0.1),
-              BlendMode.darken,
+              ui.BlendMode.darken,
             ),
             child: isNetwork
                 ? Image.network(
@@ -519,22 +600,24 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
             padding: const EdgeInsets.only(left: 20, top: 12),
             child: InkWell(
               onTap: () => Navigator.pop(context),
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.arrow_back, color: AppColors.muted, size: 16),
-                    const SizedBox(width: 6),
-                    Text(
-                      L10n.s(context, 'back'),
-                      style: GoogleFonts.dmSans(
-                        color: AppColors.muted,
-                        fontSize: 13,
-                      ),
+              borderRadius: BorderRadius.circular(100),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.border, width: 1.5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
                     ),
                   ],
+                ),
+                child: const Directionality(
+                  textDirection: ui.TextDirection.ltr,
+                  child: Icon(Icons.arrow_back_rounded, color: Colors.black, size: 20),
                 ),
               ),
             ),
@@ -560,7 +643,9 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                widget.program.name,
+                L10n.s(context, 'program_${widget.program.id}') != 'program_${widget.program.id}' 
+                    ? L10n.s(context, 'program_${widget.program.id}') 
+                    : widget.program.name,
                 style: GoogleFonts.bebasNeue(
                   fontSize: 42,
                   letterSpacing: 3,
@@ -604,7 +689,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
 
   Widget _buildStatBox(String value, String label) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(8),
@@ -612,21 +697,27 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
       ),
       child: Column(
         children: [
-          Text(
-            value,
-            style: GoogleFonts.bebasNeue(
-              fontSize: 22,
-              color: AppColors.gold,
-              letterSpacing: 1,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: GoogleFonts.bebasNeue(
+                fontSize: 22,
+                color: AppColors.gold,
+                letterSpacing: 1,
+              ),
             ),
           ),
           const SizedBox(height: 1),
-          Text(
-            label,
-            style: GoogleFonts.dmSans(
-              fontSize: 9,
-              color: AppColors.muted,
-              letterSpacing: 0.5,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              style: GoogleFonts.dmSans(
+                fontSize: 9,
+                color: AppColors.muted,
+                letterSpacing: 0.5,
+              ),
             ),
           ),
         ],
@@ -635,22 +726,33 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   }
 
   Widget _buildStyleBadge() {
-    final bool isFST7 = widget.program.badge == 'FST-7';
+    final badge = widget.program.badge;
+    final bool hasExplanation = [
+      'FST-7', 'High Intensity', 'Longevity & Detail', 'Flow & Symmetry',
+      'Golden Era / Mass', 'Modern Classic', 'Hardcore Power', 'High Volume',
+      'Squat King', 'Dual Split · Power-Physique', 'V-Taper', 'DUP Mastery',
+      'Classic Bodybuilding / PPL', 'Modern Aesthetic / PPL', 'Powerbuilding',
+      'Classic Physique / High Volume', 'Men\'s Physique / High Volume'
+    ].contains(badge);
+
+    final bool isFST7 = badge == 'FST-7';
+    final Color badgeColor = isFST7 ? const Color(0xFF008ECC) : AppColors.gold;
+    final Color badgeBg = isFST7 ? const Color(0xFF008ECC).withOpacity(0.1) : AppColors.gold3;
 
     return GestureDetector(
-      onTap: isFST7 ? _showFST7Explanation : null,
+      onTap: hasExplanation ? _showBadgeExplanation : null,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
-          color: AppColors.gold3,
+          color: badgeBg,
           borderRadius: BorderRadius.circular(100),
           border: Border.all(
-            color: isFST7 ? AppColors.gold : AppColors.gold.withOpacity(0.25),
+            color: isFST7 ? badgeColor : AppColors.gold.withOpacity(0.25),
             width: isFST7 ? 1.5 : 1.0,
           ),
           boxShadow: isFST7 ? [
             BoxShadow(
-              color: AppColors.gold.withOpacity(0.2),
+              color: badgeColor.withOpacity(0.2),
               blurRadius: 8,
               offset: const Offset(0, 2),
             )
@@ -659,19 +761,22 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              widget.program.badge,
-              style: GoogleFonts.dmSans(
-                fontSize: 11,
-                color: isFST7 ? AppColors.gold : AppColors.gold2,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.8,
+            Flexible(
+              child: Text(
+                L10n.s(context, 'badge_${widget.program.id}') != 'badge_${widget.program.id}'
+                  ? L10n.s(context, 'badge_${widget.program.id}')
+                  : badge,
+                style: GoogleFonts.dmSans(
+                  fontSize: 11,
+                  color: isFST7 ? AppColors.gold : AppColors.gold2,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.8,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
-            if (isFST7) ...[
-              const SizedBox(width: 6),
-              const Icon(Icons.info_outline_rounded, size: 14, color: AppColors.gold),
-            ],
+            if (hasExplanation) const SizedBox(width: 6),
+            if (hasExplanation) const Icon(Icons.info_outline_rounded, size: 14, color: AppColors.gold),
           ],
         ),
       ),
@@ -686,7 +791,9 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
         border: Border(left: BorderSide(color: AppColors.gold, width: 2)),
       ),
       child: Text(
-        widget.program.quote,
+        L10n.s(context, 'quote_${widget.program.id}') != 'quote_${widget.program.id}'
+          ? L10n.s(context, 'quote_${widget.program.id}')
+          : widget.program.quote,
         style: GoogleFonts.dmSans(
           fontSize: 13,
           color: AppColors.muted,
@@ -736,18 +843,20 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ex.name,
+                  L10n.s(context, 'exercise_${ex.name}') != 'exercise_${ex.name}' 
+                      ? L10n.s(context, 'exercise_${ex.name}') 
+                      : ex.name,
                   style: GoogleFonts.dmSans(
-                    fontSize: 13,
+                    fontSize: Localizations.localeOf(context).languageCode == 'ar' ? 13 : 11.5,
                     fontWeight: FontWeight.w500,
                     color: AppColors.text,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  ex.detail,
+                  _getLocalizedDetail(ex.detail),
                   style: GoogleFonts.dmSans(
-                    fontSize: 11,
+                    fontSize: Localizations.localeOf(context).languageCode == 'ar' ? 10 : 11,
                     color: AppColors.muted,
                   ),
                 ),
@@ -786,18 +895,65 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   }
 
   Widget _buildTag(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.background3,
+    final bool isHardcorePower = label == 'Hardcore Power';
+    final bool isFST7 = label == 'FST-7';
+    final bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final bool isRonnie = widget.program.id == 'ronnie';
+    
+    // Specifically make Hardcore Power a button for Ronnie (illustrates his style as requested)
+    final bool isInteractive = isHardcorePower && isRonnie;
+
+    String translatedLabel = label;
+    if (isArabic) {
+      final key = 'tag_$label';
+      final localized = L10n.s(context, key);
+      if (localized != key) {
+        translatedLabel = localized;
+      }
+    }
+
+    final Color primaryColor = isFST7 ? const Color(0xFF008ECC) : (isHardcorePower ? AppColors.gold : AppColors.border2);
+    final Color bgColor = isFST7 ? const Color(0xFF008ECC).withOpacity(0.12) : (isHardcorePower ? AppColors.gold.withOpacity(0.12) : AppColors.background3);
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: isInteractive ? _showBadgeExplanation : null,
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: AppColors.border2),
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.dmSans(
-          fontSize: 10,
-          color: AppColors.muted,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(
+              color: isFST7 ? const Color(0xFF008ECC) : (isHardcorePower ? AppColors.gold : AppColors.border2),
+              width: isInteractive ? 1.5 : 1.0,
+            ),
+            boxShadow: isInteractive ? [
+              BoxShadow(
+                color: AppColors.gold.withOpacity(0.1),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              )
+            ] : null,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                translatedLabel,
+                style: GoogleFonts.dmSans(
+                  fontSize: 10,
+                  color: isFST7 ? const Color(0xFF008ECC) : (isHardcorePower ? AppColors.gold : AppColors.muted),
+                  fontWeight: (isInteractive || isFST7) ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+              if (isInteractive) ...[
+                const SizedBox(width: 4),
+                const Icon(Icons.info_outline_rounded, size: 12, color: AppColors.gold),
+              ],
+            ],
+          ),
         ),
       ),
     );
@@ -847,30 +1003,46 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(color: isActive ? Colors.transparent : AppColors.gold.withOpacity(0.2)),
                   ),
-                  child: Text(
-                    day.dayNumber.toUpperCase(),
-                    style: GoogleFonts.bebasNeue(
-                      fontSize: 15,
-                      color: isCompleted ? AppColors.muted : (isActive ? Colors.black : AppColors.gold),
-                      letterSpacing: 1.2,
-                    ),
-                  ),
+                  child: (() {
+                    final bool isAr = Localizations.localeOf(context).languageCode == 'ar';
+                    final String localizedName = _getLocalizedDayName(context, day.name);
+                    String badgeText = (day.dayNumber.toLowerCase().contains('day') 
+                        ? L10n.s(context, 'day_label').replaceAll('{num}', int.tryParse(day.dayNumber.replaceAll(RegExp(r'[^0-9]'), ''))?.toString() ?? day.dayNumber)
+                        : L10n.s(context, 'day_label').replaceAll('{num}', int.tryParse(day.dayNumber)?.toString() ?? day.dayNumber)).toUpperCase();
+                    
+                    // Special case for Day 1 in Arabic to show the focus area if requested
+                    if (isAr && day.dayNumber == 'Day 1' && (day.name.contains('Quads') || day.name.contains('Legs') || day.name.contains('Calves'))) {
+                      badgeText = localizedName.toUpperCase();
+                    }
+
+                    return Text(
+                      badgeText,
+                      style: GoogleFonts.bebasNeue(
+                        fontSize: badgeText.length > 15 ? 10 : 15,
+                        color: isCompleted ? AppColors.muted : (isActive ? Colors.black : AppColors.gold),
+                        letterSpacing: badgeText.length > 15 ? 0.5 : 1.2,
+                      ),
+                    );
+                  })(),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        day.name.toUpperCase(),
-                        style: GoogleFonts.bebasNeue(
-                          fontSize: 20,
-                          color: isCompleted ? AppColors.muted : AppColors.text,
-                          letterSpacing: 1.5,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      (() {
+                        final String localizedName = _getLocalizedDayName(context, day.name);
+                        return Text(
+                          localizedName.toUpperCase(),
+                          style: GoogleFonts.bebasNeue(
+                            fontSize: localizedName.length > 20 ? 14 : (localizedName.length > 15 ? 16 : 20),
+                            color: isCompleted ? AppColors.muted : AppColors.text,
+                            letterSpacing: localizedName.length > 18 ? 1.0 : 1.5,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        );
+                      })(),
                       if (isActive)
                         Text(
                           L10n.s(context, 'ready_next_session'),
@@ -913,7 +1085,9 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          muscle.toUpperCase(),
+                          (L10n.s(context, 'muscle_${muscle.toLowerCase()}') != 'muscle_${muscle.toLowerCase()}' 
+                              ? L10n.s(context, 'muscle_${muscle.toLowerCase()}') 
+                              : muscle).toUpperCase(),
                           style: GoogleFonts.dmSans(
                             fontSize: 10,
                             fontWeight: FontWeight.w800,
@@ -928,63 +1102,89 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                       final ex = entry.value;
 
                       return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                        padding: EdgeInsetsDirectional.only(
+                          start: Localizations.localeOf(context).languageCode == 'ar' ? 8 : 18,
+                          end: Localizations.localeOf(context).languageCode == 'ar' ? 8 : 18,
+                          top: 6,
+                          bottom: 6,
+                        ),
                         child: Row(
                           children: [
-                            Text(
-                              '${idx + 1}',
-                              style: GoogleFonts.bebasNeue(
-                                fontSize: 14,
-                                color: AppColors.dim,
+                            SizedBox(
+                              width: 18,
+                              child: Text(
+                                '${idx + 1}',
+                                style: GoogleFonts.bebasNeue(
+                                  fontSize: 14,
+                                  color: AppColors.dim,
+                                ),
                               ),
                             ),
-                            const SizedBox(width: 16),
+                            const SizedBox(width: 8),
                             Expanded(
+                              flex: Localizations.localeOf(context).languageCode == 'ar' ? 4 : 5,
                               child: Text(
-                                ex.name,
+                                L10n.s(context, 'exercise_${ex.name}') != 'exercise_${ex.name}' 
+                                    ? L10n.s(context, 'exercise_${ex.name}') 
+                                    : ex.name,
                                 style: GoogleFonts.dmSans(
-                                  fontSize: 13,
+                                  fontSize: Localizations.localeOf(context).languageCode == 'ar' ? 12 : 11.5,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.text,
+                                  height: 1.2,
                                 ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  ex.detail,
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.muted,
+                            const SizedBox(width: 12),
+                            Expanded(
+                              flex: Localizations.localeOf(context).languageCode == 'ar' ? 5 : 4,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      _getLocalizedDetail(ex.detail),
+                                      textAlign: TextAlign.end,
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: Localizations.localeOf(context).languageCode == 'ar' ? 9.5 : 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.muted,
+                                        height: 1.1,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.visible, // Changed to visible to encourage wrapping
+                                    ),
                                   ),
-                                ),
-                                if (exerciseFormGifs.containsKey(ex.name))
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 12),
-                                    child: InkWell(
-                                      onTap: () => _launchURL(exerciseFormGifs[ex.name]!),
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.gold.withOpacity(0.12),
-                                          borderRadius: BorderRadius.circular(8),
-                                          border: Border.all(
-                                            color: AppColors.gold.withOpacity(0.3),
-                                            width: 1,
+                                  if (ex.formGifUrl != null && ex.formGifUrl!.isNotEmpty) ...[
+                                    const SizedBox(width: 6),
+                                    Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        onTap: () => _launchURL(ex.formGifUrl!),
+                                        borderRadius: BorderRadius.circular(6),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(6),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.gold.withOpacity(0.1),
+                                            borderRadius: BorderRadius.circular(6),
+                                            border: Border.all(
+                                              color: AppColors.gold.withOpacity(0.3),
+                                              width: 0.5,
+                                            ),
                                           ),
-                                        ),
-                                        child: const Icon(
-                                          Icons.play_arrow_rounded,
-                                          color: AppColors.gold,
-                                          size: 20,
+                                          child: const Icon(
+                                            Icons.play_arrow_rounded,
+                                            color: AppColors.gold,
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                              ],
+                                  ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -998,60 +1198,109 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
             // Per-day Action Button
             Padding(
               padding: const EdgeInsets.all(18),
-              child: SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: isCompleted ? null : () {
-                    // Set this program as active
-                    Provider.of<WorkoutProvider>(context, listen: false)
-                        .setActiveProgram(widget.program.id);
-                        
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WorkoutSessionScreen(
-                          exercises: day.exercises,
-                          sessionTitle: day.name,
-                          programId: widget.program.id,
-                          dayId: day.dayNumber,
+              child: isCompleted 
+                ? Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: AppColors.muted.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.check_circle_outline, size: 18, color: AppColors.muted),
+                                const SizedBox(width: 8),
+                                Text(
+                                  L10n.s(context, 'done'),
+                                  style: GoogleFonts.bebasNeue(
+                                    fontSize: 18,
+                                    letterSpacing: 2,
+                                    color: AppColors.muted,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: isCompleted ? AppColors.muted.withOpacity(0.1) : AppColors.gold,
-                    foregroundColor: isCompleted ? AppColors.muted : Colors.black,
-                    elevation: isActive ? 4 : 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    disabledBackgroundColor: AppColors.muted.withOpacity(0.1),
-                    disabledForegroundColor: AppColors.muted,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (isCompleted) ...[
-                        const Icon(Icons.check_circle_outline, size: 18),
-                        const SizedBox(width: 8),
-                      ],
-                      Text(
-                        isCompleted ? L10n.s(context, 'done') : (isActive ? 'START SESSION' : L10n.s(context, 'start_set')),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                          height: 48,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Provider.of<WorkoutProvider>(context, listen: false)
+                                  .resetSession(widget.program.id, day.dayNumber);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              side: const BorderSide(color: Color(0xFFE5E7EB)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              elevation: 0,
+                              padding: EdgeInsets.zero,
+                            ),
+                            child: Text(
+                                L10n.s(context, 'reset').toUpperCase(),
+                                style: GoogleFonts.bebasNeue(
+                                  fontSize: 15,
+                                  letterSpacing: 2,
+                                ),
+                              ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Set this program as active
+                        Provider.of<WorkoutProvider>(context, listen: false)
+                            .setActiveProgram(widget.program.id);
+                            
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WorkoutSessionScreen(
+                              exercises: day.exercises,
+                              sessionTitle: day.name,
+                              programId: widget.program.id,
+                              dayId: day.dayNumber,
+                            ),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.gold,
+                        foregroundColor: Colors.black,
+                        elevation: isActive ? 4 : 0,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      child: Text(
+                        L10n.s(context, 'start_session').toUpperCase(),
                         style: GoogleFonts.bebasNeue(
                           fontSize: 18,
                           letterSpacing: 2,
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
             ),
           ] else 
             Padding(
               padding: const EdgeInsets.all(24),
               child: Center(
                 child: Text(
-                  'REST DAY',
+                  L10n.s(context, 'workout_rest_day').toUpperCase(),
                   style: GoogleFonts.dmSans(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -1062,6 +1311,130 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
               ),
             ),
         ],
+      ),
+    );
+  }
+  String _getLocalizedDayName(BuildContext context, String dayName) {
+    final nameLow = dayName.toLowerCase();
+    
+    if (nameLow.contains('chest') && nameLow.contains('tricep')) return L10n.s(context, 'workout_chest_triceps');
+    if (nameLow.contains('back') && nameLow.contains('bicep')) return L10n.s(context, 'workout_back_biceps');
+    if (nameLow.contains('chest') && nameLow.contains('back')) return L10n.s(context, 'workout_chest_back');
+    if (nameLow.contains('leg')) return L10n.s(context, 'workout_legs');
+    if (nameLow.contains('shoulder')) return L10n.s(context, 'workout_shoulders');
+    if (nameLow.contains('push')) return L10n.s(context, 'workout_push');
+    if (nameLow.contains('pull')) return L10n.s(context, 'workout_pull');
+    if (nameLow.contains('upper')) return L10n.s(context, 'workout_upper');
+    if (nameLow.contains('lower')) return L10n.s(context, 'workout_lower');
+    if (nameLow.contains('full body')) return L10n.s(context, 'workout_full_body');
+    if (nameLow.contains('glute')) return L10n.s(context, 'workout_glute_shaping');
+    if (nameLow.contains('squat')) return L10n.s(context, 'workout_squat_day');
+    if (nameLow.contains('deadlift')) return L10n.s(context, 'workout_deadlift_day');
+    if (nameLow.contains('strength accessory')) return L10n.s(context, 'workout_strength_accessory');
+    if (nameLow.contains('arm')) return L10n.s(context, 'workout_arm_day');
+    if (nameLow.contains('rest')) return L10n.s(context, 'workout_rest_day');
+
+    final key = 'workout_${dayName.toLowerCase().replaceAll(' ', '_').replaceAll('&', 'and')}';
+    final localized = L10n.s(context, key);
+    return localized != key ? localized : dayName;
+  }
+
+  void _showStaticHoldExplanation() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
+          ),
+          border: Border(
+            top: BorderSide(color: AppColors.gold, width: 2),
+          ),
+        ),
+        padding: const EdgeInsets.fromLTRB(24, 12, 24, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 24),
+                decoration: BoxDecoration(
+                  color: AppColors.border,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppColors.gold.withOpacity(0.12),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.timer_outlined, color: AppColors.gold, size: 22),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    L10n.s(context, 'title_static_hold'),
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 28,
+                      color: AppColors.text,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Text(
+              L10n.s(context, 'desc_static_hold'),
+              style: GoogleFonts.dmSans(
+                fontSize: 15,
+                color: AppColors.text.withOpacity(0.8),
+                height: 1.6,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMentzerSpecialButton(BuildContext context) {
+    if (widget.program.id != 'mentzer' || Localizations.localeOf(context).languageCode != 'ar') {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 24),
+      child: Center(
+        child: OutlinedButton.icon(
+          onPressed: _showStaticHoldExplanation,
+          icon: const Icon(Icons.info_outline, size: 18),
+          label: Text(
+            L10n.s(context, 'btn_static_hold').toUpperCase(),
+            style: GoogleFonts.bebasNeue(
+              fontSize: 16,
+              letterSpacing: 1.5,
+            ),
+          ),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.gold,
+            side: BorderSide(color: AppColors.gold.withOpacity(0.5)),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+        ),
       ),
     );
   }

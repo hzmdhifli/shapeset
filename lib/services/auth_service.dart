@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:flutter/foundation.dart';
 
 
 class AuthService {
@@ -69,13 +70,13 @@ class AuthService {
   /// Sign out from both Firebase and Google
   static Future<void> signOut() async {
     try {
-      // disconnect() forces the account picker to show up next time
-      await _googleSignIn.disconnect();
-    } catch (_) {}
-    await _googleSignIn.signOut();
-    await _auth.signOut();
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('isLoggedIn'); // Don't clear everything, just the login state
+      await _googleSignIn.signOut();
+      await _auth.signOut();
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', false); 
+    } catch (e) {
+      debugPrint('Error during signOut: $e');
+    }
   }
 
   /// Saves the signed-in user's info to SharedPreferences for UI use

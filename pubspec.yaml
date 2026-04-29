@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.20.2
   sign_in_with_apple: ^7.0.1
   url_launcher: ^6.3.2
+  image_cropper: ^12.2.1
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +88,7 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

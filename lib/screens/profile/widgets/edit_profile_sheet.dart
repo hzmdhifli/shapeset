@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../theme/app_colors.dart';
+import '../../../services/localization_service.dart';
 
 class EditProfileSheet extends StatefulWidget {
   const EditProfileSheet({super.key});
@@ -58,6 +59,27 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
     if (mounted) Navigator.pop(context, true);
   }
 
+  String _getOptionTranslation(String option) {
+    // Map English option values from mock_data/prefs to translation keys
+    final map = {
+      'Male': 'male',
+      'Female': 'female',
+      'Other': 'gender_other',
+      'Prefer not to say': 'prefer_not_to_say',
+      'Build Muscle': 'build_muscle',
+      'Lose Fat': 'lose_fat',
+      'Endurance': 'goal_endurance',
+      'Performance': 'performance',
+      'General Fitness': 'general_fitness',
+      'Beginner': 'exp_beg',
+      'Intermediate': 'exp_int',
+      'Advanced': 'exp_adv',
+    };
+    final key = map[option] ?? option.toLowerCase().replaceAll(' ', '_');
+    final localized = L10n.s(context, key);
+    return localized != '[$key]' ? localized : option;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,24 +105,24 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
                 decoration: BoxDecoration(color: AppColors.border2, borderRadius: BorderRadius.circular(2)),
               ),
             ),
-            Text('EDIT PROFILE', style: GoogleFonts.bebasNeue(fontSize: 22, letterSpacing: 2, color: AppColors.text)),
+            Text(L10n.s(context, 'edit_profile_title'), style: GoogleFonts.bebasNeue(fontSize: 22, letterSpacing: 2, color: AppColors.text)),
             const SizedBox(height: 20),
             
-            _buildField('Full Name', _nameCtrl, Icons.person_outline),
-            _buildField('Age', _ageCtrl, Icons.calendar_today_outlined, keyboardType: TextInputType.number),
+            _buildField(L10n.s(context, 'full_name'), _nameCtrl, Icons.person_outline),
+            _buildField(L10n.s(context, 'age'), _ageCtrl, Icons.calendar_today_outlined, keyboardType: TextInputType.number),
             
-            _buildDropdown('Gender', _gender, ['Male', 'Female', 'Other', 'Prefer not to say'], (v) => setState(() => _gender = v), Icons.people_outline),
+            _buildDropdown(L10n.s(context, 'gender'), _gender, ['Male', 'Female', 'Other', 'Prefer not to say'], (v) => setState(() => _gender = v), Icons.people_outline),
             
             Row(
               children: [
-                Expanded(child: _buildField('Height (cm)', _heightCtrl, Icons.height, keyboardType: TextInputType.number)),
+                Expanded(child: _buildField(L10n.s(context, 'height_cm_label'), _heightCtrl, Icons.height, keyboardType: TextInputType.number)),
                 const SizedBox(width: 12),
-                Expanded(child: _buildField('Weight (kg)', _weightCtrl, Icons.fitness_center, keyboardType: TextInputType.number)),
+                Expanded(child: _buildField(L10n.s(context, 'weight_kg_label'), _weightCtrl, Icons.fitness_center, keyboardType: TextInputType.number)),
               ],
             ),
             
-            _buildDropdown('Fitness Goal', _goal, ['Build Muscle', 'Lose Fat', 'Endurance', 'Performance', 'General Fitness'], (v) => setState(() => _goal = v), Icons.flag_outlined),
-            _buildDropdown('Experience Level', _level, ['Beginner', 'Intermediate', 'Advanced'], (v) => setState(() => _level = v), Icons.leaderboard_outlined),
+            _buildDropdown(L10n.s(context, 'fitness_goal'), _goal, ['Build Muscle', 'Lose Fat', 'Endurance', 'Performance', 'General Fitness'], (v) => setState(() => _goal = v), Icons.flag_outlined),
+            _buildDropdown(L10n.s(context, 'exp_level'), _level, ['Beginner', 'Intermediate', 'Advanced'], (v) => setState(() => _level = v), Icons.leaderboard_outlined),
 
             const SizedBox(height: 24),
             Row(
@@ -114,7 +136,7 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
                       side: const BorderSide(color: AppColors.border2),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     ),
-                    child: const Text('Cancel', style: TextStyle(color: AppColors.muted)),
+                    child: Text(L10n.s(context, 'cancel'), style: const TextStyle(color: AppColors.muted)),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -128,7 +150,7 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                       elevation: 0,
                     ),
-                    child: const Text('SAVE CHANGES', style: TextStyle(fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2, color: Colors.black)),
+                    child: Text(L10n.s(context, 'save_changes').toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2, color: Colors.black)),
                   ),
                 ),
               ],
@@ -186,7 +208,10 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: AppColors.border2)),
               focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: AppColors.gold)),
             ),
-            items: items.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+            items: items.map((e) => DropdownMenuItem(
+              value: e, 
+              child: Text(_getOptionTranslation(e))
+            )).toList(),
             onChanged: onChanged,
           ),
         ],

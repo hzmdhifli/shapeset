@@ -14,17 +14,29 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   bool _isSearchActive = false;
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  void scrollToTop() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -53,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: CustomScrollView(
+            controller: _scrollController,
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
@@ -66,11 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       _buildHero(),
                       const SizedBox(height: 32),
                       if (_searchQuery.isEmpty) ...[
-                        _buildSectionTitle('Female special program', true),
+                        _buildSectionTitle(L10n.s(context, 'female_special'), true),
                         const SizedBox(height: 18),
                         _buildArchetypeScroll(),
                         const SizedBox(height: 38),
-                        _buildSectionTitle('LEGENDARY ATHLETES', false),
+                        _buildSectionTitle(L10n.s(context, 'legendary_athletes'), false),
                         const SizedBox(height: 16),
                       ],
                     ],
@@ -251,14 +264,14 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           final program = mockFemalePrograms[index];
           String? subtitle;
-          if (program.name == 'Athletic & Lean') {
-            subtitle = 'Hypertrophy, conditioning, definition';
-          } else if (program.name == 'Bikini/Competition') {
-            subtitle = 'Sculpt, symmetry, stage-readiness';
-          } else if (program.name == 'Powerlifter') {
-            subtitle = 'Strength, technique';
-          } else if (program.name == 'Sculpt & Cardio') {
-            subtitle = 'Glute isolation, core stability & cardio';
+          if (program.id == 'athletic_lean') {
+            subtitle = L10n.s(context, 'wellness_al_sub');
+          } else if (program.id == 'bikini_competition') {
+            subtitle = L10n.s(context, 'wellness_bikini_sub');
+          } else if (program.id == 'powerlifter') {
+            subtitle = L10n.s(context, 'wellness_power_sub');
+          } else if (program.id == 'sculpt_cardio') {
+            subtitle = L10n.s(context, 'wellness_sculpt_sub');
           } else {
             subtitle = program.alias;
           }
@@ -269,7 +282,9 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 280,
               child: SpecialProgramCard(
                 program: program,
-                title: program.name,
+                title: L10n.s(context, 'program_${program.id}') != 'program_${program.id}' 
+                    ? L10n.s(context, 'program_${program.id}') 
+                    : program.name,
                 subtitle: subtitle,
               ),
             ),

@@ -131,6 +131,8 @@ class AthleteApp extends StatelessWidget {
         Locale('es'),
         Locale('hi'),
         Locale('zh'),
+        Locale('pt'),
+        Locale('de'),
       ],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -151,13 +153,19 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  final GlobalKey<HomeScreenState> _homeKey = GlobalKey<HomeScreenState>();
+  late List<Widget> _screens;
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const QuizScreen(),
-    const ProgressScreen(),
-    const ProfileScreen(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      HomeScreen(key: _homeKey),
+      const QuizScreen(),
+      const ProgressScreen(),
+      const ProfileScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,23 +174,33 @@ class _MainScreenState extends State<MainScreen> {
         index: _currentIndex,
         children: _screens,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        selectedItemColor: AppColors.gold,
-        unselectedItemColor: AppColors.muted,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(icon: const Icon(Icons.home_outlined, size: 22), activeIcon: const Icon(Icons.home, size: 22), label: L10n.s(context, 'nav_home')),
-          BottomNavigationBarItem(icon: const Icon(Icons.help_outline, size: 22), activeIcon: const Icon(Icons.help, size: 22), label: L10n.s(context, 'nav_quiz')),
-          BottomNavigationBarItem(icon: const Icon(Icons.bar_chart_outlined, size: 22), activeIcon: const Icon(Icons.bar_chart, size: 22), label: L10n.s(context, 'nav_progress')),
-          BottomNavigationBarItem(icon: const Icon(Icons.person_outline, size: 22), activeIcon: const Icon(Icons.person, size: 22), label: L10n.s(context, 'nav_profile')),
-        ],
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          selectedItemColor: AppColors.gold,
+          unselectedItemColor: AppColors.muted,
+          elevation: 0,
+          onTap: (index) {
+            if (_currentIndex == index && index == 0) {
+              _homeKey.currentState?.scrollToTop();
+            }
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(icon: const Icon(Icons.home_outlined, size: 22), activeIcon: const Icon(Icons.home, size: 22), label: L10n.s(context, 'nav_home')),
+            BottomNavigationBarItem(icon: const Icon(Icons.help_outline, size: 22), activeIcon: const Icon(Icons.help, size: 22), label: L10n.s(context, 'nav_quiz')),
+            BottomNavigationBarItem(icon: const Icon(Icons.bar_chart_outlined, size: 22), activeIcon: const Icon(Icons.bar_chart, size: 22), label: L10n.s(context, 'nav_progress')),
+            BottomNavigationBarItem(icon: const Icon(Icons.person_outline, size: 22), activeIcon: const Icon(Icons.person, size: 22), label: L10n.s(context, 'nav_profile')),
+          ],
+        ),
       ),
     );
   }

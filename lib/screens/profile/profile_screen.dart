@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
 import '../../main.dart';
 import '../../theme/app_colors.dart';
@@ -14,6 +15,7 @@ import '../../services/localization_service.dart';
 import '../../services/auth_service.dart';
 import '../../models/program.dart';
 import '../../models/mock_data.dart';
+import '../../services/workout_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -39,13 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _prefs = prefs;
         _restTimer = prefs.getBool('restTimer') ?? true;
         
-        // Pick an active program - consistent with Progress Screen
-        final gender = prefs.getString('userGender')?.toLowerCase();
-        if (gender == 'female' || gender == 'woman') {
-          _activeProgram = mockFemalePrograms[0];
-        } else {
-          _activeProgram = mockPrograms[0];
-        }
+        // Active program will be fetched in build from WorkoutProvider
       });
     }
   }
@@ -75,9 +71,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      await _prefs?.setString('userPhoto', image.path);
-      _refreshData();
+      final croppedFile = await _cropImage(image.path);
+      if (croppedFile != null) {
+        await _prefs?.setString('userPhoto', croppedFile.path);
+        _refreshData();
+      }
     }
+  }
+
+  Future<CroppedFile?> _cropImage(String path) async {
+    return await ImageCropper().cropImage(
+      sourcePath: path,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'CROP IMAGE',
+          toolbarColor: AppColors.background,
+          toolbarWidgetColor: AppColors.gold,
+          activeControlsWidgetColor: AppColors.gold,
+          initAspectRatio: CropAspectRatioPreset.square,
+          lockAspectRatio: true,
+          backgroundColor: AppColors.background,
+          statusBarColor: AppColors.background,
+        ),
+        IOSUiSettings(
+          title: 'CROP IMAGE',
+          aspectRatioLockEnabled: true,
+          resetAspectRatioEnabled: false,
+        ),
+      ],
+    );
   }
 
   void _refreshData() {
@@ -100,17 +122,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final goal = _prefs!.getString('userGoal');
     final level = _prefs!.getString('userLevel');
 
-    String personalSubtitle = 'Name';
-    if (age != null && age.isNotEmpty) personalSubtitle += ', $age yrs';
-    if (weight != null && weight.isNotEmpty) personalSubtitle += ', $weight kg';
-    if (height != null && height.isNotEmpty) personalSubtitle += ', $height cm';
+    String personalSubtitle = L10n.s(context, 'name_label');
+    if (age != null && age.isNotEmpty) personalSubtitle += ', ${L10n.s(context, 'age_yrs').replaceAll('{age}', age)}';
+    if (weight != null && weight.isNotEmpty) personalSubtitle += ', ${L10n.s(context, 'weight_kg').replaceAll('{weight}', weight)}';
+    if (height != null && height.isNotEmpty) personalSubtitle += ', ${L10n.s(context, 'height_cm').replaceAll('{height}', height)}';
     if (gender != null && gender.isNotEmpty) personalSubtitle += ' ($gender)';
-    if (personalSubtitle == 'Name') personalSubtitle = 'Name, age, weight, height';
+    if (personalSubtitle == L10n.s(context, 'name_label')) personalSubtitle = L10n.s(context, 'profile_subtitle_hint');
 
     String goalsSubtitle = '';
     if (goal != null && goal.isNotEmpty) goalsSubtitle += goal;
     if (level != null && level.isNotEmpty) goalsSubtitle += (goalsSubtitle.isEmpty ? level : ' · $level');
-    if (goalsSubtitle.isEmpty) goalsSubtitle = 'Muscle building · Fat loss · Endurance';
+    if (goalsSubtitle.isEmpty) goalsSubtitle = L10n.s(context, 'goals_subtitle_hint');
+
+    final workoutProvider = Provider.of<WorkoutProvider>(context);
+    final userGender = gender?.toLowerCase();
+    
+    if (workoutProvider.activeProgramId != null) {
+      _activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+        (p) => p.id == workoutProvider.activeProgramId,
+        orElse: () => mockPrograms[0]
+      );
+    } else {
+      _activeProgram = null;
+    }
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -146,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.person_outline,
                   iconColor: AppColors.gold,
                   iconBg: AppColors.gold3,
-                  title: 'Personal Info',
+                  title: L10n.s(context, 'personal_info'),
                   subtitle: personalSubtitle,
                 ),
                 _buildSettingRow(
@@ -162,24 +196,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.show_chart,
                   iconColor: AppColors.blueText,
                   iconBg: AppColors.blueBg,
-                  title: 'Fitness Profile',
+                  title: L10n.s(context, 'fitness_profile'),
                   subtitle: goalsSubtitle,
                 ),
                 _buildSettingRow(
                   icon: Icons.verified_user_outlined,
                   iconColor: AppColors.greenText,
                   iconBg: AppColors.greenBg,
-                  title: 'Subscription',
-                  subtitle: 'ATHLÈTE Pro · Active',
+                  title: L10n.s(context, 'subscription'),
+                  subtitle: L10n.s(context, 'athlete_pro_active'),
                   trailing: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppColors.gold,
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    child: const Text(
-                      'PRO',
-                      style: TextStyle(
+                    child: Text(
+                      L10n.s(context, 'pro_badge'),
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
@@ -211,16 +245,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         backgroundColor: AppColors.surface,
-                        title: const Text('SELECT UNITS', style: TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
+                        title: Text(L10n.s(context, 'select_units').toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             ListTile(
-                              title: const Text('Metric (kg, cm)', style: TextStyle(color: AppColors.text)),
+                              title: Text(L10n.s(context, 'metric_units'), style: const TextStyle(color: AppColors.text)),
                               onTap: () => Navigator.pop(context),
                             ),
                             ListTile(
-                              title: const Text('Imperial (lbs, ft)', style: TextStyle(color: AppColors.text)),
+                              title: Text(L10n.s(context, 'imperial_units'), style: const TextStyle(color: AppColors.text)),
                               onTap: () => Navigator.pop(context),
                             ),
                           ],
@@ -232,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   iconColor: AppColors.gold,
                   iconBg: AppColors.gold3,
                   title: L10n.s(context, 'units'),
-                  subtitle: 'kg / lbs · cm / ft',
+                  subtitle: L10n.s(context, 'units_desc'),
                 ),
                 _buildSettingRow(
                   onTap: () {
@@ -271,8 +305,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.timer_outlined,
                   iconColor: AppColors.blueText,
                   iconBg: AppColors.blueBg,
-                  title: 'Rest Timer',
-                  subtitle: 'Auto-start between sets',
+                  title: L10n.s(context, 'rest_timer'),
+                  subtitle: L10n.s(context, 'rest_timer_desc'),
                   trailing: _buildToggle(_restTimer, (v) => _updateSetting('restTimer', v)),
                 ),
                 _buildSettingRow(
@@ -280,7 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   iconColor: AppColors.muted,
                   iconBg: AppColors.background3,
                   title: L10n.s(context, 'notifications'),
-                  subtitle: 'Workout reminders & streaks',
+                  subtitle: L10n.s(context, 'notifications_desc'),
                   trailing: Consumer<SettingsProvider>(
                     builder: (context, settings, _) => _buildToggle(
                       settings.notificationsEnabled,
@@ -296,7 +330,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   iconColor: AppColors.muted,
                   iconBg: AppColors.background3,
                   title: L10n.s(context, 'dark_mode'),
-                  subtitle: 'Switch theme',
+                  subtitle: L10n.s(context, 'dark_mode_desc'),
                   trailing: Consumer<SettingsProvider>(
                     builder: (context, settings, _) => _buildToggle(
                       settings.themeMode == ThemeMode.dark,
@@ -310,9 +344,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         backgroundColor: AppColors.surface,
-                        title: const Text('PRIVACY SETTINGS', style: TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
-                        content: const Text('Your profile is currently private. Only you can see your progress.', style: TextStyle(color: AppColors.muted)),
-                        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('CLOSE', style: TextStyle(color: AppColors.gold)))],
+                        title: Text(L10n.s(context, 'privacy_settings_title'), style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
+                        content: Text(L10n.s(context, 'privacy_desc'), style: const TextStyle(color: AppColors.muted)),
+                        actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(L10n.s(context, 'close'), style: const TextStyle(color: AppColors.gold)))],
                       ),
                     );
                   },
@@ -320,7 +354,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   iconColor: AppColors.greenText,
                   iconBg: AppColors.greenBg,
                   title: L10n.s(context, 'privacy'),
-                  subtitle: 'Who can see your progress',
+                  subtitle: L10n.s(context, 'privacy_desc_short'),
                 ),
               ]),
             ),
@@ -346,17 +380,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         backgroundColor: AppColors.surface,
-                        title: const Text('HELP CENTER', style: TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
+                        title: Text(L10n.s(context, 'help_center').toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
                         content: const Text('Support: support@athlete.app\nFAQs available at athlete.app/help', style: TextStyle(color: AppColors.muted)),
-                        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK', style: TextStyle(color: AppColors.gold)))],
+                        actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(L10n.s(context, 'ok'), style: const TextStyle(color: AppColors.gold)))],
                       ),
                     );
                   },
                   icon: Icons.help_outline,
                   iconColor: AppColors.blueText,
                   iconBg: AppColors.blueBg,
-                  title: 'Help Center',
-                  subtitle: 'FAQs & how-to guides',
+                  title: L10n.s(context, 'help_center'),
+                  subtitle: L10n.s(context, 'help_center_desc'),
                 ),
                 _buildSettingRow(
                   onTap: () {
@@ -364,19 +398,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         backgroundColor: AppColors.surface,
-                        title: const Text('SEND FEEDBACK', style: TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
-                        content: const TextField(
+                        title: Text(L10n.s(context, 'feedback').toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
+                        content: TextField(
                           maxLines: 3,
-                          style: TextStyle(color: AppColors.text),
+                          style: const TextStyle(color: AppColors.text),
                           decoration: InputDecoration(
-                            hintText: 'Tell us what you think...',
-                            hintStyle: TextStyle(color: AppColors.muted),
-                            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.border2)),
+                            hintText: L10n.s(context, 'tell_us_thoughts'),
+                            hintStyle: const TextStyle(color: AppColors.muted),
+                            enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: AppColors.border2)),
                           ),
                         ),
                         actions: [
-                          TextButton(onPressed: () => Navigator.pop(context), child: const Text('CANCEL', style: TextStyle(color: AppColors.muted))),
-                          TextButton(onPressed: () => Navigator.pop(context), child: const Text('SEND', style: TextStyle(color: AppColors.gold))),
+                          TextButton(onPressed: () => Navigator.pop(context), child: Text(L10n.s(context, 'cancel'), style: const TextStyle(color: AppColors.muted))),
+                          TextButton(onPressed: () => Navigator.pop(context), child: Text(L10n.s(context, 'send'), style: const TextStyle(color: AppColors.gold))),
                         ],
                       ),
                     );
@@ -384,8 +418,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.chat_bubble_outline,
                   iconColor: AppColors.muted,
                   iconBg: AppColors.background3,
-                  title: 'Send Feedback',
-                  subtitle: 'Help us improve ATHLÈTE',
+                  title: L10n.s(context, 'feedback'),
+                  subtitle: L10n.s(context, 'feedback_desc'),
                 ),
                 _buildSettingRow(
                   onTap: () {
@@ -393,9 +427,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         backgroundColor: AppColors.surface,
-                        title: const Text('TERMS & PRIVACY', style: TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
-                        content: const Text('By using ATHLÈTE, you agree to our Terms of Service and Privacy Policy.', style: TextStyle(color: AppColors.muted)),
-                        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('CLOSE', style: TextStyle(color: AppColors.gold)))],
+                        title: Text(L10n.s(context, 'terms').toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
+                        content: Text(L10n.s(context, 'terms_agree'), style: const TextStyle(color: AppColors.muted)),
+                        actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(L10n.s(context, 'close'), style: const TextStyle(color: AppColors.gold)))],
                       ),
                     );
                   },
@@ -403,18 +437,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   iconColor: AppColors.muted,
                   iconBg: AppColors.background3,
                   title: L10n.s(context, 'terms'),
-                  subtitle: 'Legal & data policy',
+                  subtitle: L10n.s(context, 'legal_policy'),
                 ),
               ]),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 24)),
             SliverToBoxAdapter(child: _buildLogoutButton()),
             const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Center(
                 child: Text(
-                  'ATHLÈTE v1.0.0 · © 2025',
-                  style: TextStyle(
+                  L10n.s(context, 'version_info').replaceAll('{version}', '1.0.0'),
+                  style: const TextStyle(
                     color: AppColors.dim,
                     fontSize: 11,
                   ),
@@ -440,7 +474,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text(
                 L10n.s(context, 'my_profile'),
                 style: GoogleFonts.bebasNeue(
-                  fontSize: 22,
+                  fontSize: _res(context, 22),
                   letterSpacing: 2.5,
                   color: AppColors.text,
                 ),
@@ -464,9 +498,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     border: Border.all(color: AppColors.gold.withOpacity(0.25)),
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  child: const Text(
-                    'Edit Profile',
-                    style: TextStyle(
+                  child: Text(
+                    L10n.s(context, 'edit_profile'),
+                    style: const TextStyle(
                       color: AppColors.gold,
                       fontSize: 12,
                     ),
@@ -492,6 +526,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final displayName = (name != null && name.isNotEmpty) ? name : 'ALEX';
     final displayEmail = (email != null && email.isNotEmpty) ? email : 'alex_lifts@example.com';
     final photoUrl = _prefs?.getString('userPhoto');
+    final level = _prefs?.getString('userLevel');
     final initials = displayName.isNotEmpty ? displayName.substring(0, 1).toUpperCase() : 'A';
 
     return Padding(
@@ -503,8 +538,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             GestureDetector(
               onTap: _pickImage,
               child: Container(
-                width: 78,
-                height: 78,
+                width: _res(context, 78),
+                height: _res(context, 78),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: AppColors.gold, width: 2),
@@ -524,7 +559,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: photoUrl == null ? Text(
                     initials,
                     style: GoogleFonts.bebasNeue(
-                      fontSize: 26,
+                      fontSize: _res(context, 26),
                       color: AppColors.gold,
                       letterSpacing: 1,
                     ),
@@ -557,7 +592,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       displayName.toUpperCase(),
                       style: GoogleFonts.bebasNeue(
-                        fontSize: 26,
+                        fontSize: _res(context, 26),
                         letterSpacing: 2,
                         color: AppColors.text,
                       ),
@@ -585,7 +620,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const Text('⚡', style: TextStyle(fontSize: 10)),
                           const SizedBox(width: 5),
                           Text(
-                            'Level 7 — Intermediate Athlete',
+                            L10n.s(context, 'user_level_status')
+                                .replaceAll('{num}', '7')
+                                .replaceAll('{rank}', _getLocalizedRank(level)),
                             style: TextStyle(
                               color: AppColors.gold2,
                               fontSize: 10,
@@ -604,6 +641,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
   }
 
+  String _getLocalizedRank(String? level) {
+    if (level == null) return L10n.s(context, 'rank_intermediate');
+    final l = level.toLowerCase();
+    if (l.contains('begin')) return L10n.s(context, 'rank_beginner');
+    if (l.contains('inter')) return L10n.s(context, 'rank_intermediate');
+    if (l.contains('adv')) return L10n.s(context, 'rank_advanced');
+    return L10n.s(context, 'rank_intermediate');
+  }
+
   Widget _buildXPBar() {
     return Padding(
       padding: const EdgeInsets.all(22),
@@ -619,15 +665,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Level 7 → Level 8',
-                  style: TextStyle(color: AppColors.muted, fontSize: 11),
+                Text(
+                  L10n.s(context, 'level_progress').replaceAll('{current}', '7').replaceAll('{next}', '8'),
+                  style: TextStyle(color: AppColors.muted, fontSize: _res(context, 11)),
                 ),
                 Text(
                   '3,400 / 5,000 XP',
                   style: TextStyle(
                     color: AppColors.gold2,
-                    fontSize: 11,
+                    fontSize: _res(context, 11),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -657,12 +703,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 6),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  '1,600 XP to next level',
-                  style: TextStyle(color: AppColors.dim, fontSize: 10),
+                  L10n.s(context, 'xp_to_next').replaceAll('{amount}', '1,600'),
+                  style: const TextStyle(color: AppColors.dim, fontSize: 10),
                 ),
-                Text(
+                const Text(
                   '68%',
                   style: TextStyle(color: AppColors.dim, fontSize: 10),
                 ),
@@ -679,9 +725,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
       child: Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
           color: AppColors.dim,
-          fontSize: 10,
+          fontSize: _res(context, 10),
           fontWeight: FontWeight.w500,
           letterSpacing: 1.8,
         ),
@@ -690,18 +736,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildStatsGrid() {
+    final workoutProvider = Provider.of<WorkoutProvider>(context);
+    final historyCount = workoutProvider.history.length;
+    
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 22),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 22),
       sliver: SliverGrid.count(
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        childAspectRatio: 1.15,
+        childAspectRatio: 1.25,
         children: [
-          _buildStatCard('🔥', '18', L10n.s(context, 'sessions_completed'), '+3 this week', AppColors.redText, AppColors.redBg, AppColors.redText),
-          _buildStatCard('⚡', '12', L10n.s(context, 'streak'), 'Personal best', AppColors.gold, AppColors.gold3, AppColors.gold2),
-          _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), '↑ 14% vs last mo.', AppColors.text, AppColors.blueBg, AppColors.blueText),
-          _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% this week', AppColors.text, AppColors.greenBg, AppColors.greenText),
+          _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+3 ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
+          _buildStatCard('⚡', '12', L10n.s(context, 'streak'), L10n.s(context, 'personal_best'), AppColors.gold, AppColors.gold3, AppColors.gold2),
+          _buildStatCard('⏱️', Localizations.localeOf(context).languageCode == 'ar' ? '٣٤ س' : '34h', L10n.s(context, 'training_time'), '↑ 14% ${L10n.s(context, 'month')}', AppColors.text, AppColors.blueBg, AppColors.blueText),
+          _buildStatCard('🏋️', Localizations.localeOf(context).languageCode == 'ar' ? '٤.٢ ط' : '4.2T', L10n.s(context, 'total_volume'), '↑ 8% ${L10n.s(context, 'week')}', AppColors.text, AppColors.greenBg, AppColors.greenText),
         ],
       ),
     );
@@ -718,21 +767,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(icon, style: const TextStyle(fontSize: 16)),
+          Text(icon, style: TextStyle(fontSize: _res(context, 16))),
           const SizedBox(height: 8),
-          Text(
-            val,
-            style: GoogleFonts.bebasNeue(
-              fontSize: 28,
-              letterSpacing: 1,
-              color: valColor,
-              height: 1,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              val,
+              style: GoogleFonts.bebasNeue(
+                fontSize: _res(context, 28),
+                letterSpacing: 1,
+                color: valColor,
+                height: 1,
+              ),
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            label,
-            style: const TextStyle(color: AppColors.muted, fontSize: 11),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              label,
+              style: TextStyle(color: AppColors.muted, fontSize: _res(context, 11)),
+            ),
           ),
           const SizedBox(height: 6),
           Flexible(
@@ -742,10 +799,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: deltaBg,
                 borderRadius: BorderRadius.circular(100),
               ),
-              child: Text(
-                delta,
-                style: TextStyle(color: deltaText, fontSize: 10, fontWeight: FontWeight.w500),
-                overflow: TextOverflow.ellipsis,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  delta,
+                  style: TextStyle(color: deltaText, fontSize: 10, fontWeight: FontWeight.w500),
+                ),
               ),
             ),
           ),
@@ -755,6 +814,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildActiveProgramRing() {
+    final workoutProvider = Provider.of<WorkoutProvider>(context);
+    if (_activeProgram == null) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 22),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: AppColors.border),
+          ),
+          child: Column(
+            children: [
+              const Icon(Icons.fitness_center_outlined, color: AppColors.muted, size: 32),
+              const SizedBox(height: 16),
+              Text(
+                L10n.s(context, 'no_program_selected'),
+                style: const TextStyle(color: AppColors.text, fontSize: 14, fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                height: 44,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => const MainScreen()),
+                      (route) => false,
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.gold,
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  child: Text(L10n.s(context, 'start_program_button'), style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    
+    final completedCount = _activeProgram!.schedule.where((day) => workoutProvider.isDayCompleted(_activeProgram!.id, day.dayNumber)).length;
+    final totalDays = _activeProgram!.schedule.where((day) => day.isTraining).length;
+    final progress = totalDays > 0 ? completedCount / totalDays : 0.0;
+    final progressPercent = (progress * 100).toInt();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Container(
@@ -776,7 +885,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 68,
                       height: 68,
                       child: CircularProgressIndicator(
-                        value: 0.38,
+                        value: progress,
                         strokeWidth: 7,
                         color: AppColors.gold,
                         backgroundColor: AppColors.gold.withOpacity(0.1),
@@ -789,7 +898,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          '38%',
+                          '$progressPercent%',
                           style: GoogleFonts.bebasNeue(
                             fontSize: 16,
                             color: AppColors.gold2,
@@ -818,7 +927,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 3),
                   Text(
-                    'Week 5 of 12 · ${_activeProgram?.badge ?? "Full Volume"}',
+                    '${L10n.s(context, 'week')} 3 ${L10n.s(context, 'of')} 12 · ${_activeProgram?.badge ?? ""}',
                     style: const TextStyle(color: AppColors.muted, fontSize: 11, height: 1.55),
                   ),
                   const SizedBox(height: 10),
@@ -826,9 +935,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     spacing: 14,
                     runSpacing: 4,
                     children: [
-                      _buildRingMetaItem(L10n.s(context, 'week'), '5/12'),
-                      _buildRingMetaItem(L10n.s(context, 'sessions_completed'), '18/48'),
-                      _buildRingMetaItem('Left', '7 wks'),
+                      _buildRingMetaItem(L10n.s(context, 'week'), '3/12'),
+                      _buildRingMetaItem(L10n.s(context, 'sessions_completed'), '$completedCount/$totalDays'),
+                      _buildRingMetaItem('Left', '9 wks'),
                     ],
                   ),
                 ],
@@ -891,9 +1000,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Row(
                   children: [
-                    _buildLegendItem('Done', AppColors.gold),
+                    _buildLegendItem(L10n.s(context, 'done'), AppColors.gold),
                     const SizedBox(width: 10),
-                    _buildLegendItem('Goal', AppColors.border2),
+                    _buildLegendItem(Localizations.localeOf(context).languageCode == 'ar' ? 'الهدف' : 'Goal', AppColors.border2),
                   ],
                 ),
               ],
@@ -959,7 +1068,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildStreakSection() {
-    final days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+    final days = Localizations.localeOf(context).languageCode == 'ar' 
+        ? ['ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح']
+        : ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
     final status = ['done', 'done', 'done', 'done', 'done', 'skip', 'today'];
 
     return Padding(
@@ -989,25 +1100,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    const Text(
-                      'day streak — keep it going',
-                      style: TextStyle(color: AppColors.muted, fontSize: 11),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        '${L10n.s(context, 'day_streak')} — ${L10n.s(context, 'keep_it_going')}',
+                        style: const TextStyle(color: AppColors.muted, fontSize: 11),
+                      ),
                     ),
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('Best streak', style: TextStyle(color: AppColors.muted, fontSize: 11)),
+                    Text(L10n.s(context, 'best_streak'), style: const TextStyle(color: AppColors.muted, fontSize: 11)),
                     const SizedBox(height: 2),
                     RichText(
-                      text: const TextSpan(
-                        style: TextStyle(color: AppColors.muted, fontSize: 11),
+                      text: TextSpan(
+                        style: const TextStyle(color: AppColors.muted, fontSize: 11),
                         children: [
-                          TextSpan(text: 'ever: '),
+                          TextSpan(text: Localizations.localeOf(context).languageCode == 'ar' ? 'على الإطلاق: ' : 'ever: '),
                           TextSpan(
-                            text: '18 days',
-                            style: TextStyle(color: AppColors.gold2, fontWeight: FontWeight.w500),
+                            text: '18 ${L10n.s(context, 'day')}',
+                            style: const TextStyle(color: AppColors.gold2, fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -1066,12 +1181,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Column(
         children: [
-          _buildAchievementItem('🏆', 'First Sweat', 'Completed your first session', 'Jan 12', true),
-          _buildAchievementItem('🔥', 'On Fire', '7-day training streak', 'Feb 3', true),
-          _buildAchievementItem('💪', 'Ironclad', 'Lifted 1 tonne in a single week', 'Feb 18', true),
-          _buildAchievementItem('⚡', 'Half Way There', 'Completed 50% of a program', 'Mar 5', true),
-          _buildAchievementItem('🥇', 'Champion', 'Complete a full 12-week program', '', false),
-          _buildAchievementItem('🌟', 'Beast Mode', 'Train 6 days in a row', '', false),
+          _buildAchievementItem('🏆', L10n.s(context, 'first_sweat_title'), L10n.s(context, 'first_sweat_desc'), 'Jan 12', true),
+          _buildAchievementItem('🔥', L10n.s(context, 'on_fire_title'), L10n.s(context, 'on_fire_desc'), 'Feb 3', true),
+          _buildAchievementItem('💪', L10n.s(context, 'ironclad_title'), L10n.s(context, 'ironclad_desc'), 'Feb 18', true),
+          _buildAchievementItem('⚡', L10n.s(context, 'halfway_title'), L10n.s(context, 'halfway_desc'), 'Mar 5', true),
+          _buildAchievementItem('🥇', L10n.s(context, 'champion_title'), L10n.s(context, 'champion_desc'), '', false),
+          _buildAchievementItem('🌟', L10n.s(context, 'beast_mode_title'), L10n.s(context, 'beast_mode_desc'), '', false),
         ],
       ),
     );
@@ -1237,17 +1352,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                    await AuthService.signOut();
-                    final prefs = await SharedPreferences.getInstance();
-                    await prefs.clear();
-                    if (mounted) {
-                      Navigator.of(context).pushAndRemoveUntil(
-                         MaterialPageRoute(builder: (context) => const LoginScreen()),
-                        (route) => false,
-                      );
-                    }
+                  onPressed: () {
+                    Navigator.pop(context); // Close dialog
+                    // Navigate immediately
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      (route) => false,
+                    );
+                    // Perform cleanup in background
+                    AuthService.signOut().then((_) async {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.clear();
+                    });
                   },
                   child: const Text(
                     'YES, LOG OUT',
@@ -1303,6 +1419,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Navigator.pop(context);
       },
     );
+  }
+
+  double _res(BuildContext context, double original) {
+    double width = MediaQuery.of(context).size.width;
+    double scale = width / 375.0;
+    if (scale < 0.85) scale = 0.85;
+    if (scale > 1.25) scale = 1.25;
+    return original * scale;
   }
 }
 

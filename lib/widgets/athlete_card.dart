@@ -149,7 +149,9 @@ class AthleteCard extends StatelessWidget {
             ),
           const SizedBox(height: 3),
           Text(
-            program.name.split(' ').first, // Just the first name for the card look
+            (L10n.s(context, 'program_${program.id}') != 'program_${program.id}' 
+                ? L10n.s(context, 'program_${program.id}') 
+                : program.name).split(' ').first, 
             style: GoogleFonts.bebasNeue(
               fontSize: 22,
               letterSpacing: 2,

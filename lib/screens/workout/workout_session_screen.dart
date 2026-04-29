@@ -145,9 +145,21 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
     final int setsCount = _parseSets(widget.exercises[_currentExIndex].detail);
 
     if (nextSet > setsCount) {
-       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Exercise Complete! Click next to continue.')),
-      );
+      if (_currentExIndex < widget.exercises.length - 1) {
+        setState(() {
+          _currentExIndex++;
+          _resetPhase();
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(L10n.s(context, 'starting_ex').replaceAll('{name}', (L10n.s(context, 'exercise_${widget.exercises[_currentExIndex].name}') != 'exercise_${widget.exercises[_currentExIndex].name}' ? L10n.s(context, 'exercise_${widget.exercises[_currentExIndex].name}') : widget.exercises[_currentExIndex].name))),
+            backgroundColor: AppColors.gold,
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      } else {
+        _showWorkoutDone();
+      }
       return;
     }
 
@@ -234,6 +246,107 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
     super.dispose();
   }
 
+  void _showWorkoutDone() {
+    final workoutProvider = Provider.of<WorkoutProvider>(context, listen: false);
+    final Set<String> muscles = widget.exercises.map((ex) => _getMuscleGroup(ex.name)).toSet();
+
+    workoutProvider.completeSession(CompletedSession(
+      programId: widget.programId,
+      dayId: widget.dayId,
+      dayName: widget.sessionTitle,
+      date: DateTime.now(),
+      musclesTrained: muscles.toList(),
+    ));
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const WorkoutDoneScreen()),
+    );
+  }
+
+  void _resetPhase() {
+    _timer?.cancel();
+    _isExerciseRunning = false;
+    _isResting = false;
+    _activeSetIndex = -1;
+    _secondsRemaining = 0;
+    _isFlashing = false;
+    _flashController.stop();
+    _isPaused = false;
+    _completedSets.fillRange(0, _completedSets.length, false);
+  }
+
+  String _getLocalizedDetail(String detail) {
+    if (Localizations.localeOf(context).languageCode != 'ar') return detail;
+    
+    String result = detail;
+
+    // Special handling for Franco's "shamel" (comprehensive) style
+    if (widget.programId == 'franco') {
+      result = result.replaceAll(RegExp(r'supersets?:?\s*', caseSensitive: false), 'مجموعة شاملة من\n');
+    } else {
+      // Standard simple terminology for other programs
+      result = result.replaceAll(RegExp(r'supersets?:?\s*', caseSensitive: false), 'مجموعات ');
+    }
+    
+    result = result.replaceAll(RegExp(r'\bsets?\b', caseSensitive: false), 'مجموعات');
+    result = result.replaceAll(RegExp(r'\breps?\b', caseSensitive: false), 'تكرارًا');
+    result = result.replaceAll(RegExp(r'\bto\b', caseSensitive: false), 'إلى');
+    result = result.replaceAll(RegExp(r'failure', caseSensitive: false), 'فشل عضلي');
+    result = result.replaceAll(RegExp(r'static hold', caseSensitive: false), 'ثبات استاتيكي');
+    result = result.replaceAll(RegExp(r'dropset|drop set', caseSensitive: false), 'مجموعة تناقصية');
+    result = result.replaceAll(RegExp(r'active recovery', caseSensitive: false), 'استشفاء نشط');
+    result = result.replaceAll(RegExp(r'recovery', caseSensitive: false), 'استشفاء');
+    result = result.replaceAll(RegExp(r'each side', caseSensitive: false), 'لكل جانب');
+    result = result.replaceAll(RegExp(r'per side', caseSensitive: false), 'لكل جانب');
+    result = result.replaceAll(RegExp(r'bodyweight', caseSensitive: false), 'وزن الجسم');
+    result = result.replaceAll(RegExp(r'sec\.?', caseSensitive: false), 'ثانية');
+    result = result.replaceAll(RegExp(r'\bmins?\b|minutes?', caseSensitive: false), 'دقيقة');
+    result = result.replaceAll(RegExp(r'\brounds?\b', caseSensitive: false), 'جولات');
+    result = result.replaceAll(RegExp(r'cardio', caseSensitive: false), 'كارديو');
+    result = result.replaceAll(RegExp(r'to max', caseSensitive: false), 'إلى الحد الأقصى');
+    
+    // Localize the 'x' in 4x12
+    if (result.contains(RegExp(r'\d+x\d+'))) {
+      result = result.replaceAll('x', ' × ');
+    }
+    
+    return result;
+  }
+
+  double _res(BuildContext context, double original) {
+    double width = MediaQuery.of(context).size.width;
+    double scale = width / 375.0;
+    if (scale < 0.85) scale = 0.85;
+    if (scale > 1.25) scale = 1.25;
+    return original * scale;
+  }
+
+  String _getLocalizedDayName(BuildContext context, String dayName) {
+    final nameLow = dayName.toLowerCase();
+    
+    if (nameLow.contains('chest') && nameLow.contains('tricep')) return L10n.s(context, 'workout_chest_triceps');
+    if (nameLow.contains('back') && nameLow.contains('bicep')) return L10n.s(context, 'workout_back_biceps');
+    if (nameLow.contains('chest') && nameLow.contains('back')) return L10n.s(context, 'workout_chest_back');
+    if (nameLow.contains('leg')) return L10n.s(context, 'workout_legs');
+    if (nameLow.contains('shoulder')) return L10n.s(context, 'workout_shoulders');
+    if (nameLow.contains('push')) return L10n.s(context, 'workout_push');
+    if (nameLow.contains('pull')) return L10n.s(context, 'workout_pull');
+    if (nameLow.contains('upper')) return L10n.s(context, 'workout_upper');
+    if (nameLow.contains('lower')) return L10n.s(context, 'workout_lower');
+    if (nameLow.contains('full body')) return L10n.s(context, 'workout_full_body');
+    if (nameLow.contains('glute')) return L10n.s(context, 'workout_glute_shaping');
+    if (nameLow.contains('squat')) return L10n.s(context, 'workout_squat_day');
+    if (nameLow.contains('deadlift')) return L10n.s(context, 'workout_deadlift_day');
+    if (nameLow.contains('strength accessory')) return L10n.s(context, 'workout_strength_accessory');
+    if (nameLow.contains('arm')) return L10n.s(context, 'workout_arm_day');
+    if (nameLow.contains('rest')) return L10n.s(context, 'workout_rest_day');
+
+    final key = 'workout_${dayName.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '_').replaceAll(RegExp(r'_+'), '_').replaceAll(RegExp(r'^_| _ $'), '')}';
+    final localized = L10n.s(context, key);
+    return localized != key ? localized : dayName;
+  }
+
   @override
   Widget build(BuildContext context) {
     final exercises = widget.exercises;
@@ -300,24 +413,24 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'TRAINING TIP',
-                                    style: GoogleFonts.bebasNeue(
-                                      fontSize: 14,
-                                      color: AppColors.gold,
-                                      letterSpacing: 1.5,
+                                    Text(
+                                      L10n.s(context, 'training_tip_title'),
+                                      style: GoogleFonts.bebasNeue(
+                                        fontSize: _res(context, 14),
+                                        color: AppColors.gold,
+                                        letterSpacing: 1.5,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    '"3x8-12" means 3 sets, each one between 8 (min) and 12 (max) repetitions.',
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 11,
-                                      color: Colors.white.withOpacity(0.8),
-                                      fontWeight: FontWeight.w500,
-                                      height: 1.4,
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      L10n.s(context, 'training_tip_desc'),
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: _res(context, 11),
+                                        color: Colors.white.withOpacity(0.8),
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.4,
+                                      ),
                                     ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -354,14 +467,16 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.fitness_center, color: AppColors.gold, size: 14),
+          Icon(Icons.fitness_center, color: AppColors.gold, size: _res(context, 14)),
           const SizedBox(width: 8),
           Text(
-            muscle.toUpperCase(),
-            style: const TextStyle(
+            (L10n.s(context, 'muscle_${muscle.toLowerCase()}') != 'muscle_${muscle.toLowerCase()}' 
+                ? L10n.s(context, 'muscle_${muscle.toLowerCase()}') 
+                : (L10n.s(context, muscle) != muscle ? L10n.s(context, muscle) : muscle)).toUpperCase(),
+            style: TextStyle(
               color: AppColors.gold,
               fontFamily: 'Bebas Neue',
-              fontSize: 16,
+              fontSize: _res(context, 16),
               letterSpacing: 2,
             ),
           ),
@@ -371,38 +486,50 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
   }
 
   Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.arrow_back, color: AppColors.muted, size: 20),
-                const SizedBox(width: 6),
-                Text(L10n.s(context, 'end_session'), style: const TextStyle(color: AppColors.muted, fontSize: 12)),
-              ],
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              widget.sessionTitle.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontFamily: 'Bebas Neue', 
-                fontSize: 16, 
-                letterSpacing: 2, 
-                color: AppColors.text,
-                overflow: TextOverflow.ellipsis,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Icon(Icons.arrow_back, color: AppColors.muted, size: 20),
+                ),
+                  const SizedBox(width: 6),
+                  Text(L10n.s(context, 'end_session'), style: TextStyle(color: AppColors.muted, fontSize: _res(context, 12))),
+                ],
               ),
-              maxLines: 1,
             ),
-          ),
-          const SizedBox(width: 80), // Keep for visual balance, or better use a dummy invisible back button
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: (() {
+                final String displayTitle = (widget.sessionTitle.toLowerCase().contains('day') && !widget.sessionTitle.contains(' ')) 
+                    ? L10n.s(context, 'day_label').replaceAll('{num}', widget.sessionTitle.replaceAll(RegExp(r'[^0-9]'), '')).toUpperCase()
+                    : _getLocalizedDayName(context, widget.sessionTitle).toUpperCase();
+                
+                return Text(
+                  displayTitle,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Bebas Neue', 
+                    fontSize: _res(context, displayTitle.length > 20 ? 12 : (displayTitle.length > 15 ? 14 : 16)), 
+                    letterSpacing: displayTitle.length > 18 ? 1.0 : 2, 
+                    color: AppColors.text,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  maxLines: 1,
+                );
+              })(),
+            ),
+            SizedBox(width: _res(context, 80)), // Keep for visual balance
+          ],
+        ),
       ),
     );
   }
@@ -425,8 +552,8 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${L10n.s(context, 'exercise')} ${_currentExIndex + 1} ${L10n.s(context, 'of')} $total', style: const TextStyle(color: AppColors.muted, fontSize: 11)),
-              Text('0:00 ${L10n.s(context, 'elapsed')}', style: const TextStyle(color: AppColors.muted, fontSize: 11)),
+              Text('${L10n.s(context, 'exercise')} ${_currentExIndex + 1} ${L10n.s(context, 'of')} $total', style: TextStyle(color: AppColors.muted, fontSize: _res(context, 11))),
+              Text('0:00 ${L10n.s(context, 'elapsed')}', style: TextStyle(color: AppColors.muted, fontSize: _res(context, 11))),
             ],
           ),
         ],
@@ -458,7 +585,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
               if (_isResting) ...[
                 const SizedBox(height: 4),
                 Text(
-                  "Hey, Get some water",
+                  L10n.s(context, 'water_reminder'),
                   style: GoogleFonts.dmSans(
                     fontSize: 12,
                     color: Colors.blue.withOpacity(0.7),
@@ -474,8 +601,8 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 140,
-                      height: 140,
+                      width: _res(context, 140),
+                      height: _res(context, 140),
                       child: CircularProgressIndicator(
                         value: _maxSeconds > 0 ? _secondsRemaining / _maxSeconds : 0,
                         strokeWidth: 8,
@@ -490,12 +617,12 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             if (_isPaused)
-                              const Icon(Icons.play_arrow, color: AppColors.gold, size: 30),
+                              Icon(Icons.play_arrow, color: AppColors.gold, size: _res(context, 30)),
                             Text(
                               '${_secondsRemaining ~/ 60}:${(_secondsRemaining % 60).toString().padLeft(2, '0')}',
                               style: TextStyle(
                                 fontFamily: 'Bebas Neue',
-                                fontSize: _isPaused ? 32 : 42,
+                                fontSize: _res(context, _isPaused ? 32 : 42),
                                 color: _isPaused ? AppColors.gold : timerColor.withOpacity(opacity),
                                 letterSpacing: 2,
                               ),
@@ -507,17 +634,37 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.gold,
                             shape: const CircleBorder(),
-                            padding: const EdgeInsets.all(32),
+                            padding: EdgeInsets.all(_res(context, 32)),
                           ),
                           child: Text(
                             L10n.s(context, 'start_set'),
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontFamily: 'Bebas Neue', color: Colors.black, fontSize: 14, letterSpacing: 1),
+                            style: TextStyle(fontFamily: 'Bebas Neue', color: Colors.black, fontSize: _res(context, 14), letterSpacing: 1),
                           ),
                         ),
                   ],
                 ),
               ),
+              if (_isExerciseRunning || _isResting) ...[
+                const SizedBox(height: 16),
+                TextButton.icon(
+                  onPressed: _handleTimerFinished,
+                  icon: Icon(Icons.skip_next, color: _isResting ? Colors.blue : AppColors.gold, size: 20),
+                  label: Text(
+                    (_isExerciseRunning ? L10n.s(context, 'complete_set_btn') : L10n.s(context, 'skip_rest_btn')).toUpperCase(),
+                    style: GoogleFonts.bebasNeue(
+                      color: _isResting ? Colors.blue : AppColors.gold,
+                      fontSize: 18,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    backgroundColor: (_isResting ? Colors.blue : AppColors.gold).withOpacity(0.05),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  ),
+                ),
+              ],
             ],
           ),
         );
@@ -540,7 +687,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${widget.sessionTitle} · $muscleGroup'.toUpperCase(), style: const TextStyle(fontSize: 10, color: AppColors.muted, letterSpacing: 1.5)),
+              Text('${widget.sessionTitle} · ${L10n.s(context, 'muscle_${muscleGroup.toLowerCase()}') != 'muscle_${muscleGroup.toLowerCase()}' ? L10n.s(context, 'muscle_${muscleGroup.toLowerCase()}') : muscleGroup}'.toUpperCase(), style: const TextStyle(fontSize: 10, color: AppColors.muted, letterSpacing: 1.5)),
               if (_isExerciseRunning)
                 const Icon(Icons.flash_on, color: AppColors.gold, size: 14),
             ],
@@ -550,13 +697,21 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
             onTap: (exercise.formGifUrl != null && exercise.formGifUrl!.isNotEmpty)
                 ? () => _launchURL(exercise.formGifUrl!)
                 : null,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(6),
             child: Row(
               children: [
                 Expanded(
                   child: Text(
-                    exercise.name.toUpperCase(), 
-                    style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 26, color: AppColors.text, letterSpacing: 2)
+                    (L10n.s(context, 'exercise_${exercise.name}') != 'exercise_${exercise.name}' ? L10n.s(context, 'exercise_${exercise.name}') : exercise.name).toUpperCase(), 
+                    style: TextStyle(
+                      fontFamily: 'Bebas Neue', 
+                      fontSize: _res(context, Localizations.localeOf(context).languageCode == 'ar' ? 20 : 18), 
+                      color: AppColors.text, 
+                      letterSpacing: Localizations.localeOf(context).languageCode == 'ar' ? 0.5 : 1.5,
+                      height: 1.1,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 if (exercise.formGifUrl != null && exercise.formGifUrl!.isNotEmpty)
@@ -569,7 +724,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
           const SizedBox(height: 18),
           _buildSetsList(context, exercise, setsCount),
           const SizedBox(height: 18),
-          _buildTip('Focus on your $muscleGroup muscles. Ensure controlled movement throughout the entire range of motion.'),
+          _buildTip(L10n.s(context, 'focus_muscle_tip').replaceAll('{muscle}', L10n.s(context, 'muscle_${muscleGroup.toLowerCase()}') != 'muscle_${muscleGroup.toLowerCase()}' ? L10n.s(context, 'muscle_${muscleGroup.toLowerCase()}') : muscleGroup)),
         ],
       ),
     );
@@ -577,10 +732,11 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
 
   Widget _buildSimpleFormButton(String url) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 9),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: AppColors.gold.withOpacity(0.12),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(6),
         border: Border.all(color: AppColors.gold.withOpacity(0.3), width: 1),
         boxShadow: [
           BoxShadow(
@@ -590,10 +746,10 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
           ),
         ],
       ),
-      child: const Icon(
+      child: Icon(
         Icons.play_arrow_rounded,
         color: AppColors.gold,
-        size: 22,
+        size: _res(context, 22),
       ),
     );
   }
@@ -603,9 +759,9 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
       children: [
         Expanded(child: _buildExStatBox(setsCount.toString(), L10n.s(context, 'sets'))),
         const SizedBox(width: 8),
-        Expanded(child: _buildExStatBox(_parseReps(exercise.detail), L10n.s(context, 'reps'))),
+        Expanded(child: _buildExStatBox(_getLocalizedDetail(_parseReps(exercise.detail)), L10n.s(context, 'reps'))),
         const SizedBox(width: 8),
-        Expanded(child: _buildExStatBox('90s', L10n.s(context, 'rest'))),
+        Expanded(child: _buildExStatBox(Localizations.localeOf(context).languageCode == 'ar' ? '90 ثانية' : '90s', L10n.s(context, 'rest'))),
       ],
     );
   }
@@ -617,15 +773,29 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
       child: Column(
         children: [
           const SizedBox(height: 2),
-          Text(value, style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 18, color: AppColors.text, letterSpacing: 1)),
-          Text(label, style: const TextStyle(fontSize: 9, color: AppColors.muted)),
+          Text(
+            value, 
+            style: (Localizations.localeOf(context).languageCode == 'ar' ? GoogleFonts.dmSans() : GoogleFonts.bebasNeue()).copyWith(
+              fontSize: _res(context, Localizations.localeOf(context).languageCode == 'ar' ? 14 : 18), 
+              color: AppColors.text, 
+              letterSpacing: 1,
+            ),
+          ),
+          Text(
+            label, 
+            style: TextStyle(
+              fontSize: _res(context, 9), 
+              color: AppColors.muted,
+              fontWeight: Localizations.localeOf(context).languageCode == 'ar' ? FontWeight.w600 : FontWeight.normal,
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildSetsList(BuildContext context, WorkoutExercise exercise, int setsCount) {
-    final reps = _parseReps(exercise.detail);
+    final reps = _getLocalizedDetail(_parseReps(exercise.detail));
     return Column(
       children: List.generate(setsCount, (index) {
         final bool isActive = _activeSetIndex == index;
@@ -641,25 +811,25 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
             children: [
               Text('${L10n.s(context, 'set')} ${index + 1}', 
                 style: TextStyle(
-                  fontSize: 11, 
+                  fontSize: _res(context, 11), 
                   color: isActive ? AppColors.gold : AppColors.dim,
                   fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
                 )
               ),
               const SizedBox(width: 10),
-              Expanded(child: Text(reps, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.text))),
+              Expanded(child: Text(reps, style: TextStyle(fontSize: _res(context, Localizations.localeOf(context).languageCode == 'ar' ? 10 : 12), fontWeight: FontWeight.bold, color: AppColors.text))),
               if (_completedSets[index])
-                const Icon(Icons.check_circle, size: 20, color: AppColors.gold)
+                Icon(Icons.check_circle, size: _res(context, 20), color: AppColors.gold)
               else if (isActive)
-                const SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold)),
+                SizedBox(
+                  width: _res(context, 16),
+                  height: _res(context, 16),
+                  child: const CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(AppColors.gold)),
                 )
               else
                 Container(
-                  width: 20,
-                  height: 20,
+                  width: _res(context, 20),
+                  height: _res(context, 20),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color: AppColors.border2, width: 1.5),
@@ -680,7 +850,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
         border: Border(left: BorderSide(color: AppColors.gold, width: 2)),
         borderRadius: BorderRadius.only(topRight: Radius.circular(8), bottomRight: Radius.circular(8)),
       ),
-      child: Text(tip, style: const TextStyle(fontSize: 11, color: AppColors.muted, height: 1.6)),
+      child: Text(tip, style: TextStyle(fontSize: _res(context, 11), color: AppColors.muted, height: 1.6)),
     );
   }
 
@@ -701,7 +871,14 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   side: const BorderSide(color: AppColors.border2),
                 ),
-                child: Text('← ${L10n.s(context, 'prev')}', style: const TextStyle(color: AppColors.muted)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(Localizations.localeOf(context).languageCode == 'ar' ? '→' : '←', style: const TextStyle(color: AppColors.muted)),
+                    const SizedBox(width: 4),
+                    Text(L10n.s(context, 'prev'), style: const TextStyle(color: AppColors.muted)),
+                  ],
+                ),
               ),
             ),
           if (_currentExIndex > 0)
@@ -725,9 +902,18 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
-              child: Text(
-                _currentExIndex < totalCount - 1 ? '${L10n.s(context, 'next_exercise')} →' : L10n.s(context, 'finish_session'),
-                style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _currentExIndex < totalCount - 1 ? L10n.s(context, 'next_exercise') : L10n.s(context, 'finish_session'),
+                    style: TextStyle(fontFamily: 'Bebas Neue', fontSize: _res(context, 16), letterSpacing: 2),
+                  ),
+                  if (_currentExIndex < totalCount - 1) ...[
+                    const SizedBox(width: 6),
+                    Text(Localizations.localeOf(context).languageCode == 'ar' ? '←' : '→', style: const TextStyle(fontSize: 18)),
+                  ]
+                ],
               ),
             ),
           ),
@@ -736,41 +922,6 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
     );
   }
 
-  void _resetPhase() {
-    _timer?.cancel();
-    _isExerciseRunning = false;
-    _isResting = false;
-    _activeSetIndex = -1;
-    _secondsRemaining = 0;
-    _isFlashing = false;
-    _flashController.stop();
-    _isPaused = false;
-    _completedSets.fillRange(0, _completedSets.length, false);
-  }
-
-  void _showWorkoutDone() {
-    // Save completion data
-    final workoutProvider = Provider.of<WorkoutProvider>(context, listen: false);
-    
-    // Extract program and day info if possible (might need to pass these to the screen)
-    // For now, we'll assume we have enough context or we can pass it from ProgramDetailScreen
-    
-    // Attempt to find muscles trained
-    final Set<String> muscles = widget.exercises.map((ex) => _getMuscleGroup(ex.name)).toSet();
-
-    workoutProvider.completeSession(CompletedSession(
-      programId: widget.programId,
-      dayId: widget.dayId,
-      dayName: widget.sessionTitle,
-      date: DateTime.now(),
-      musclesTrained: muscles.toList(),
-    ));
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const WorkoutDoneScreen()),
-    );
-  }
 }
 
 class WorkoutDoneScreen extends StatelessWidget {
@@ -788,7 +939,12 @@ class WorkoutDoneScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               L10n.s(context, 'session_complete'),
-              style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 32, letterSpacing: 3, color: AppColors.text),
+              style: (Localizations.localeOf(context).languageCode == 'ar' ? GoogleFonts.dmSans() : GoogleFonts.bebasNeue()).copyWith(
+                fontSize: Localizations.localeOf(context).languageCode == 'ar' ? 24 : 32, 
+                letterSpacing: 3, 
+                color: AppColors.text,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
@@ -807,7 +963,13 @@ class WorkoutDoneScreen extends StatelessWidget {
                   foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 ),
-                child: Text(L10n.s(context, 'view_my_progress'), style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 17, letterSpacing: 3)),
+                child: Text(
+                  L10n.s(context, 'view_my_progress'), 
+                  style: (Localizations.localeOf(context).languageCode == 'ar' ? GoogleFonts.dmSans() : GoogleFonts.bebasNeue()).copyWith(
+                    fontSize: 17, 
+                    letterSpacing: Localizations.localeOf(context).languageCode == 'ar' ? 0.5 : 3,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 10),

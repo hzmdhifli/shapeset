@@ -269,7 +269,7 @@ class _SignupScreenState extends State<SignupScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Sign-in failed: ${error.toString()}'),
+            content: Text(L10n.s(context, 'signin_failed').replaceAll('{error}', error.toString())),
             backgroundColor: Colors.redAccent,
             duration: const Duration(seconds: 5),
           ),
@@ -292,7 +292,7 @@ class _SignupScreenState extends State<SignupScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Apple sign-in failed: ${error.toString()}'),
+            content: Text(L10n.s(context, 'apple_signin_failed').replaceAll('{error}', error.toString())),
             backgroundColor: Colors.redAccent,
             duration: const Duration(seconds: 5),
           ),
