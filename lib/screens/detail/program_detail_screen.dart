@@ -407,6 +407,8 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                   const SizedBox(height: 12),
                   _buildTags(),
                   _buildMentzerSpecialButton(context),
+                  _buildCBumFocusButton(context),
+                  _buildSupersetSpecialButton(context),
                   const SizedBox(height: 32),
                   _buildCTA(context),
                 ],
@@ -1011,7 +1013,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                         : L10n.s(context, 'day_label').replaceAll('{num}', int.tryParse(day.dayNumber)?.toString() ?? day.dayNumber)).toUpperCase();
                     
                     // Special case for Day 1 in Arabic to show the focus area if requested
-                    if (isAr && day.dayNumber == 'Day 1' && (day.name.contains('Quads') || day.name.contains('Legs') || day.name.contains('Calves'))) {
+                    if (isAr && day.dayNumber == 'Day 1' && !['cbum', 'jaycutler', 'platz', 'jeffseid'].contains(widget.program.id) && (day.name.contains('Quads') || day.name.contains('Legs') || day.name.contains('Calves'))) {
                       badgeText = localizedName.toUpperCase();
                     }
 
@@ -1320,6 +1322,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
     if (nameLow.contains('chest') && nameLow.contains('tricep')) return L10n.s(context, 'workout_chest_triceps');
     if (nameLow.contains('back') && nameLow.contains('bicep')) return L10n.s(context, 'workout_back_biceps');
     if (nameLow.contains('chest') && nameLow.contains('back')) return L10n.s(context, 'workout_chest_back');
+    if (nameLow.contains('shoulder') && nameLow.contains('chest')) return L10n.s(context, 'workout_shoulders_and_chest');
     if (nameLow.contains('leg')) return L10n.s(context, 'workout_legs');
     if (nameLow.contains('shoulder')) return L10n.s(context, 'workout_shoulders');
     if (nameLow.contains('push')) return L10n.s(context, 'workout_push');
@@ -1434,6 +1437,274 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
+        ),
+      ),
+    );
+  }
+
+  bool _hasSupersets() {
+    // Check badge
+    if (widget.program.badge.toLowerCase().contains('superset')) return true;
+    
+    // Check description
+    if (widget.program.description.toLowerCase().contains('superset')) return true;
+    
+    // Check schedule
+    final List<ScheduleDay> days = widget.program.splits != null && widget.program.splits!.isNotEmpty
+        ? widget.program.splits!.expand((s) => s.days).toList()
+        : widget.program.schedule;
+        
+    for (var day in days) {
+      if (day.description.toLowerCase().contains('superset')) return true;
+      for (var ex in day.exercises) {
+        if (ex.detail.toLowerCase().contains('superset')) return true;
+      }
+    }
+    
+    return false;
+  }
+
+  void _showSupersetExplanation() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
+          ),
+          border: Border(
+            top: BorderSide(color: AppColors.gold, width: 2),
+          ),
+        ),
+        padding: const EdgeInsets.fromLTRB(24, 12, 24, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 24),
+                decoration: BoxDecoration(
+                  color: AppColors.border,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppColors.gold.withOpacity(0.12),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.bolt_outlined, color: AppColors.gold, size: 22),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    L10n.s(context, 'title_superset'),
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 28,
+                      color: AppColors.text,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Text(
+              L10n.s(context, 'desc_superset'),
+              style: GoogleFonts.dmSans(
+                fontSize: 15,
+                color: AppColors.text.withOpacity(0.8),
+                height: 1.6,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            const SizedBox(height: 24),
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                decoration: BoxDecoration(
+                  color: AppColors.gold.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.gold.withOpacity(0.3)),
+                ),
+                child: Center(
+                  child: Text(
+                    L10n.s(context, 'got_it'),
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 18,
+                      color: AppColors.gold,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSupersetSpecialButton(BuildContext context) {
+    if (Localizations.localeOf(context).languageCode != 'ar' || !_hasSupersets()) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 24),
+      child: Center(
+        child: OutlinedButton.icon(
+          onPressed: _showSupersetExplanation,
+          icon: const Icon(Icons.info_outline, size: 18),
+          label: Text(
+            L10n.s(context, 'btn_superset').toUpperCase(),
+            style: GoogleFonts.bebasNeue(
+              fontSize: 16,
+              letterSpacing: 1.5,
+            ),
+          ),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.gold,
+            side: BorderSide(color: AppColors.gold.withOpacity(0.5)),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCBumFocusButton(BuildContext context) {
+    if (widget.program.id != 'cbum' || Localizations.localeOf(context).languageCode != 'ar') {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 24),
+      child: Center(
+        child: OutlinedButton.icon(
+          onPressed: _showCBumFocusExplanation,
+          icon: const Icon(Icons.star_outline, size: 18),
+          label: Text(
+            L10n.s(context, 'badge_cbum').toUpperCase(),
+            style: GoogleFonts.bebasNeue(
+              fontSize: 16,
+              letterSpacing: 1.5,
+            ),
+          ),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.gold,
+            side: BorderSide(color: AppColors.gold.withOpacity(0.5)),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showCBumFocusExplanation() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
+          ),
+          border: Border(
+            top: BorderSide(color: AppColors.gold, width: 2),
+          ),
+        ),
+        padding: const EdgeInsets.fromLTRB(24, 12, 24, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 24),
+                decoration: BoxDecoration(
+                  color: AppColors.border,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppColors.gold.withOpacity(0.12),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.star_border_rounded, color: AppColors.gold, size: 22),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    L10n.s(context, 'title_cbum_special'),
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 28,
+                      color: AppColors.text,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Text(
+              L10n.s(context, 'desc_cbum_special'),
+              style: GoogleFonts.dmSans(
+                fontSize: 15,
+                color: AppColors.text.withOpacity(0.8),
+                height: 1.6,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            const SizedBox(height: 24),
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                decoration: BoxDecoration(
+                  color: AppColors.gold.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.gold.withOpacity(0.3)),
+                ),
+                child: Center(
+                  child: Text(
+                    L10n.s(context, 'got_it'),
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 18,
+                      color: AppColors.gold,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

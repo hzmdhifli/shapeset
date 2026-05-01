@@ -21,12 +21,29 @@ class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class ProfileScreenState extends State<ProfileScreen> {
+  final ScrollController _scrollController = ScrollController();
   SharedPreferences? _prefs;
   Program? _activeProgram;
+
+  void scrollToTop() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -150,6 +167,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: CustomScrollView(
+          controller: _scrollController,
+          physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(child: _buildHeader(context)),
             SliverToBoxAdapter(child: _buildAvatarSection()),
@@ -749,8 +768,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+3 ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
           _buildStatCard('⚡', '12', L10n.s(context, 'streak'), L10n.s(context, 'personal_best'), AppColors.gold, AppColors.gold3, AppColors.gold2),
-          _buildStatCard('⏱️', Localizations.localeOf(context).languageCode == 'ar' ? '٣٤ س' : '34h', L10n.s(context, 'training_time'), '↑ 14% ${L10n.s(context, 'month')}', AppColors.text, AppColors.blueBg, AppColors.blueText),
-          _buildStatCard('🏋️', Localizations.localeOf(context).languageCode == 'ar' ? '٤.٢ ط' : '4.2T', L10n.s(context, 'total_volume'), '↑ 8% ${L10n.s(context, 'week')}', AppColors.text, AppColors.greenBg, AppColors.greenText),
+          _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), '↑ 14% ${L10n.s(context, 'month')}', AppColors.text, AppColors.blueBg, AppColors.blueText),
+          _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% ${L10n.s(context, 'week')}', AppColors.text, AppColors.greenBg, AppColors.greenText),
         ],
       ),
     );
@@ -986,15 +1005,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Sessions per week',
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                      L10n.s(context, 'sessions_per_week'),
+                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 2),
                     Text(
-                      'Last 7 weeks · goal 6/week',
-                      style: TextStyle(color: AppColors.muted, fontSize: 11),
+                      L10n.s(context, 'sessions_goal'),
+                      style: const TextStyle(color: AppColors.muted, fontSize: 11),
                     ),
                   ],
                 ),
@@ -1339,15 +1358,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 L10n.s(context, 'log_out').toUpperCase(),
                 style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text, letterSpacing: 1.5),
               ),
-              content: const Text(
-                'Are you sure you want to log out of your account?',
-                style: TextStyle(color: AppColors.muted, fontSize: 14),
+              content: Text(
+                L10n.s(context, 'logout_confirm_msg'),
+                style: const TextStyle(color: AppColors.muted, fontSize: 14),
               ),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
-                    "CANCEL",
+                    L10n.s(context, 'cancel').toUpperCase(),
                     style: const TextStyle(color: AppColors.muted, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -1365,9 +1384,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       await prefs.clear();
                     });
                   },
-                  child: const Text(
-                    'YES, LOG OUT',
-                    style: TextStyle(color: AppColors.redText, fontWeight: FontWeight.bold),
+                  child: Text(
+                    L10n.s(context, 'logout_yes').toUpperCase(),
+                    style: const TextStyle(color: AppColors.redText, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

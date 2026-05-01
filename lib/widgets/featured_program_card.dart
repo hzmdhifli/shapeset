@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../models/mock_data.dart';
 import '../screens/detail/program_detail_screen.dart';
+import '../services/localization_service.dart';
 
 class FeaturedProgramCard extends StatelessWidget {
   const FeaturedProgramCard({super.key});
@@ -61,7 +62,7 @@ class FeaturedProgramCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildTag(),
+                      _buildTag(context),
                       const SizedBox(height: 7),
                       Text(
                         'CRISTIANO\nRONALDO',
@@ -115,7 +116,7 @@ class FeaturedProgramCard extends StatelessWidget {
   );
 }
 
-  Widget _buildTag() {
+  Widget _buildTag(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -123,9 +124,9 @@ class FeaturedProgramCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
         border: Border.all(color: AppColors.gold.withOpacity(0.3)),
       ),
-      child: const Text(
-        '⚡ FEATURED PROGRAM',
-        style: TextStyle(
+      child: Text(
+        L10n.s(context, 'featured_program_tag'),
+        style: const TextStyle(
           color: AppColors.gold2,
           fontSize: 10,
           fontWeight: FontWeight.w600,

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import '../models/program.dart';
 import '../screens/detail/program_detail_screen.dart';
+import '../services/localization_service.dart';
 
 class SpecialProgramCard extends StatelessWidget {
   final Program program;
@@ -92,7 +93,7 @@ class SpecialProgramCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
-                        'FEATURED',
+                        L10n.s(context, 'featured_tag'),
                         style: GoogleFonts.dmSans(
                           fontSize: 9,
                           fontWeight: FontWeight.bold,
@@ -115,7 +116,7 @@ class SpecialProgramCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      subtitle ?? '5 Specialized Physique Archetypes',
+                      subtitle ?? L10n.s(context, 'female_program_fallback'),
                       style: GoogleFonts.dmSans(
                         fontSize: 13,
                         color: AppColors.muted,
@@ -128,9 +129,9 @@ class SpecialProgramCard extends StatelessWidget {
               ),
               
               // Play/Arrow icon
-              Positioned(
+              PositionedDirectional(
                 bottom: 24,
-                right: 24,
+                end: 24,
                 child: Container(
                   width: 44,
                   height: 44,
@@ -139,8 +140,10 @@ class SpecialProgramCard extends StatelessWidget {
                     color: AppColors.gold.withOpacity(0.2),
                     border: Border.all(color: AppColors.gold.withOpacity(0.5)),
                   ),
-                  child: const Icon(
-                    Icons.arrow_forward_ios,
+                  child: Icon(
+                    Localizations.localeOf(context).languageCode == 'ar' 
+                        ? Icons.arrow_back_ios_new
+                        : Icons.arrow_forward_ios,
                     color: AppColors.gold,
                     size: 16,
                   ),

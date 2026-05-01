@@ -9,12 +9,29 @@ class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
 
   @override
-  State<QuizScreen> createState() => _QuizScreenState();
+  State<QuizScreen> createState() => QuizScreenState();
 }
 
-class _QuizScreenState extends State<QuizScreen> {
+class QuizScreenState extends State<QuizScreen> {
+  final ScrollController _scrollController = ScrollController();
   int _currentStep = 0;
   final Map<int, int> _answers = {};
+
+  void scrollToTop() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   List<QuizStep> _getSteps(BuildContext context) {
     // Initial Step: Gender Selection
@@ -227,6 +244,7 @@ class _QuizScreenState extends State<QuizScreen> {
             const SizedBox(height: 24),
             Expanded(
               child: ListView.separated(
+                controller: _scrollController,
                 itemCount: step.options.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 10),
                 itemBuilder: (context, index) {
@@ -425,6 +443,7 @@ class _QuizScreenState extends State<QuizScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 60),

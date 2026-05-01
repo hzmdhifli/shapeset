@@ -1,0 +1,3850 @@
+[
+  {
+    "key": "welcome_back",
+    "source": "WELCOME\\nBACK"
+  },
+  {
+    "key": "sign_in_continue",
+    "source": "Sign in to continue your training journey."
+  },
+  {
+    "key": "sign_in_google",
+    "source": "Sign in with Google"
+  },
+  {
+    "key": "no_account",
+    "source": "Don't have an account? "
+  },
+  {
+    "key": "sign_up_free",
+    "source": "Sign up free"
+  },
+  {
+    "key": "secure_access",
+    "source": "SECURE ACCESS"
+  },
+  {
+    "key": "encryption_info",
+    "source": "We use industry-standard encryption to protect your data."
+  },
+  {
+    "key": "create_account",
+    "source": "CREATE YOUR\\nACCOUNT"
+  },
+  {
+    "key": "join_thousands",
+    "source": "Join thousands of athletes training with the world's best programs."
+  },
+  {
+    "key": "sync_info",
+    "source": "Your name, email, and profile photo will be automatically synced from your Google account."
+  },
+  {
+    "key": "have_account",
+    "source": "Already have an account? "
+  },
+  {
+    "key": "sign_in",
+    "source": "Sign in"
+  },
+  {
+    "key": "get_started_fast",
+    "source": "GET STARTED FAST"
+  },
+  {
+    "key": "one_tap_login",
+    "source": "One-tap login means you can start your first workout in less than 30 seconds."
+  },
+  {
+    "key": "my_profile",
+    "source": "MY PROFILE"
+  },
+  {
+    "key": "edit_profile",
+    "source": "Edit Profile"
+  },
+  {
+    "key": "your_stats",
+    "source": "YOUR STATS"
+  },
+  {
+    "key": "active_program",
+    "source": "ACTIVE PROGRAM"
+  },
+  {
+    "key": "no_program_selected",
+    "source": "No program has been selected yet"
+  },
+  {
+    "key": "start_program_button",
+    "source": "START PROGRAM"
+  },
+  {
+    "key": "weekly_activity",
+    "source": "WEEKLY ACTIVITY"
+  },
+  {
+    "key": "streak",
+    "source": "THIS WEEK'S STREAK"
+  },
+  {
+    "key": "achievements",
+    "source": "ACHIEVEMENTS"
+  },
+  {
+    "key": "account",
+    "source": "ACCOUNT"
+  },
+  {
+    "key": "preferences",
+    "source": "PREFERENCES"
+  },
+  {
+    "key": "units",
+    "source": "Units"
+  },
+  {
+    "key": "language",
+    "source": "Language"
+  },
+  {
+    "key": "rest_timer",
+    "source": "Rest Timer"
+  },
+  {
+    "key": "notifications",
+    "source": "Notifications"
+  },
+  {
+    "key": "dark_mode",
+    "source": "Dark Mode"
+  },
+  {
+    "key": "privacy",
+    "source": "Privacy"
+  },
+  {
+    "key": "support",
+    "source": "SUPPORT"
+  },
+  {
+    "key": "help_center",
+    "source": "Help Center"
+  },
+  {
+    "key": "feedback",
+    "source": "Send Feedback"
+  },
+  {
+    "key": "terms",
+    "source": "Terms & Privacy"
+  },
+  {
+    "key": "log_out",
+    "source": "Log Out"
+  },
+  {
+    "key": "home_title",
+    "source": "ATHLÈTE"
+  },
+  {
+    "key": "search_hint",
+    "source": "Search athlete, style..."
+  },
+  {
+    "key": "no_athletes",
+    "source": "No athletes found"
+  },
+  {
+    "key": "hero_category",
+    "source": "BODYBUILDING LEGENDS"
+  },
+  {
+    "key": "hero_title",
+    "source": "CHOOSE YOUR\\nPROGRAM"
+  },
+  {
+    "key": "hero_subtitle",
+    "source": "Select an athlete to explore their full training system."
+  },
+  {
+    "key": "step",
+    "source": "Step"
+  },
+  {
+    "key": "of",
+    "source": "of"
+  },
+  {
+    "key": "continue",
+    "source": "CONTINUE →"
+  },
+  {
+    "key": "finish_setup",
+    "source": "FINISH SETUP →"
+  },
+  {
+    "key": "start_training",
+    "source": "START TRAINING →"
+  },
+  {
+    "key": "goal_title",
+    "source": "WHAT\\'S YOUR\\nMAIN GOAL?"
+  },
+  {
+    "key": "goal_sub",
+    "source": "We\\'ll personalize your program recommendations around this."
+  },
+  {
+    "key": "build_muscle",
+    "source": "Build Muscle"
+  },
+  {
+    "key": "build_muscle_desc",
+    "source": "Mass & strength gain"
+  },
+  {
+    "key": "lose_fat",
+    "source": "Lose Fat"
+  },
+  {
+    "key": "lose_fat_desc",
+    "source": "Cut & get shredded"
+  },
+  {
+    "key": "endurance",
+    "source": "Endurance"
+  },
+  {
+    "key": "endurance_desc",
+    "source": "Cardio & stamina"
+  },
+  {
+    "key": "performance",
+    "source": "Performance"
+  },
+  {
+    "key": "performance_desc",
+    "source": "Speed & athleticism"
+  },
+  {
+    "key": "level_title",
+    "source": "YOUR TRAINING\\nEXPERIENCE"
+  },
+  {
+    "key": "level_sub",
+    "source": "This sets the intensity and complexity of your program."
+  },
+  {
+    "key": "beginner",
+    "source": "Beginner"
+  },
+  {
+    "key": "beginner_sub",
+    "source": "Under 1 year of training"
+  },
+  {
+    "key": "intermediate",
+    "source": "Intermediate"
+  },
+  {
+    "key": "intermediate_sub",
+    "source": "1–3 years of training"
+  },
+  {
+    "key": "advanced",
+    "source": "Advanced"
+  },
+  {
+    "key": "advanced_sub",
+    "source": "3+ years — serious athlete"
+  },
+  {
+    "key": "metrics_title",
+    "source": "YOUR BODY\\nMETRICS"
+  },
+  {
+    "key": "metrics_sub",
+    "source": "Used to tailor your nutrition plan and track your transformation."
+  },
+  {
+    "key": "weight",
+    "source": "Weight"
+  },
+  {
+    "key": "height",
+    "source": "Height"
+  },
+  {
+    "key": "age",
+    "source": "Age"
+  },
+  {
+    "key": "sex",
+    "source": "Biological Sex"
+  },
+  {
+    "key": "select",
+    "source": "Select..."
+  },
+  {
+    "key": "male",
+    "source": "Male"
+  },
+  {
+    "key": "female",
+    "source": "Female"
+  },
+  {
+    "key": "days_title",
+    "source": "HOW MANY DAYS\\nPER WEEK?"
+  },
+  {
+    "key": "days_sub",
+    "source": "Consistency beats intensity. Choose what you can realistically commit to."
+  },
+  {
+    "key": "days_3",
+    "source": "3 Days"
+  },
+  {
+    "key": "days_3_desc",
+    "source": "Full body focus"
+  },
+  {
+    "key": "days_4",
+    "source": "4 Days"
+  },
+  {
+    "key": "days_4_desc",
+    "source": "Upper/lower split"
+  },
+  {
+    "key": "days_5",
+    "source": "5 Days"
+  },
+  {
+    "key": "days_5_desc",
+    "source": "Classic PPL split"
+  },
+  {
+    "key": "days_6",
+    "source": "6 Days"
+  },
+  {
+    "key": "days_6_desc",
+    "source": "Full commitment"
+  },
+  {
+    "key": "performing_set",
+    "source": "PERFORMING SET"
+  },
+  {
+    "key": "ready_to_start",
+    "source": "READY TO START"
+  },
+  {
+    "key": "resting",
+    "source": "RESTING"
+  },
+  {
+    "key": "rest_over",
+    "source": "REST OVER"
+  },
+  {
+    "key": "ready_for_set",
+    "source": "Are you ready for Set {num}?"
+  },
+  {
+    "key": "yes_start_set",
+    "source": "YES, START SET"
+  },
+  {
+    "key": "start_set",
+    "source": "START SET"
+  },
+  {
+    "key": "start_session",
+    "source": "START SESSION"
+  },
+  {
+    "key": "edit_profile_title",
+    "source": "EDIT PROFILE"
+  },
+  {
+    "key": "full_name",
+    "source": "Full Name"
+  },
+  {
+    "key": "gender",
+    "source": "Gender"
+  },
+  {
+    "key": "height_cm_label",
+    "source": "Height (cm)"
+  },
+  {
+    "key": "weight_kg_label",
+    "source": "Weight (kg)"
+  },
+  {
+    "key": "fitness_goal",
+    "source": "Fitness Goal"
+  },
+  {
+    "key": "exp_level",
+    "source": "Experience Level"
+  },
+  {
+    "key": "prefer_not_to_say",
+    "source": "Prefer not to say"
+  },
+  {
+    "key": "general_fitness",
+    "source": "General Fitness"
+  },
+  {
+    "key": "gender_other",
+    "source": "Other"
+  },
+  {
+    "key": "save_changes",
+    "source": "SAVE CHANGES"
+  },
+  {
+    "key": "user_level_status",
+    "source": "Level {num} — {rank}"
+  },
+  {
+    "key": "rank_beginner",
+    "source": "Beginner Athlete"
+  },
+  {
+    "key": "rank_intermediate",
+    "source": "Intermediate Athlete"
+  },
+  {
+    "key": "rank_advanced",
+    "source": "Advanced Athlete"
+  },
+  {
+    "key": "quiz_gender_q",
+    "source": "Gender Q"
+  },
+  {
+    "key": "quiz_gender_sub",
+    "source": "Gender Sub"
+  },
+  {
+    "key": "quiz_female_goal_q",
+    "source": "Female Goal Q"
+  },
+  {
+    "key": "quiz_female_goal_sub",
+    "source": "Female Goal Sub"
+  },
+  {
+    "key": "quiz_female_goal_lean",
+    "source": "Female Goal Lean"
+  },
+  {
+    "key": "quiz_female_goal_lean_sub",
+    "source": "Female Goal Lean Sub"
+  },
+  {
+    "key": "quiz_female_goal_curvy",
+    "source": "Female Goal Curvy"
+  },
+  {
+    "key": "quiz_female_goal_curvy_sub",
+    "source": "Female Goal Curvy Sub"
+  },
+  {
+    "key": "quiz_female_goal_strong",
+    "source": "Female Goal Strong"
+  },
+  {
+    "key": "quiz_female_goal_strong_sub",
+    "source": "Female Goal Strong Sub"
+  },
+  {
+    "key": "quiz_female_goal_sculpt",
+    "source": "Female Goal Sculpt"
+  },
+  {
+    "key": "quiz_female_goal_sculpt_sub",
+    "source": "Female Goal Sculpt Sub"
+  },
+  {
+    "key": "quiz_male",
+    "source": "Male"
+  },
+  {
+    "key": "quiz_male_sub",
+    "source": "Male Sub"
+  },
+  {
+    "key": "quiz_female",
+    "source": "Female"
+  },
+  {
+    "key": "quiz_female_sub",
+    "source": "Female Sub"
+  },
+  {
+    "key": "quiz_res_aesthetic",
+    "source": "Res Aesthetic"
+  },
+  {
+    "key": "quiz_res_golden",
+    "source": "Res Golden"
+  },
+  {
+    "key": "quiz_res_mass",
+    "source": "Res Mass"
+  },
+  {
+    "key": "quiz_res_strength",
+    "source": "Res Strength"
+  },
+  {
+    "key": "quiz_res_cond",
+    "source": "Res Cond"
+  },
+  {
+    "key": "quiz_res_natural",
+    "source": "Res Natural"
+  },
+  {
+    "key": "quiz_res_bikini",
+    "source": "Res Bikini"
+  },
+  {
+    "key": "quiz_res_athletic",
+    "source": "Res Athletic"
+  },
+  {
+    "key": "quiz_res_power",
+    "source": "Res Power"
+  },
+  {
+    "key": "quiz_res_sculpt",
+    "source": "Res Sculpt"
+  },
+  {
+    "key": "quiz_analysis_result",
+    "source": "Analysis Result"
+  },
+  {
+    "key": "quiz_goal_q",
+    "source": "Goal Q"
+  },
+  {
+    "key": "quiz_goal_sub",
+    "source": "Goal Sub"
+  },
+  {
+    "key": "quiz_goal_mass",
+    "source": "Goal Mass"
+  },
+  {
+    "key": "quiz_goal_mass_sub",
+    "source": "Goal Mass Sub"
+  },
+  {
+    "key": "quiz_goal_aesthetic",
+    "source": "Goal Aesthetic"
+  },
+  {
+    "key": "quiz_goal_aesthetic_sub",
+    "source": "Goal Aesthetic Sub"
+  },
+  {
+    "key": "quiz_goal_strength",
+    "source": "Goal Strength"
+  },
+  {
+    "key": "quiz_goal_strength_sub",
+    "source": "Goal Strength Sub"
+  },
+  {
+    "key": "quiz_goal_symmetry",
+    "source": "Goal Symmetry"
+  },
+  {
+    "key": "quiz_goal_symmetry_sub",
+    "source": "Goal Symmetry Sub"
+  },
+  {
+    "key": "quiz_goal_classic",
+    "source": "Goal Classic"
+  },
+  {
+    "key": "quiz_goal_classic_sub",
+    "source": "Goal Classic Sub"
+  },
+  {
+    "key": "quiz_goal_natural",
+    "source": "Goal Natural"
+  },
+  {
+    "key": "quiz_goal_natural_sub",
+    "source": "Goal Natural Sub"
+  },
+  {
+    "key": "quiz_freq_q",
+    "source": "Freq Q"
+  },
+  {
+    "key": "quiz_freq_sub",
+    "source": "Freq Sub"
+  },
+  {
+    "key": "quiz_days_3",
+    "source": "Days 3"
+  },
+  {
+    "key": "quiz_days_3_sub",
+    "source": "Days 3 Sub"
+  },
+  {
+    "key": "quiz_days_4",
+    "source": "Days 4"
+  },
+  {
+    "key": "quiz_days_4_sub",
+    "source": "Days 4 Sub"
+  },
+  {
+    "key": "quiz_days_5",
+    "source": "Days 5"
+  },
+  {
+    "key": "quiz_days_5_sub",
+    "source": "Days 5 Sub"
+  },
+  {
+    "key": "quiz_days_6",
+    "source": "Days 6"
+  },
+  {
+    "key": "quiz_days_6_sub",
+    "source": "Days 6 Sub"
+  },
+  {
+    "key": "quiz_days_7",
+    "source": "Days 7"
+  },
+  {
+    "key": "quiz_days_7_sub",
+    "source": "Days 7 Sub"
+  },
+  {
+    "key": "quiz_muscle_q",
+    "source": "Muscle Q"
+  },
+  {
+    "key": "quiz_muscle_sub",
+    "source": "Muscle Sub"
+  },
+  {
+    "key": "quiz_body_chest",
+    "source": "Body Chest"
+  },
+  {
+    "key": "quiz_body_legs",
+    "source": "Body Legs"
+  },
+  {
+    "key": "quiz_body_shoulders",
+    "source": "Body Shoulders"
+  },
+  {
+    "key": "quiz_body_arms",
+    "source": "Body Arms"
+  },
+  {
+    "key": "quiz_body_symmetry",
+    "source": "Body Symmetry"
+  },
+  {
+    "key": "quiz_body_back",
+    "source": "Body Back"
+  },
+  {
+    "key": "quiz_body_forearms",
+    "source": "Body Forearms"
+  },
+  {
+    "key": "quiz_exp_q",
+    "source": "Exp Q"
+  },
+  {
+    "key": "quiz_exp_sub",
+    "source": "Exp Sub"
+  },
+  {
+    "key": "quiz_exp_beg",
+    "source": "Exp Beg"
+  },
+  {
+    "key": "quiz_exp_beg_sub",
+    "source": "Exp Beg Sub"
+  },
+  {
+    "key": "quiz_exp_int",
+    "source": "Exp Int"
+  },
+  {
+    "key": "quiz_exp_int_sub",
+    "source": "Exp Int Sub"
+  },
+  {
+    "key": "quiz_exp_adv",
+    "source": "Exp Adv"
+  },
+  {
+    "key": "quiz_exp_adv_sub",
+    "source": "Exp Adv Sub"
+  },
+  {
+    "key": "quiz_exp_vet",
+    "source": "Exp Vet"
+  },
+  {
+    "key": "quiz_exp_vet_sub",
+    "source": "Exp Vet Sub"
+  },
+  {
+    "key": "quiz_exp_pro",
+    "source": "Exp Pro"
+  },
+  {
+    "key": "quiz_exp_pro_sub",
+    "source": "Exp Pro Sub"
+  },
+  {
+    "key": "quiz_style_q",
+    "source": "Style Q"
+  },
+  {
+    "key": "quiz_style_sub",
+    "source": "Style Sub"
+  },
+  {
+    "key": "quiz_style_vol",
+    "source": "Style Vol"
+  },
+  {
+    "key": "quiz_style_vol_sub",
+    "source": "Style Vol Sub"
+  },
+  {
+    "key": "quiz_style_heavy",
+    "source": "Style Heavy"
+  },
+  {
+    "key": "quiz_style_heavy_sub",
+    "source": "Style Heavy Sub"
+  },
+  {
+    "key": "quiz_style_mm",
+    "source": "Style Mm"
+  },
+  {
+    "key": "quiz_style_mm_sub",
+    "source": "Style Mm Sub"
+  },
+  {
+    "key": "quiz_style_exp",
+    "source": "Style Exp"
+  },
+  {
+    "key": "quiz_style_exp_sub",
+    "source": "Style Exp Sub"
+  },
+  {
+    "key": "quiz_style_aes",
+    "source": "Style Aes"
+  },
+  {
+    "key": "quiz_style_aes_sub",
+    "source": "Style Aes Sub"
+  },
+  {
+    "key": "quiz_style_cond",
+    "source": "Style Cond"
+  },
+  {
+    "key": "quiz_style_cond_sub",
+    "source": "Style Cond Sub"
+  },
+  {
+    "key": "quiz_era_q",
+    "source": "Era Q"
+  },
+  {
+    "key": "quiz_era_sub",
+    "source": "Era Sub"
+  },
+  {
+    "key": "quiz_era_golden",
+    "source": "Era Golden"
+  },
+  {
+    "key": "quiz_era_golden_sub",
+    "source": "Era Golden Sub"
+  },
+  {
+    "key": "quiz_era_mass",
+    "source": "Era Mass"
+  },
+  {
+    "key": "quiz_era_mass_sub",
+    "source": "Era Mass Sub"
+  },
+  {
+    "key": "quiz_era_modern",
+    "source": "Era Modern"
+  },
+  {
+    "key": "quiz_era_modern_sub",
+    "source": "Era Modern Sub"
+  },
+  {
+    "key": "quiz_era_aes",
+    "source": "Era Aes"
+  },
+  {
+    "key": "quiz_era_aes_sub",
+    "source": "Era Aes Sub"
+  },
+  {
+    "key": "quiz_era_open",
+    "source": "Era Open"
+  },
+  {
+    "key": "quiz_era_open_sub",
+    "source": "Era Open Sub"
+  },
+  {
+    "key": "quiz_diet_q",
+    "source": "Diet Q"
+  },
+  {
+    "key": "quiz_diet_sub",
+    "source": "Diet Sub"
+  },
+  {
+    "key": "quiz_diet_bulk",
+    "source": "Diet Bulk"
+  },
+  {
+    "key": "quiz_diet_bulk_sub",
+    "source": "Diet Bulk Sub"
+  },
+  {
+    "key": "quiz_diet_clean",
+    "source": "Diet Clean"
+  },
+  {
+    "key": "quiz_diet_clean_sub",
+    "source": "Diet Clean Sub"
+  },
+  {
+    "key": "quiz_diet_strict",
+    "source": "Diet Strict"
+  },
+  {
+    "key": "quiz_diet_strict_sub",
+    "source": "Diet Strict Sub"
+  },
+  {
+    "key": "quiz_diet_intu",
+    "source": "Diet Intu"
+  },
+  {
+    "key": "quiz_diet_intu_sub",
+    "source": "Diet Intu Sub"
+  },
+  {
+    "key": "quiz_diet_cycle",
+    "source": "Diet Cycle"
+  },
+  {
+    "key": "quiz_diet_cycle_sub",
+    "source": "Diet Cycle Sub"
+  },
+  {
+    "key": "quiz_diet_prot",
+    "source": "Diet Prot"
+  },
+  {
+    "key": "quiz_diet_prot_sub",
+    "source": "Diet Prot Sub"
+  },
+  {
+    "key": "quiz_moti_q",
+    "source": "Moti Q"
+  },
+  {
+    "key": "quiz_moti_sub",
+    "source": "Moti Sub"
+  },
+  {
+    "key": "quiz_moti_dom",
+    "source": "Moti Dom"
+  },
+  {
+    "key": "quiz_moti_dom_sub",
+    "source": "Moti Dom Sub"
+  },
+  {
+    "key": "quiz_moti_look",
+    "source": "Moti Look"
+  },
+  {
+    "key": "quiz_moti_look_sub",
+    "source": "Moti Look Sub"
+  },
+  {
+    "key": "quiz_moti_pr",
+    "source": "Moti Pr"
+  },
+  {
+    "key": "quiz_moti_pr_sub",
+    "source": "Moti Pr Sub"
+  },
+  {
+    "key": "quiz_moti_legacy",
+    "source": "Moti Legacy"
+  },
+  {
+    "key": "quiz_moti_legacy_sub",
+    "source": "Moti Legacy Sub"
+  },
+  {
+    "key": "quiz_moti_inspire",
+    "source": "Moti Inspire"
+  },
+  {
+    "key": "quiz_moti_inspire_sub",
+    "source": "Moti Inspire Sub"
+  },
+  {
+    "key": "quiz_moti_shred",
+    "source": "Moti Shred"
+  },
+  {
+    "key": "quiz_moti_shred_sub",
+    "source": "Moti Shred Sub"
+  },
+  {
+    "key": "quiz_type_q",
+    "source": "Type Q"
+  },
+  {
+    "key": "quiz_type_sub",
+    "source": "Type Sub"
+  },
+  {
+    "key": "quiz_type_slim",
+    "source": "Type Slim"
+  },
+  {
+    "key": "quiz_type_slim_sub",
+    "source": "Type Slim Sub"
+  },
+  {
+    "key": "quiz_type_avg",
+    "source": "Type Avg"
+  },
+  {
+    "key": "quiz_type_avg_sub",
+    "source": "Type Avg Sub"
+  },
+  {
+    "key": "quiz_type_stocky",
+    "source": "Type Stocky"
+  },
+  {
+    "key": "quiz_type_stocky_sub",
+    "source": "Type Stocky Sub"
+  },
+  {
+    "key": "wellness_athletic_sub",
+    "source": "Functional strength & lean muscle"
+  },
+  {
+    "key": "wellness_bikini_sub",
+    "source": "Bikini stage readiness"
+  },
+  {
+    "key": "wellness_power_sub",
+    "source": "Pure strength & explosive power"
+  },
+  {
+    "key": "wellness_sculpt_sub",
+    "source": "Fat loss & body sculpting"
+  },
+  {
+    "key": "female_program_fallback",
+    "source": "5 Specialized Physique Archetypes"
+  },
+  {
+    "key": "featured_tag",
+    "source": "FEATURED"
+  },
+  {
+    "key": "featured_program_tag",
+    "source": "⚡ FEATURED PROGRAM"
+  },
+  {
+    "key": "quiz_type_ath",
+    "source": "Type Ath"
+  },
+  {
+    "key": "quiz_type_ath_sub",
+    "source": "Type Ath Sub"
+  },
+  {
+    "key": "quiz_type_power",
+    "source": "Type Power"
+  },
+  {
+    "key": "quiz_type_power_sub",
+    "source": "Type Power Sub"
+  },
+  {
+    "key": "quiz_quote_q",
+    "source": "Quote Q"
+  },
+  {
+    "key": "quiz_quote_sub",
+    "source": "Quote Sub"
+  },
+  {
+    "key": "quiz_quote_ronnie",
+    "source": "Quote Ronnie"
+  },
+  {
+    "key": "quiz_quote_arnold",
+    "source": "Quote Arnold"
+  },
+  {
+    "key": "quiz_quote_alex",
+    "source": "Quote Alex"
+  },
+  {
+    "key": "quiz_quote_phil",
+    "source": "Quote Phil"
+  },
+  {
+    "key": "quiz_quote_franco",
+    "source": "Quote Franco"
+  },
+  {
+    "key": "quiz_quote_ulisses",
+    "source": "Quote Ulisses"
+  },
+  {
+    "key": "quiz_quote_larry",
+    "source": "Quote Larry"
+  },
+  {
+    "key": "quiz_quote_jeff",
+    "source": "Quote Jeff"
+  },
+  {
+    "key": "ready_next_session",
+    "source": "READY FOR YOUR NEXT SESSION"
+  },
+  {
+    "key": "last_completed_session",
+    "source": "LAST COMPLETED SESSION"
+  },
+  {
+    "key": "overall_completion",
+    "source": "OVERALL WEEK COMPLETION"
+  },
+  {
+    "key": "muscles_trained",
+    "source": "MUSCLES TRAINED"
+  },
+  {
+    "key": "weekly_activity",
+    "source": "WEEKLY ACTIVITY"
+  },
+  {
+    "key": "achievements",
+    "source": "ACHIEVEMENTS"
+  },
+  {
+    "key": "halfway_title",
+    "source": "Halfway"
+  },
+  {
+    "key": "halfway_desc",
+    "source": "Completed 6 weeks of training"
+  },
+  {
+    "key": "beast_mode_title",
+    "source": "Beast Mode"
+  },
+  {
+    "key": "beast_mode_desc",
+    "source": "Completed 5 workouts in a single week"
+  },
+  {
+    "key": "program_completions",
+    "source": "PROGRAM COMPLETIONS"
+  },
+  {
+    "key": "times_finished",
+    "source": "{num} times finished"
+  },
+  {
+    "key": "best_streak",
+    "source": "Best Streak"
+  },
+  {
+    "key": "day_streak",
+    "source": "Day Streak"
+  },
+  {
+    "key": "keep_it_going",
+    "source": "Keep it going"
+  },
+  {
+    "key": "Kettlebell Sumo Deadlift",
+    "source": "Kettlebell Sumo Deadlift"
+  },
+  {
+    "key": "Bulgarian single squat",
+    "source": "Bulgarian Single Squat"
+  },
+  {
+    "key": "Dumbbell Bulgarian single squat",
+    "source": "Dumbbell Bulgarian Single Squat"
+  },
+  {
+    "key": "style_VOL",
+    "source": "Style Vol"
+  },
+  {
+    "key": "style_PWR",
+    "source": "Style Pwr"
+  },
+  {
+    "key": "style_CLS",
+    "source": "Style Cls"
+  },
+  {
+    "key": "style_FST",
+    "source": "Style Fst"
+  },
+  {
+    "key": "intensity_HIGH",
+    "source": "Intensity High"
+  },
+  {
+    "key": "intensity_MAX",
+    "source": "Intensity Max"
+  },
+  {
+    "key": "intensity_MEDIUM",
+    "source": "Intensity Medium"
+  },
+  {
+    "key": "quote_arnold",
+    "source": "Arnold"
+  },
+  {
+    "key": "quote_ronnie",
+    "source": "Ronnie"
+  },
+  {
+    "key": "quote_cbum",
+    "source": "Cbum"
+  },
+  {
+    "key": "quote_jaycutler",
+    "source": "Jaycutler"
+  },
+  {
+    "key": "quote_philheath",
+    "source": "Philheath"
+  },
+  {
+    "key": "quote_athletic_lean",
+    "source": "Athletic Lean"
+  },
+  {
+    "key": "quote_bikini_competition",
+    "source": "Bikini Competition"
+  },
+  {
+    "key": "quote_powerlifter_female",
+    "source": "Powerlifter Female"
+  },
+  {
+    "key": "quote_sculpt_and_cardio",
+    "source": "Sculpt And Cardio"
+  },
+  {
+    "key": "alias_The Austrian Oak",
+    "source": "The Austrian Oak"
+  },
+  {
+    "key": "alias_The King",
+    "source": "The King"
+  },
+  {
+    "key": "alias_CBum",
+    "source": "Cbum"
+  },
+  {
+    "key": "alias_The Quad Stomp",
+    "source": "The Quad Stomp"
+  },
+  {
+    "key": "alias_The Gifted",
+    "source": "The Gifted"
+  },
+  {
+    "key": "alias_Functional Strength",
+    "source": "Functional Strength"
+  },
+  {
+    "key": "alias_Hourglass Detail",
+    "source": "Hourglass Detail"
+  },
+  {
+    "key": "workout_chest_triceps",
+    "source": "Chest & Triceps"
+  },
+  {
+    "key": "workout_back_biceps",
+    "source": "Back & Biceps"
+  },
+  {
+    "key": "workout_chest_back",
+    "source": "Chest & Back"
+  },
+  {
+    "key": "workout_shoulders_and_chest",
+    "source": "Shoulders & Chest"
+  },
+  {
+    "key": "workout_legs",
+    "source": "Legs"
+  },
+  {
+    "key": "workout_shoulders",
+    "source": "Shoulders"
+  },
+  {
+    "key": "workout_push",
+    "source": "Push"
+  },
+  {
+    "key": "workout_pull",
+    "source": "Pull"
+  },
+  {
+    "key": "workout_upper",
+    "source": "Upper Body"
+  },
+  {
+    "key": "workout_lower",
+    "source": "Lower Body"
+  },
+  {
+    "key": "workout_full_body",
+    "source": "Full Body"
+  },
+  {
+    "key": "workout_glute_shaping",
+    "source": "Glute Shaping"
+  },
+  {
+    "key": "workout_squat_day",
+    "source": "Squat Day"
+  },
+  {
+    "key": "workout_deadlift_day",
+    "source": "Deadlift Day"
+  },
+  {
+    "key": "workout_strength_accessory",
+    "source": "Strength Accessory"
+  },
+  {
+    "key": "workout_arm_day",
+    "source": "Arm Day"
+  },
+  {
+    "key": "workout_rest_day",
+    "source": "Rest Day"
+  },
+  {
+    "key": "alias_Maximum Strength",
+    "source": "Maximum Strength"
+  },
+  {
+    "key": "alias_Full Body Refinement",
+    "source": "Full Body Refinement"
+  },
+  {
+    "key": "streak",
+    "source": "THIS WEEK'S STREAK"
+  },
+  {
+    "key": "weekly_activity",
+    "source": "WEEKLY ACTIVITY"
+  },
+  {
+    "key": "of",
+    "source": "of"
+  },
+  {
+    "key": "muscle_quads",
+    "source": "Quads"
+  },
+  {
+    "key": "muscle_hamstrings",
+    "source": "Hamstrings"
+  },
+  {
+    "key": "muscle_calves",
+    "source": "Calves"
+  },
+  {
+    "key": "muscle_shoulder",
+    "source": "Shoulder"
+  },
+  {
+    "key": "muscle_traps",
+    "source": "Traps"
+  },
+  {
+    "key": "muscle_chest",
+    "source": "Chest"
+  },
+  {
+    "key": "muscle_biceps",
+    "source": "Biceps"
+  },
+  {
+    "key": "muscle_triceps",
+    "source": "Triceps"
+  },
+  {
+    "key": "muscle_abs",
+    "source": "Abs"
+  },
+  {
+    "key": "muscle_back",
+    "source": "Back"
+  },
+  {
+    "key": "muscle_cardio",
+    "source": "Cardio"
+  },
+  {
+    "key": "muscle_strength",
+    "source": "Strength"
+  },
+  {
+    "key": "other_muscle",
+    "source": "Other Muscle"
+  },
+  {
+    "key": "muscle_other",
+    "source": "Other"
+  },
+  {
+    "key": "Other",
+    "source": "Other"
+  },
+  {
+    "key": "Other Muscle",
+    "source": "Other Muscle"
+  },
+  {
+    "key": "other muscle",
+    "source": "Other Muscle"
+  },
+  {
+    "key": "عضلة أخرى_muscle",
+    "source": "عضلة أخرى Muscle"
+  },
+  {
+    "key": "muscle_chest_shoulders_and_arms",
+    "source": "Chest Shoulders And Arms"
+  },
+  {
+    "key": "workout_chest_shoulders_and_arms",
+    "source": "Chest Shoulders And Arms"
+  },
+  {
+    "key": "chest_shoulders_and_arms",
+    "source": "Chest Shoulders And Arms"
+  },
+  {
+    "key": "Chest, Shoulders & Arms",
+    "source": "Chest, Shoulders & Arms"
+  },
+  {
+    "key": "muscle_back_and_legs",
+    "source": "Back And Legs"
+  },
+  {
+    "key": "workout_back_and_legs",
+    "source": "Back And Legs"
+  },
+  {
+    "key": "back_and_legs",
+    "source": "Back And Legs"
+  },
+  {
+    "key": "Back & Legs",
+    "source": "Back & Legs"
+  },
+  {
+    "key": "muscle_chest_and_shoulders",
+    "source": "Chest And Shoulders"
+  },
+  {
+    "key": "workout_chest_and_shoulders",
+    "source": "Chest And Shoulders"
+  },
+  {
+    "key": "chest_and_shoulders",
+    "source": "Chest And Shoulders"
+  },
+  {
+    "key": "Chest & Shoulders",
+    "source": "Chest & Shoulders"
+  },
+  {
+    "key": "muscle_arms_morning",
+    "source": "Arms Morning"
+  },
+  {
+    "key": "workout_arms_morning",
+    "source": "Arms Morning"
+  },
+  {
+    "key": "arms_morning",
+    "source": "Arms Morning"
+  },
+  {
+    "key": "Arms (Morning)",
+    "source": "Arms (morning)"
+  },
+  {
+    "key": "muscle_legs_and_back",
+    "source": "Legs And Back"
+  },
+  {
+    "key": "workout_legs_and_back",
+    "source": "Legs And Back"
+  },
+  {
+    "key": "legs_and_back",
+    "source": "Legs And Back"
+  },
+  {
+    "key": "Legs & Back",
+    "source": "Legs & Back"
+  },
+  {
+    "key": "muscle_back_morning",
+    "source": "Back Morning"
+  },
+  {
+    "key": "workout_back_morning",
+    "source": "Back Morning"
+  },
+  {
+    "key": "back_morning",
+    "source": "Back Morning"
+  },
+  {
+    "key": "Back (Morning)",
+    "source": "Back (morning)"
+  },
+  {
+    "key": "AM: Chest/Shoulders | PM: Arms",
+    "source": "Am: Chest/shoulders | Pm: Arms"
+  },
+  {
+    "key": "AM: Back | PM: Legs",
+    "source": "Am: Back | Pm: Legs"
+  },
+  {
+    "key": "Morning Isolation & Density",
+    "source": "Morning Isolation & Density"
+  },
+  {
+    "key": "Direct Bicep/Tricep Work",
+    "source": "Direct Bicep/tricep Work"
+  },
+  {
+    "key": "AM: Legs | PM: Back",
+    "source": "Am: Legs | Pm: Back"
+  },
+  {
+    "key": "Classic Symmetry",
+    "source": "Classic Symmetry"
+  },
+  {
+    "key": "Sardinian Recovery Focus",
+    "source": "Sardinian Recovery Focus"
+  },
+  {
+    "key": "AM: Arms | PM: Legs",
+    "source": "Am: Arms | Pm: Legs"
+  },
+  {
+    "key": "V-Taper Depth",
+    "source": "V-taper Depth"
+  },
+  {
+    "key": "muscle_legs",
+    "source": "Legs"
+  },
+  {
+    "key": "workout_legs",
+    "source": "Legs"
+  },
+  {
+    "key": "tag_Volume",
+    "source": "Volume"
+  },
+  {
+    "key": "tag_Mass",
+    "source": "Mass"
+  },
+  {
+    "key": "tag_Massive",
+    "source": "Massive"
+  },
+  {
+    "key": "tag_Hypertrophy",
+    "source": "Hypertrophy"
+  },
+  {
+    "key": "tag_Strength",
+    "source": "Strength"
+  },
+  {
+    "key": "tag_Endurance",
+    "source": "Endurance"
+  },
+  {
+    "key": "tag_Aesthetic",
+    "source": "Aesthetic"
+  },
+  {
+    "key": "tag_Hybrid",
+    "source": "Hybrid"
+  },
+  {
+    "key": "tag_Chest",
+    "source": "Chest"
+  },
+  {
+    "key": "tag_Back",
+    "source": "Back"
+  },
+  {
+    "key": "tag_Shoulder",
+    "source": "Shoulder"
+  },
+  {
+    "key": "tag_Legs",
+    "source": "Legs"
+  },
+  {
+    "key": "style_dual_split",
+    "source": "Style Dual Split"
+  },
+  {
+    "key": "style_dual_split_desc",
+    "source": "Style Dual Split Desc"
+  },
+  {
+    "key": "sets_to_max",
+    "source": "Sets To Max"
+  },
+  {
+    "key": "superset",
+    "source": "Superset"
+  },
+  {
+    "key": "tag_Superset",
+    "source": "Superset"
+  },
+  {
+    "key": "Superset",
+    "source": "Superset"
+  },
+  {
+    "key": "sets to failure",
+    "source": "Sets To Failure"
+  },
+  {
+    "key": "sets_to_failure",
+    "source": "Sets To Failure"
+  },
+  {
+    "key": "Sets to failure",
+    "source": "Sets To Failure"
+  },
+  {
+    "key": "Sets to Failure",
+    "source": "Sets To Failure"
+  },
+  {
+    "key": "to max",
+    "source": "To Max"
+  },
+  {
+    "key": "to MAX",
+    "source": "To Max"
+  },
+  {
+    "key": "rounds",
+    "source": "Rounds"
+  },
+  {
+    "key": "cardio",
+    "source": "Cardio"
+  },
+  {
+    "key": "min",
+    "source": "Min"
+  },
+  {
+    "key": "unit_s",
+    "source": "Unit S"
+  },
+  {
+    "key": "timer_90",
+    "source": "Timer 90"
+  },
+  {
+    "key": "rest_90s",
+    "source": "Rest 90s"
+  },
+  {
+    "key": "dual_split_title",
+    "source": "Dual Split Title"
+  },
+  {
+    "key": "dual_split_desc",
+    "source": "Dual Split Desc"
+  },
+  {
+    "key": "exercise_Cable Row",
+    "source": "Cable Row"
+  },
+  {
+    "key": "exercise_Smith Machine Shrug",
+    "source": "Smith Machine Shrug"
+  },
+  {
+    "key": "exercise_Barbell Incline Bench Press",
+    "source": "Barbell Incline Bench Press"
+  },
+  {
+    "key": "exercise_Paused Back Squat",
+    "source": "Paused Back Squat"
+  },
+  {
+    "key": "exercise_Barbell Hip Thrust",
+    "source": "Barbell Hip Thrust"
+  },
+  {
+    "key": "exercise_Dumbbell Stiff Leg Deadlift",
+    "source": "Dumbbell Stiff Leg Deadlift"
+  },
+  {
+    "key": "exercise_Arm Curl Machine",
+    "source": "Arm Curl Machine"
+  },
+  {
+    "key": "exercise_Dumbbell Leg Curl",
+    "source": "Dumbbell Leg Curl"
+  },
+  {
+    "key": "exercise_Shoulder Press Machine",
+    "source": "Shoulder Press Machine"
+  },
+  {
+    "key": "exercise_Reverse Pec Deck Fly Machine",
+    "source": "Reverse Pec Deck Fly Machine"
+  },
+  {
+    "key": "exercise_Cable Hammer Curl",
+    "source": "Cable Hammer Curl"
+  },
+  {
+    "key": "exercise_Behind Neck Press",
+    "source": "Behind Neck Press"
+  },
+  {
+    "key": "exercise_Bentover Dumbbell Lateral Raise",
+    "source": "Bentover Dumbbell Lateral Raise"
+  },
+  {
+    "key": "exercise_Seated Dumbbell Tricep Extension",
+    "source": "Seated Dumbbell Tricep Extension"
+  },
+  {
+    "key": "exercise_Bench Dips",
+    "source": "Bench Dips"
+  },
+  {
+    "key": "exercise_Donkey Kick",
+    "source": "Donkey Kick"
+  },
+  {
+    "key": "exercise_Back Squat",
+    "source": "Back Squat"
+  },
+  {
+    "key": "exercise_Front Squat",
+    "source": "Front Squat"
+  },
+  {
+    "key": "exercise_Leg Press",
+    "source": "Leg Press"
+  },
+  {
+    "key": "exercise_Leg Extension",
+    "source": "Leg Extension"
+  },
+  {
+    "key": "exercise_Hack Squat Machine",
+    "source": "Hack Squat Machine"
+  },
+  {
+    "key": "exercise_Romanian Deadlift",
+    "source": "Romanian Deadlift"
+  },
+  {
+    "key": "exercise_Leg Curl",
+    "source": "Leg Curl"
+  },
+  {
+    "key": "exercise_Seated Leg Curl",
+    "source": "Seated Leg Curl"
+  },
+  {
+    "key": "exercise_Stiff Leg Deadlift",
+    "source": "Stiff Leg Deadlift"
+  },
+  {
+    "key": "exercise_Hip Thrust",
+    "source": "Hip Thrust"
+  },
+  {
+    "key": "exercise_Overhead Press",
+    "source": "Overhead Press"
+  },
+  {
+    "key": "exercise_Dumbbell Shoulder Press",
+    "source": "Dumbbell Shoulder Press"
+  },
+  {
+    "key": "exercise_Dumbbell Lateral Raise",
+    "source": "Dumbbell Lateral Raise"
+  },
+  {
+    "key": "exercise_Barbell Bench Press",
+    "source": "Barbell Bench Press"
+  },
+  {
+    "key": "exercise_Dumbbell Bench Press",
+    "source": "Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_Incline Dumbbell Bench Press",
+    "source": "Incline Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_Dips",
+    "source": "Dips"
+  },
+  {
+    "key": "exercise_Pull Up",
+    "source": "Pull Up"
+  },
+  {
+    "key": "exercise_Lat Pulldown",
+    "source": "Lat Pulldown"
+  },
+  {
+    "key": "exercise_Barbell Row",
+    "source": "Barbell Row"
+  },
+  {
+    "key": "exercise_Barbell Bent-over Row",
+    "source": "Barbell Bent-over Row"
+  },
+  {
+    "key": "exercise_barbell bent over row",
+    "source": "Barbell Bent Over Row"
+  },
+  {
+    "key": "exercise_Seated Row",
+    "source": "Seated Row"
+  },
+  {
+    "key": "exercise_Dumbbell Bicep Curl",
+    "source": "Dumbbell Bicep Curl"
+  },
+  {
+    "key": "exercise_Barbell Upright Row",
+    "source": "Barbell Upright Row"
+  },
+  {
+    "key": "exercise_Dumbbell Hammer Curl",
+    "source": "Dumbbell Hammer Curl"
+  },
+  {
+    "key": "exercise_Cable Curl",
+    "source": "Cable Curl"
+  },
+  {
+    "key": "exercise_Barbell Preacher Curl",
+    "source": "Barbell Preacher Curl"
+  },
+  {
+    "key": "exercise_Barbbell Preacher Curl",
+    "source": "Barbbell Preacher Curl"
+  },
+  {
+    "key": "exercise_Dumbbell Tricep Extension",
+    "source": "Dumbbell Tricep Extension"
+  },
+  {
+    "key": "exercise_EZ Bar Curl",
+    "source": "Ez Bar Curl"
+  },
+  {
+    "key": "exercise_Cable Push Down",
+    "source": "Cable Push Down"
+  },
+  {
+    "key": "exercise_Skull Crusher",
+    "source": "Skull Crusher"
+  },
+  {
+    "key": "exercise_Plank",
+    "source": "Plank"
+  },
+  {
+    "key": "exercise_Crunch",
+    "source": "Crunch"
+  },
+  {
+    "key": "exercise_Sit Up",
+    "source": "Sit Up"
+  },
+  {
+    "key": "exercise_Hanging Leg Raise",
+    "source": "Hanging Leg Raise"
+  },
+  {
+    "key": "exercise_Lunge",
+    "source": "Lunge"
+  },
+  {
+    "key": "exercise_Step Up",
+    "source": "Step Up"
+  },
+  {
+    "key": "exercise_Calf Raise",
+    "source": "Calf Raise"
+  },
+  {
+    "key": "exercise_Standing Calf Raise",
+    "source": "Standing Calf Raise"
+  },
+  {
+    "key": "exercise_Seated Calf Raise",
+    "source": "Seated Calf Raise"
+  },
+  {
+    "key": "exercise_Face Pull",
+    "source": "Face Pull"
+  },
+  {
+    "key": "exercise_Arnold Dumbbell Press",
+    "source": "Arnold Dumbbell Press"
+  },
+  {
+    "key": "exercise_Dumbbell Fly",
+    "source": "Dumbbell Fly"
+  },
+  {
+    "key": "exercise_Pec Deck Fly Machine",
+    "source": "Pec Deck Fly Machine"
+  },
+  {
+    "key": "exercise_Push Up",
+    "source": "Push Up"
+  },
+  {
+    "key": "exercise_Barbell Shrug",
+    "source": "Barbell Shrug"
+  },
+  {
+    "key": "exercise_Dumbbell Shrug",
+    "source": "Dumbbell Shrug"
+  },
+  {
+    "key": "exercise_Close-grip Bench Press",
+    "source": "Close-grip Bench Press"
+  },
+  {
+    "key": "exercise_Hammer Curl",
+    "source": "Hammer Curl"
+  },
+  {
+    "key": "exercise_Preacher Curl",
+    "source": "Preacher Curl"
+  },
+  {
+    "key": "exercise_Deadlift",
+    "source": "Deadlift"
+  },
+  {
+    "key": "exercise_Conventional Deadlift",
+    "source": "Conventional Deadlift"
+  },
+  {
+    "key": "exercise_Sumo Deadlift",
+    "source": "Sumo Deadlift"
+  },
+  {
+    "key": "exercise_Dumbbell Sumo Deadlift",
+    "source": "Dumbbell Sumo Deadlift"
+  },
+  {
+    "key": "exercise_Dumbbell Bulgarian Single Squat",
+    "source": "Dumbbell Bulgarian Single Squat"
+  },
+  {
+    "key": "exercise_Dumbbell Bulgarian single squat",
+    "source": "Dumbbell Bulgarian Single Squat"
+  },
+  {
+    "key": "exercise_Dumbbell Bulgarian Split Squat",
+    "source": "Dumbbell Bulgarian Split Squat"
+  },
+  {
+    "key": "exercise_Barbell Bulgarian Split Squat",
+    "source": "Barbell Bulgarian Split Squat"
+  },
+  {
+    "key": "exercise_Kettlebell Sumo Deadlift",
+    "source": "Kettlebell Sumo Deadlift"
+  },
+  {
+    "key": "exercise_Good-morning",
+    "source": "Good-morning"
+  },
+  {
+    "key": "exercise_Bulgarian Split Squat",
+    "source": "Bulgarian Split Squat"
+  },
+  {
+    "key": "exercise_Goblet Squat",
+    "source": "Goblet Squat"
+  },
+  {
+    "key": "exercise_T-Bar Row",
+    "source": "T-bar Row"
+  },
+  {
+    "key": "exercise_Single Leg Press",
+    "source": "Single Leg Press"
+  },
+  {
+    "key": "exercise_Glute Kickback",
+    "source": "Glute Kickback"
+  },
+  {
+    "key": "exercise_Abduction Machine",
+    "source": "Abduction Machine"
+  },
+  {
+    "key": "exercise_Adduction Machine",
+    "source": "Adduction Machine"
+  },
+  {
+    "key": "exercise_Hammer Bench Press",
+    "source": "Hammer Bench Press"
+  },
+  {
+    "key": "exercise_Barbell Front Raise",
+    "source": "Barbell Front Raise"
+  },
+  {
+    "key": "exercise_Dumbbell Front Raise",
+    "source": "Dumbbell Front Raise"
+  },
+  {
+    "key": "exercise_Reverse Pec Deck",
+    "source": "Reverse Pec Deck"
+  },
+  {
+    "key": "exercise_Straight Arm Pulldown",
+    "source": "Straight Arm Pulldown"
+  },
+  {
+    "key": "exercise_Concentration Curl",
+    "source": "Concentration Curl"
+  },
+  {
+    "key": "exercise_Reverse Curl",
+    "source": "Reverse Curl"
+  },
+  {
+    "key": "exercise_Tricep Extension",
+    "source": "Tricep Extension"
+  },
+  {
+    "key": "exercise_Cable Overhead Ext",
+    "source": "Cable Overhead Ext"
+  },
+  {
+    "key": "exercise_V-up",
+    "source": "V-up"
+  },
+  {
+    "key": "exercise_Leg Raise",
+    "source": "Leg Raise"
+  },
+  {
+    "key": "exercise_Heel Touch",
+    "source": "Heel Touch"
+  },
+  {
+    "key": "exercise_Side Bend",
+    "source": "Side Bend"
+  },
+  {
+    "key": "exercise_Hyperextension",
+    "source": "Hyperextension"
+  },
+  {
+    "key": "exercise_Running",
+    "source": "Running"
+  },
+  {
+    "key": "exercise_Cycling",
+    "source": "Cycling"
+  },
+  {
+    "key": "exercise_Climbing Stairs",
+    "source": "Climbing Stairs"
+  },
+  {
+    "key": "exercise_Walking",
+    "source": "Walking"
+  },
+  {
+    "key": "exercise_Flat Barbell Bench Press",
+    "source": "Flat Barbell Bench Press"
+  },
+  {
+    "key": "exercise_Bench Press",
+    "source": "Bench Press"
+  },
+  {
+    "key": "exercise_Incline Dumbbell Press",
+    "source": "Incline Dumbbell Press"
+  },
+  {
+    "key": "exercise_Flat Dumbbell Flye",
+    "source": "Flat Dumbbell Flye"
+  },
+  {
+    "key": "exercise_Standing DB Lateral Raise",
+    "source": "Standing Db Lateral Raise"
+  },
+  {
+    "key": "exercise_Bent-over Lateral Raise",
+    "source": "Bent-over Lateral Raise"
+  },
+  {
+    "key": "exercise_Behind-the-Neck Press",
+    "source": "Behind-the-neck Press"
+  },
+  {
+    "key": "exercise_Alternating Front Raise",
+    "source": "Alternating Front Raise"
+  },
+  {
+    "key": "exercise_Cable Pushdowns",
+    "source": "Cable Pushdowns"
+  },
+  {
+    "key": "exercise_Standing DB Curls",
+    "source": "Standing Db Curls"
+  },
+  {
+    "key": "exercise_Skull Crushers",
+    "source": "Skull Crushers"
+  },
+  {
+    "key": "exercise_Barbell Preacher Curls",
+    "source": "Barbell Preacher Curls"
+  },
+  {
+    "key": "exercise_Seated Barbell Extension",
+    "source": "Seated Barbell Extension"
+  },
+  {
+    "key": "exercise_Incline DB Curls",
+    "source": "Incline Db Curls"
+  },
+  {
+    "key": "exercise_Chin-ups",
+    "source": "Chin-ups"
+  },
+  {
+    "key": "exercise_Wide-Grip Pull-ups",
+    "source": "Wide-grip Pull-ups"
+  },
+  {
+    "key": "exercise_One-Arm DB Row",
+    "source": "One-arm Db Row"
+  },
+  {
+    "key": "exercise_Roman Chair Sit-ups",
+    "source": "Roman Chair Sit-ups"
+  },
+  {
+    "key": "exercise_One Arm Cable Seated Row",
+    "source": "One Arm Cable Seated Row"
+  },
+  {
+    "key": "exercise_Plate Shoulder Press",
+    "source": "Plate Shoulder Press"
+  },
+  {
+    "key": "exercise_Smith Machine Overhead Press",
+    "source": "Smith Machine Overhead Press"
+  },
+  {
+    "key": "exercise_Incline Dumbell Bench Press",
+    "source": "Incline Dumbell Bench Press"
+  },
+  {
+    "key": "exercise_Seated Row",
+    "source": "Seated Row"
+  },
+  {
+    "key": "exercise_Seated Rows",
+    "source": "Seated Rows"
+  },
+  {
+    "key": "exercise_Farmer\\'s walk",
+    "source": "Farmer\\'s Walk"
+  },
+  {
+    "key": "exercise_Farmer\\'s Walk",
+    "source": "Farmer\\'s Walk"
+  },
+  {
+    "key": "exercise_Box jump",
+    "source": "Box Jump"
+  },
+  {
+    "key": "exercise_Box Jump",
+    "source": "Box Jump"
+  },
+  {
+    "key": "exercise_Glute kickback",
+    "source": "Glute Kickback"
+  },
+  {
+    "key": "exercise_Glute kickbacks",
+    "source": "Glute Kickbacks"
+  },
+  {
+    "key": "exercise_glute kickbacks",
+    "source": "Glute Kickbacks"
+  },
+  {
+    "key": "exercise_Cable Front Raise",
+    "source": "Cable Front Raise"
+  },
+  {
+    "key": "exercise_dumbbell bench press",
+    "source": "Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_lunge",
+    "source": "Lunge"
+  },
+  {
+    "key": "exercise_Cable Crossover",
+    "source": "Cable Crossover"
+  },
+  {
+    "key": "exercise_Barbell Pullover",
+    "source": "Barbell Pullover"
+  },
+  {
+    "key": "exercise_Dumbbell Pullover",
+    "source": "Dumbbell Pullover"
+  },
+  {
+    "key": "exercise_Underhand Lat Pulldown",
+    "source": "Underhand Lat Pulldown"
+  },
+  {
+    "key": "exercise_T-bar Row Machine",
+    "source": "T-bar Row Machine"
+  },
+  {
+    "key": "exercise_Seated Cable Row",
+    "source": "Seated Cable Row"
+  },
+  {
+    "key": "exercise_Cable Straight Arm Pulldown",
+    "source": "Cable Straight Arm Pulldown"
+  },
+  {
+    "key": "exercise_Underhand Barbell Row",
+    "source": "Underhand Barbell Row"
+  },
+  {
+    "key": "exercise_Lat Pull Down",
+    "source": "Lat Pull Down"
+  },
+  {
+    "key": "exercise_Weighted Pull Up",
+    "source": "Weighted Pull Up"
+  },
+  {
+    "key": "exercise_Weighted Pull-up",
+    "source": "Weighted Pull-up"
+  },
+  {
+    "key": "exercise_One Arm Dumbbell Row",
+    "source": "One Arm Dumbbell Row"
+  },
+  {
+    "key": "exercise_Smith Machine Overhead Bench Press",
+    "source": "Smith Machine Overhead Bench Press"
+  },
+  {
+    "key": "exercise_Zercher Squat",
+    "source": "Zercher Squat"
+  },
+  {
+    "key": "exercise_Smith Machine Squat",
+    "source": "Smith Machine Squat"
+  },
+  {
+    "key": "exercise_V Squat",
+    "source": "V Squat"
+  },
+  {
+    "key": "exercise_Trap-bar Deadlift",
+    "source": "Trap-bar Deadlift"
+  },
+  {
+    "key": "exercise_Glute-Ham Raise",
+    "source": "Glute-ham Raise"
+  },
+  {
+    "key": "exercise_Seated Single Leg Leg Curl",
+    "source": "Seated Single Leg Leg Curl"
+  },
+  {
+    "key": "exercise_Inner Thigh Machine",
+    "source": "Inner Thigh Machine"
+  },
+  {
+    "key": "exercise_Glute Kickback Machine",
+    "source": "Glute Kickback Machine"
+  },
+  {
+    "key": "exercise_Hip Abduction Machine",
+    "source": "Hip Abduction Machine"
+  },
+  {
+    "key": "exercise_Paused Sumo Deadlift",
+    "source": "Paused Sumo Deadlift"
+  },
+  {
+    "key": "exercise_Shoulder Overhead Press",
+    "source": "Shoulder Overhead Press"
+  },
+  {
+    "key": "exercise_Barbell Bulgarian Split Squat",
+    "source": "Barbell Bulgarian Split Squat"
+  },
+  {
+    "key": "exercise_Hip Thrust Machine",
+    "source": "Hip Thrust Machine"
+  },
+  {
+    "key": "exercise_Single Leg Glute Bridge",
+    "source": "Single Leg Glute Bridge"
+  },
+  {
+    "key": "exercise_Lying Hip Abduction",
+    "source": "Lying Hip Abduction"
+  },
+  {
+    "key": "exercise_Side Laying Clam",
+    "source": "Side Laying Clam"
+  },
+  {
+    "key": "exercise_Pistol Box Squat",
+    "source": "Pistol Box Squat"
+  },
+  {
+    "key": "exercise_Cable Donkey Kick",
+    "source": "Cable Donkey Kick"
+  },
+  {
+    "key": "exercise_Weighted Abdominal Hip Thrust",
+    "source": "Weighted Abdominal Hip Thrust"
+  },
+  {
+    "key": "exercise_45 Degree Side Bend",
+    "source": "45 Degree Side Bend"
+  },
+  {
+    "key": "exercise_Side Plank",
+    "source": "Side Plank"
+  },
+  {
+    "key": "exercise_Smith Machine Bench Press",
+    "source": "Smith Machine Bench Press"
+  },
+  {
+    "key": "exercise_Smith Machine Incline Bench Press",
+    "source": "Smith Machine Incline Bench Press"
+  },
+  {
+    "key": "exercise_Weighted Dips",
+    "source": "Weighted Dips"
+  },
+  {
+    "key": "exercise_Weighted Push Up",
+    "source": "Weighted Push Up"
+  },
+  {
+    "key": "exercise_Hindu Push Up",
+    "source": "Hindu Push Up"
+  },
+  {
+    "key": "exercise_Archer Push Up",
+    "source": "Archer Push Up"
+  },
+  {
+    "key": "exercise_Close-grip Push Up",
+    "source": "Close-grip Push Up"
+  },
+  {
+    "key": "exercise_Incline Bench Press Machine",
+    "source": "Incline Bench Press Machine"
+  },
+  {
+    "key": "exercise_Seated Dips Machine",
+    "source": "Seated Dips Machine"
+  },
+  {
+    "key": "exercise_Low-pulley Cable Fly",
+    "source": "Low-pulley Cable Fly"
+  },
+  {
+    "key": "exercise_Spoto Bench Press",
+    "source": "Spoto Bench Press"
+  },
+  {
+    "key": "exercise_Assisted Dip Machine",
+    "source": "Assisted Dip Machine"
+  },
+  {
+    "key": "exercise_Barbell Floor Chest Press",
+    "source": "Barbell Floor Chest Press"
+  },
+  {
+    "key": "exercise_Clap Push Up",
+    "source": "Clap Push Up"
+  },
+  {
+    "key": "exercise_Decline Dumbbell Fly",
+    "source": "Decline Dumbbell Fly"
+  },
+  {
+    "key": "exercise_Incline Push Up",
+    "source": "Incline Push Up"
+  },
+  {
+    "key": "exercise_Knee Push Up",
+    "source": "Knee Push Up"
+  },
+  {
+    "key": "exercise_Pike Push Up",
+    "source": "Pike Push Up"
+  },
+  {
+    "key": "exercise_Decline Chest Press Machine",
+    "source": "Decline Chest Press Machine"
+  },
+  {
+    "key": "exercise_Incline Dumbbell Twist Press",
+    "source": "Incline Dumbbell Twist Press"
+  },
+  {
+    "key": "exercise_Incline Cable Fly",
+    "source": "Incline Cable Fly"
+  },
+  {
+    "key": "exercise_Dumbbell Squeeze Press",
+    "source": "Dumbbell Squeeze Press"
+  },
+  {
+    "key": "exercise_Cable Pull Through",
+    "source": "Cable Pull Through"
+  },
+  {
+    "key": "exercise_Cable Tricep Extension",
+    "source": "Cable Tricep Extension"
+  },
+  {
+    "key": "exercise_Lying Tricep Extension",
+    "source": "Lying Tricep Extension"
+  },
+  {
+    "key": "exercise_Cable Overhead Tricep Extension",
+    "source": "Cable Overhead Tricep Extension"
+  },
+  {
+    "key": "exercise_Cable Lying Tricep Extension",
+    "source": "Cable Lying Tricep Extension"
+  },
+  {
+    "key": "exercise_Tricep Extension Machine",
+    "source": "Tricep Extension Machine"
+  },
+  {
+    "key": "exercise_V-up",
+    "source": "V-up"
+  },
+  {
+    "key": "exercise_Hollow Rock",
+    "source": "Hollow Rock"
+  },
+  {
+    "key": "exercise_Hollow Position",
+    "source": "Hollow Position"
+  },
+  {
+    "key": "exercise_Dumbbell Side Bend",
+    "source": "Dumbbell Side Bend"
+  },
+  {
+    "key": "exercise_Abs Roll Out",
+    "source": "Abs Roll Out"
+  },
+  {
+    "key": "exercise_Air Bicycle Abs",
+    "source": "Air Bicycle Abs"
+  },
+  {
+    "key": "exercise_Hanging Knee Raise",
+    "source": "Hanging Knee Raise"
+  },
+  {
+    "key": "exercise_Abdominal Crunch Machine",
+    "source": "Abdominal Crunch Machine"
+  },
+  {
+    "key": "exercise_Hang Clean",
+    "source": "Hang Clean"
+  },
+  {
+    "key": "exercise_Hang Snatch",
+    "source": "Hang Snatch"
+  },
+  {
+    "key": "exercise_Pilates Jackknife",
+    "source": "Pilates Jackknife"
+  },
+  {
+    "key": "exercise_Reverse Crunch",
+    "source": "Reverse Crunch"
+  },
+  {
+    "key": "exercise_Incline Dumbbell Curl",
+    "source": "Incline Dumbbell Curl"
+  },
+  {
+    "key": "exercise_Seated Dumbbell Rear Lateral Raise",
+    "source": "Seated Dumbbell Rear Lateral Raise"
+  },
+  {
+    "key": "exercise_EZ Bar Preacher Curl",
+    "source": "Ez Bar Preacher Curl"
+  },
+  {
+    "key": "exercise_Bodyweight Calf Raise",
+    "source": "Bodyweight Calf Raise"
+  },
+  {
+    "key": "exercise_Barbell Standing Calf Raise",
+    "source": "Barbell Standing Calf Raise"
+  },
+  {
+    "key": "exercise_Standing Cable Fly",
+    "source": "Standing Cable Fly"
+  },
+  {
+    "key": "exercise_Dumbbell Romanian Deadlift",
+    "source": "Dumbbell Romanian Deadlift"
+  },
+  {
+    "key": "exercise_Dumbbell Kickback",
+    "source": "Dumbbell Kickback"
+  },
+  {
+    "key": "exercise_Dumbbell Preacher Curl",
+    "source": "Dumbbell Preacher Curl"
+  },
+  {
+    "key": "exercise_RKC Plank",
+    "source": "Rkc Plank"
+  },
+  {
+    "key": "exercise_Cable Side Bend",
+    "source": "Cable Side Bend"
+  },
+  {
+    "key": "exercise_Weighted Decline Crunch",
+    "source": "Weighted Decline Crunch"
+  },
+  {
+    "key": "exercise_Decline Reverse Crunch",
+    "source": "Decline Reverse Crunch"
+  },
+  {
+    "key": "exercise_Decline Sit Up",
+    "source": "Decline Sit Up"
+  },
+  {
+    "key": "exercise_Weighted Decline Sit Up",
+    "source": "Weighted Decline Sit Up"
+  },
+  {
+    "key": "exercise_Side Crunch",
+    "source": "Side Crunch"
+  },
+  {
+    "key": "exercise_Cable Twist",
+    "source": "Cable Twist"
+  },
+  {
+    "key": "exercise_Abdominal Hip Thrust",
+    "source": "Abdominal Hip Thrust"
+  },
+  {
+    "key": "exercise_Lateral Raise Machine",
+    "source": "Lateral Raise Machine"
+  },
+  {
+    "key": "exercise_Shrug Machine",
+    "source": "Shrug Machine"
+  },
+  {
+    "key": "exercise_Incline Dumbbell Fly",
+    "source": "Incline Dumbbell Fly"
+  },
+  {
+    "key": "exercise_Cable Lateral Raise",
+    "source": "Cable Lateral Raise"
+  },
+  {
+    "key": "exercise_Preacher Curl Machine",
+    "source": "Preacher Curl Machine"
+  },
+  {
+    "key": "exercise_Chest Press Machine",
+    "source": "Chest Press Machine"
+  },
+  {
+    "key": "exercise_Incline Chest Press Machine",
+    "source": "Incline Chest Press Machine"
+  },
+  {
+    "key": "exercise_Single Leg Leg Press",
+    "source": "Single Leg Leg Press"
+  },
+  {
+    "key": "exercise_Single Leg Leg Curl",
+    "source": "Single Leg Leg Curl"
+  },
+  {
+    "key": "exercise_Barbell Hack Squat",
+    "source": "Barbell Hack Squat"
+  },
+  {
+    "key": "exercise_Paused Deadlift",
+    "source": "Paused Deadlift"
+  },
+  {
+    "key": "exercise_Barbell Box Squat",
+    "source": "Barbell Box Squat"
+  },
+  {
+    "key": "exercise_Landmine Press",
+    "source": "Landmine Press"
+  },
+  {
+    "key": "exercise_Push Press",
+    "source": "Push Press"
+  },
+  {
+    "key": "exercise_Deficit Deadlift",
+    "source": "Deficit Deadlift"
+  },
+  {
+    "key": "exercise_Glute Bridge",
+    "source": "Glute Bridge"
+  },
+  {
+    "key": "exercise_Zercher Squat",
+    "source": "Zercher Squat"
+  },
+  {
+    "key": "exercise_Jump Squat",
+    "source": "Jump Squat"
+  },
+  {
+    "key": "exercise_Dumbbell Goblet Squat",
+    "source": "Dumbbell Goblet Squat"
+  },
+  {
+    "key": "exercise_Dumbbell Lunge",
+    "source": "Dumbbell Lunge"
+  },
+  {
+    "key": "exercise_Weighted Step Up",
+    "source": "Weighted Step Up"
+  },
+  {
+    "key": "exercise_Dumbbell Bulgarian Split Squat",
+    "source": "Dumbbell Bulgarian Split Squat"
+  },
+  {
+    "key": "exercise_Hip Abduction Machine",
+    "source": "Hip Abduction Machine"
+  },
+  {
+    "key": "exercise_Single Leg Glute Bridge",
+    "source": "Single Leg Glute Bridge"
+  },
+  {
+    "key": "exercise_Walking",
+    "source": "Walking"
+  },
+  {
+    "key": "exercise_V Squat",
+    "source": "V Squat"
+  },
+  {
+    "key": "exercise_Dumbbell Squat",
+    "source": "Dumbbell Squat"
+  },
+  {
+    "key": "exercise_Barbell Hack Squat",
+    "source": "Barbell Hack Squat"
+  },
+  {
+    "key": "exercise_Horizontal Leg Press",
+    "source": "Horizontal Leg Press"
+  },
+  {
+    "key": "exercise_Smith Machine Split Squat",
+    "source": "Smith Machine Split Squat"
+  },
+  {
+    "key": "exercise_Smith Machine Deadlift",
+    "source": "Smith Machine Deadlift"
+  },
+  {
+    "key": "exercise_Barbell Front Rack Lunge",
+    "source": "Barbell Front Rack Lunge"
+  },
+  {
+    "key": "exercise_Barbell Jump Squat",
+    "source": "Barbell Jump Squat"
+  },
+  {
+    "key": "exercise_Barbell Lunge",
+    "source": "Barbell Lunge"
+  },
+  {
+    "key": "exercise_Barbell Split Squat",
+    "source": "Barbell Split Squat"
+  },
+  {
+    "key": "exercise_Bodyweight Overhead Squat",
+    "source": "Bodyweight Overhead Squat"
+  },
+  {
+    "key": "exercise_Dumbbell Sumo Squat",
+    "source": "Dumbbell Sumo Squat"
+  },
+  {
+    "key": "exercise_Single Leg Leg Extension",
+    "source": "Single Leg Leg Extension"
+  },
+  {
+    "key": "exercise_Single Leg Horizontal Leg Press",
+    "source": "Single Leg Horizontal Leg Press"
+  },
+  {
+    "key": "exercise_Pistol Squat",
+    "source": "Pistol Squat"
+  },
+  {
+    "key": "exercise_Sumo Air Squat",
+    "source": "Sumo Air Squat"
+  },
+  {
+    "key": "exercise_Lunge Twist",
+    "source": "Lunge Twist"
+  },
+  {
+    "key": "exercise_Kettlebell Lunge Twist",
+    "source": "Kettlebell Lunge Twist"
+  },
+  {
+    "key": "exercise_Front Rack Lunge",
+    "source": "Front Rack Lunge"
+  },
+  {
+    "key": "program_completions",
+    "source": "PROGRAM COMPLETIONS"
+  },
+  {
+    "key": "times_finished",
+    "source": "{num} times finished"
+  },
+  {
+    "key": "training_tip",
+    "source": "TRAINING TIP"
+  },
+  {
+    "key": "tip_details",
+    "source": "\"3x8-12\" means 3 sets, each one between 8 (min) and 12 (max) repetitions."
+  },
+  {
+    "key": "got_it",
+    "source": "GOT IT"
+  },
+  {
+    "key": "keep_going",
+    "source": "KEEP\\nGOING"
+  },
+  {
+    "key": "muscles_trained",
+    "source": "MUSCLES TRAINED"
+  },
+  {
+    "key": "level_progress",
+    "source": "Level {current} → Level {next}"
+  },
+  {
+    "key": "xp_to_next",
+    "source": "{amount} XP to next level"
+  },
+  {
+    "key": "select_units",
+    "source": "SELECT UNITS"
+  },
+  {
+    "key": "metric_units",
+    "source": "Metric (kg, cm)"
+  },
+  {
+    "key": "imperial_units",
+    "source": "Imperial (lbs, ft)"
+  },
+  {
+    "key": "rest_timer_desc",
+    "source": "Auto-start between sets"
+  },
+  {
+    "key": "notifications_desc",
+    "source": "Workout reminders & streaks"
+  },
+  {
+    "key": "dark_mode_desc",
+    "source": "Switch theme"
+  },
+  {
+    "key": "privacy_desc_short",
+    "source": "Who can see your progress"
+  },
+  {
+    "key": "legal_policy",
+    "source": "Legal & data policy"
+  },
+  {
+    "key": "version_info",
+    "source": "ATHLÈTE v{version} · © 2025"
+  },
+  {
+    "key": "ok",
+    "source": "OK"
+  },
+  {
+    "key": "cancel",
+    "source": "CANCEL"
+  },
+  {
+    "key": "logout_confirm_msg",
+    "source": "Are you sure you want to log out of your account?"
+  },
+  {
+    "key": "logout_yes",
+    "source": "YES, LOG OUT"
+  },
+  {
+    "key": "send",
+    "source": "SEND"
+  },
+  {
+    "key": "tell_us_thoughts",
+    "source": "Tell us what you think..."
+  },
+  {
+    "key": "terms_agree",
+    "source": "By using ATHLÈTE, you agree to our Terms of Service and Privacy Policy."
+  },
+  {
+    "key": "name_label",
+    "source": "Name"
+  },
+  {
+    "key": "age_yrs",
+    "source": "{age} yrs"
+  },
+  {
+    "key": "height_cm",
+    "source": "{height} cm"
+  },
+  {
+    "key": "weight_kg",
+    "source": "{weight} kg"
+  },
+  {
+    "key": "profile_subtitle_hint",
+    "source": "Name, age, weight, height"
+  },
+  {
+    "key": "goals_subtitle_hint",
+    "source": "Muscle building · Fat loss · Endurance"
+  },
+  {
+    "key": "day_pure",
+    "source": "Day Pure"
+  },
+  {
+    "key": "workout_chest_back",
+    "source": "Chest & Back"
+  },
+  {
+    "key": "workout_chest_triceps",
+    "source": "Chest & Triceps"
+  },
+  {
+    "key": "workout_back_biceps",
+    "source": "Back & Biceps"
+  },
+  {
+    "key": "workout_legs",
+    "source": "Legs"
+  },
+  {
+    "key": "workout_shoulders",
+    "source": "Shoulders"
+  },
+  {
+    "key": "workout_push",
+    "source": "Push"
+  },
+  {
+    "key": "workout_pull",
+    "source": "Pull"
+  },
+  {
+    "key": "workout_upper",
+    "source": "Upper Body"
+  },
+  {
+    "key": "workout_lower",
+    "source": "Lower Body"
+  },
+  {
+    "key": "workout_full_body",
+    "source": "Full Body"
+  },
+  {
+    "key": "workout_glute_shaping",
+    "source": "Glute Shaping"
+  },
+  {
+    "key": "workout_squat_day",
+    "source": "Squat Day"
+  },
+  {
+    "key": "workout_deadlift_day",
+    "source": "Deadlift Day"
+  },
+  {
+    "key": "workout_strength_accessory",
+    "source": "Strength Accessory"
+  },
+  {
+    "key": "workout_arm_day",
+    "source": "Arm Day"
+  },
+  {
+    "key": "workout_rest_day",
+    "source": "Rest Day"
+  },
+  {
+    "key": "workout_lower_power",
+    "source": "Lower Power"
+  },
+  {
+    "key": "workout_upper_shape",
+    "source": "Upper Shape"
+  },
+  {
+    "key": "workout_glute_build",
+    "source": "Glute Build"
+  },
+  {
+    "key": "workout_hamstring_detail",
+    "source": "Hamstring Detail"
+  },
+  {
+    "key": "workout_hips",
+    "source": "Hips"
+  },
+  {
+    "key": "workout_glutes",
+    "source": "Glutes"
+  },
+  {
+    "key": "workout_leg_detail_and_cardio",
+    "source": "Leg Detail And Cardio"
+  },
+  {
+    "key": "workout_core_-_strength",
+    "source": "Core - Strength"
+  },
+  {
+    "key": "workout_core_-_stability",
+    "source": "Core - Stability"
+  },
+  {
+    "key": "workout_shoulders_and_arms",
+    "source": "Shoulders And Arms"
+  },
+  {
+    "key": "workout_volume_split",
+    "source": "Volume Split"
+  },
+  {
+    "key": "workout_mass_and_detail",
+    "source": "Mass And Detail"
+  },
+  {
+    "key": "workout_advanced_lower_body",
+    "source": "Advanced Lower Body"
+  },
+  {
+    "key": "workout_back,_biceps_and_shoulders",
+    "source": "Back, Biceps And Shoulders"
+  },
+  {
+    "key": "workout_leg_destroyer",
+    "source": "Leg Destroyer"
+  },
+  {
+    "key": "workout_massive_width",
+    "source": "Massive Width"
+  },
+  {
+    "key": "workout_power_width",
+    "source": "Power Width"
+  },
+  {
+    "key": "workout_calves_and_quads",
+    "source": "Calves And Quads"
+  },
+  {
+    "key": "workout_shoulders_and_chest",
+    "source": "Shoulders & Chest"
+  },
+  {
+    "key": "workout_hamstrings_and_back",
+    "source": "Hamstrings And Back"
+  },
+  {
+    "key": "workout_chest_and_calves",
+    "source": "Chest And Calves"
+  },
+  {
+    "key": "workout_triceps_and_biceps",
+    "source": "Triceps And Biceps"
+  },
+  {
+    "key": "workout_shoulders_and_traps",
+    "source": "Shoulders And Traps"
+  },
+  {
+    "key": "workout_quads,_hams_and_calves",
+    "source": "Quads, Hams And Calves"
+  },
+  {
+    "key": "workout_the_quad_stomp",
+    "source": "The Quad Stomp"
+  },
+  {
+    "key": "workout_massive_legs",
+    "source": "Massive Legs"
+  },
+  {
+    "key": "workout_back_detail",
+    "source": "Back Detail"
+  },
+  {
+    "key": "workout_shoulder_roundness",
+    "source": "Shoulder Roundness"
+  },
+  {
+    "key": "workout_touch-up_/_weak_points",
+    "source": "Touch-up / Weak Points"
+  },
+  {
+    "key": "workout_symmetry_refinement",
+    "source": "Symmetry Refinement"
+  },
+  {
+    "key": "workout_chest_and_abs",
+    "source": "Chest And Abs"
+  },
+  {
+    "key": "workout_legs_and_abs",
+    "source": "Legs And Abs"
+  },
+  {
+    "key": "workout_arms_and_abs",
+    "source": "Arms And Abs"
+  },
+  {
+    "key": "workout_legs_—_heavy_volume",
+    "source": "Legs — Heavy Volume"
+  },
+  {
+    "key": "workout_delts_and_arms",
+    "source": "Delts And Arms"
+  },
+  {
+    "key": "workout_legs_—_static_focus",
+    "source": "Legs — Static Focus"
+  },
+  {
+    "key": "workout_chest,_shoulders_and_arms",
+    "source": "Chest, Shoulders And Arms"
+  },
+  {
+    "key": "workout_back_and_legs",
+    "source": "Back And Legs"
+  },
+  {
+    "key": "workout_arms_(morning)",
+    "source": "Arms (morning)"
+  },
+  {
+    "key": "workout_legs_and_back",
+    "source": "Legs And Back"
+  },
+  {
+    "key": "workout_arms_and_legs",
+    "source": "Arms And Legs"
+  },
+  {
+    "key": "workout_back_(morning)",
+    "source": "Back (morning)"
+  },
+  {
+    "key": "workout_back_and_shoulders",
+    "source": "Back And Shoulders"
+  },
+  {
+    "key": "workout_squat_focus",
+    "source": "Squat Focus"
+  },
+  {
+    "key": "workout_bench_focus",
+    "source": "Bench Focus"
+  },
+  {
+    "key": "workout_deadlift_focus",
+    "source": "Deadlift Focus"
+  },
+  {
+    "key": "workout_squat_and_bench_(light)",
+    "source": "Squat And Bench (light)"
+  },
+  {
+    "key": "workout_push_—_chest_and_shoulders",
+    "source": "Push — Chest And Shoulders"
+  },
+  {
+    "key": "workout_pull_—_back_and_biceps",
+    "source": "Pull — Back And Biceps"
+  },
+  {
+    "key": "workout_push_—_chest_and_triceps",
+    "source": "Push — Chest And Triceps"
+  },
+  {
+    "key": "workout_pull_—_back_and_rear_delts",
+    "source": "Pull — Back And Rear Delts"
+  },
+  {
+    "key": "workout_legs_—_quad_focus",
+    "source": "Legs — Quad Focus"
+  },
+  {
+    "key": "workout_rest_/_active_recovery",
+    "source": "Rest / Active Recovery"
+  },
+  {
+    "key": "workout_back_and_rear_delts",
+    "source": "Back And Rear Delts"
+  },
+  {
+    "key": "workout_posing_+_weak_points",
+    "source": "Posing + Weak Points"
+  },
+  {
+    "key": "workout_push_—_chest_focus",
+    "source": "Push — Chest Focus"
+  },
+  {
+    "key": "workout_pull_—_back_focus",
+    "source": "Pull — Back Focus"
+  },
+  {
+    "key": "workout_push_—_shoulder_focus",
+    "source": "Push — Shoulder Focus"
+  },
+  {
+    "key": "workout_pull_—_arm_focus",
+    "source": "Pull — Arm Focus"
+  },
+  {
+    "key": "workout_legs_/_glutes",
+    "source": "Legs / Glutes"
+  },
+  {
+    "key": "workout_rest,_light_cardio_optional",
+    "source": "Rest, Light Cardio Optional"
+  },
+  {
+    "key": "workout_abs_and_cardio",
+    "source": "Abs And Cardio"
+  },
+  {
+    "key": "workout_legs_—_hamstring_focus",
+    "source": "Legs — Hamstring Focus"
+  },
+  {
+    "key": "workout_rest_/_cardio",
+    "source": "Rest / Cardio"
+  },
+  {
+    "key": "workout_conditioning_/_cardio",
+    "source": "Conditioning / Cardio"
+  },
+  {
+    "key": "workout_weak_points_+_cardio",
+    "source": "Weak Points + Cardio"
+  },
+  {
+    "key": "workout_endurance",
+    "source": "Endurance"
+  },
+  {
+    "key": "workout_refinement_push",
+    "source": "Refinement Push"
+  },
+  {
+    "key": "workout_back",
+    "source": "Back"
+  },
+  {
+    "key": "workout_chest",
+    "source": "Chest"
+  },
+  {
+    "key": "workout_arms",
+    "source": "Arms"
+  },
+  {
+    "key": "workout_back_and_traps",
+    "source": "Back And Traps"
+  },
+  {
+    "key": "workout_legs_—_hamstrings_and_glutes",
+    "source": "Legs — Hamstrings And Glutes"
+  },
+  {
+    "key": "wellness_al_sub",
+    "source": "Wellness Al Sub"
+  },
+  {
+    "key": "wellness_bikini_sub",
+    "source": "Bikini stage readiness"
+  },
+  {
+    "key": "wellness_power_sub",
+    "source": "Pure strength & explosive power"
+  },
+  {
+    "key": "wellness_sculpt_sub",
+    "source": "Fat loss & body sculpting"
+  },
+  {
+    "key": "btn_static_hold",
+    "source": "Static Hold"
+  },
+  {
+    "key": "title_static_hold",
+    "source": "What is a Static Hold?"
+  },
+  {
+    "key": "desc_static_hold",
+    "source": "A Static Hold is a training technique involving holding the weight in the fully contracted position for as long as possible. In Mike Mentzer\\'s methodology, this is used after reaching failure to completely exhaust the muscle fibers and trigger maximum growth."
+  },
+  {
+    "key": "reset",
+    "source": "Reset"
+  },
+  {
+    "key": "exercise_Seated Row Machine",
+    "source": "Seated Row Machine"
+  },
+  {
+    "key": "exercise_seated row",
+    "source": "Seated Row"
+  },
+  {
+    "key": "badge_arnold",
+    "source": "Arnold"
+  },
+  {
+    "key": "quote_arnold",
+    "source": "Arnold"
+  },
+  {
+    "key": "badge_ronnie",
+    "source": "Ronnie"
+  },
+  {
+    "key": "tag_Hardcore Power",
+    "source": "Hardcore Power"
+  },
+  {
+    "key": "badge_Hardcore Power",
+    "source": "Hardcore Power"
+  },
+  {
+    "key": "quote_ronnie",
+    "source": "Ronnie"
+  },
+  {
+    "key": "badge_cbum",
+    "source": "Cbum"
+  },
+  {
+    "key": "quote_cbum",
+    "source": "Cbum"
+  },
+  {
+    "key": "title_cbum_special",
+    "source": "Cbum Special"
+  },
+  {
+    "key": "desc_cbum_special",
+    "source": "Cbum Special"
+  },
+  {
+    "key": "badge_philheath",
+    "source": "Philheath"
+  },
+  {
+    "key": "quote_philheath",
+    "source": "Philheath"
+  },
+  {
+    "key": "badge_franco",
+    "source": "Franco"
+  },
+  {
+    "key": "quote_franco",
+    "source": "Franco"
+  },
+  {
+    "key": "badge_dexter",
+    "source": "Dexter"
+  },
+  {
+    "key": "quote_dexter",
+    "source": "Dexter"
+  },
+  {
+    "key": "badge_jaycutler",
+    "source": "Jaycutler"
+  },
+  {
+    "key": "quote_jaycutler",
+    "source": "Jaycutler"
+  },
+  {
+    "key": "badge_mentzer",
+    "source": "Mentzer"
+  },
+  {
+    "key": "desc_High Intensity",
+    "source": "High Intensity"
+  },
+  {
+    "key": "quote_mentzer",
+    "source": "Mentzer"
+  },
+  {
+    "key": "badge_platz",
+    "source": "Platz"
+  },
+  {
+    "key": "quote_platz",
+    "source": "Platz"
+  },
+  {
+    "key": "badge_flex",
+    "source": "Flex"
+  },
+  {
+    "key": "quote_flex",
+    "source": "Flex"
+  },
+  {
+    "key": "badge_ramon",
+    "source": "Ramon"
+  },
+  {
+    "key": "quote_ramon",
+    "source": "Ramon"
+  },
+  {
+    "key": "badge_jeffseid",
+    "source": "Jeffseid"
+  },
+  {
+    "key": "quote_jeffseid",
+    "source": "Jeffseid"
+  },
+  {
+    "key": "badge_larrywheels",
+    "source": "Larrywheels"
+  },
+  {
+    "key": "quote_larrywheels",
+    "source": "Larrywheels"
+  },
+  {
+    "key": "badge_mikethurston",
+    "source": "Mikethurston"
+  },
+  {
+    "key": "quote_mikethurston",
+    "source": "Mikethurston"
+  },
+  {
+    "key": "badge_terrenceruffin",
+    "source": "Terrenceruffin"
+  },
+  {
+    "key": "quote_terrenceruffin",
+    "source": "Terrenceruffin"
+  },
+  {
+    "key": "badge_alexeubank",
+    "source": "Alexeubank"
+  },
+  {
+    "key": "quote_alexeubank",
+    "source": "Alexeubank"
+  },
+  {
+    "key": "badge_ulissesjr",
+    "source": "Ulissesjr"
+  },
+  {
+    "key": "quote_ulissesjr",
+    "source": "Ulissesjr"
+  },
+  {
+    "key": "badge_ryanterry",
+    "source": "Ryanterry"
+  },
+  {
+    "key": "quote_ryanterry",
+    "source": "Ryanterry"
+  },
+  {
+    "key": "badge_stevecook",
+    "source": "Stevecook"
+  },
+  {
+    "key": "quote_stevecook",
+    "source": "Stevecook"
+  },
+  {
+    "key": "badge_simeonpanda",
+    "source": "Simeonpanda"
+  },
+  {
+    "key": "quote_simeonpanda",
+    "source": "Simeonpanda"
+  },
+  {
+    "key": "badge_hadichoopan",
+    "source": "Hadichoopan"
+  },
+  {
+    "key": "quote_hadichoopan",
+    "source": "Hadichoopan"
+  },
+  {
+    "key": "badge_bigramy",
+    "source": "Bigramy"
+  },
+  {
+    "key": "quote_bigramy",
+    "source": "Bigramy"
+  },
+  {
+    "key": "badge_davidlaid",
+    "source": "Davidlaid"
+  },
+  {
+    "key": "quote_davidlaid",
+    "source": "Davidlaid"
+  },
+  {
+    "key": "badge_athletic_lean",
+    "source": "Athletic Lean"
+  },
+  {
+    "key": "quote_athletic_lean",
+    "source": "Athletic Lean"
+  },
+  {
+    "key": "badge_bikini_competition",
+    "source": "Bikini Competition"
+  },
+  {
+    "key": "quote_bikini_competition",
+    "source": "Bikini Competition"
+  },
+  {
+    "key": "badge_powerlifter_female",
+    "source": "Powerlifter Female"
+  },
+  {
+    "key": "quote_powerlifter_female",
+    "source": "Powerlifter Female"
+  },
+  {
+    "key": "badge_sculpt_and_cardio",
+    "source": "Sculpt And Cardio"
+  },
+  {
+    "key": "quote_sculpt_and_cardio",
+    "source": "Sculpt And Cardio"
+  },
+  {
+    "key": "desc_FST-7",
+    "source": "Fst-7"
+  },
+  {
+    "key": "desc_High Intensity",
+    "source": "High Intensity"
+  },
+  {
+    "key": "desc_Longevity & Detail",
+    "source": "Longevity & Detail"
+  },
+  {
+    "key": "desc_Flow & Symmetry",
+    "source": "Flow & Symmetry"
+  },
+  {
+    "key": "desc_Golden Era / Mass",
+    "source": "Golden Era / Mass"
+  },
+  {
+    "key": "desc_Modern Classic",
+    "source": "Modern Classic"
+  },
+  {
+    "key": "desc_Hardcore Power",
+    "source": "Hardcore Power"
+  },
+  {
+    "key": "desc_High Volume",
+    "source": "High Volume"
+  },
+  {
+    "key": "desc_Squat King",
+    "source": "Squat King"
+  },
+  {
+    "key": "desc_Dual Split · Power-Physique",
+    "source": "Dual Split · Power-physique"
+  },
+  {
+    "key": "desc_V-Taper",
+    "source": "V-taper"
+  },
+  {
+    "key": "desc_DUP Mastery",
+    "source": "Dup Mastery"
+  },
+  {
+    "key": "desc_Classic Bodybuilding / PPL",
+    "source": "Classic Bodybuilding / Ppl"
+  },
+  {
+    "key": "desc_Modern Aesthetic / PPL",
+    "source": "Modern Aesthetic / Ppl"
+  },
+  {
+    "key": "desc_Powerbuilding",
+    "source": "Powerbuilding"
+  },
+  {
+    "key": "desc_Classic Physique / High Volume",
+    "source": "Classic Physique / High Volume"
+  },
+  {
+    "key": "desc_Men\\'s Physique / High Volume",
+    "source": "Men\\'s Physique / High Volume"
+  },
+  {
+    "key": "desc_Raw Power",
+    "source": "Raw Power"
+  },
+  {
+    "key": "desc_Precision · Core",
+    "source": "Precision · Core"
+  },
+  {
+    "key": "workout_chest_triceps",
+    "source": "Chest & Triceps"
+  },
+  {
+    "key": "workout_back_biceps",
+    "source": "Back & Biceps"
+  },
+  {
+    "key": "workout_chest_back",
+    "source": "Chest & Back"
+  },
+  {
+    "key": "workout_legs",
+    "source": "Legs"
+  },
+  {
+    "key": "workout_shoulders",
+    "source": "Shoulders"
+  },
+  {
+    "key": "workout_push",
+    "source": "Push"
+  },
+  {
+    "key": "workout_pull",
+    "source": "Pull"
+  },
+  {
+    "key": "workout_upper",
+    "source": "Upper Body"
+  },
+  {
+    "key": "workout_lower",
+    "source": "Lower Body"
+  },
+  {
+    "key": "workout_full_body",
+    "source": "Full Body"
+  },
+  {
+    "key": "workout_glute_shaping",
+    "source": "Glute Shaping"
+  },
+  {
+    "key": "workout_squat_day",
+    "source": "Squat Day"
+  },
+  {
+    "key": "workout_deadlift_day",
+    "source": "Deadlift Day"
+  },
+  {
+    "key": "workout_strength_accessory",
+    "source": "Strength Accessory"
+  },
+  {
+    "key": "workout_arm_day",
+    "source": "Arm Day"
+  },
+  {
+    "key": "workout_chest_and_biceps",
+    "source": "Chest And Biceps"
+  },
+  {
+    "key": "workout_back_and_rear_delts",
+    "source": "Back And Rear Delts"
+  },
+  {
+    "key": "workout_shoulders_and_traps",
+    "source": "Shoulders And Traps"
+  },
+  {
+    "key": "workout_posing_and_weak_points",
+    "source": "Posing And Weak Points"
+  },
+  {
+    "key": "workout_posing_+_weak_points",
+    "source": "Posing + Weak Points"
+  },
+  {
+    "key": "workout_posing",
+    "source": "Posing"
+  },
+  {
+    "key": "workout_deep_recovery",
+    "source": "Deep Recovery"
+  },
+  {
+    "key": "workout_push_—_chest_focus",
+    "source": "Push — Chest Focus"
+  },
+  {
+    "key": "workout_pull_—_back_focus",
+    "source": "Pull — Back Focus"
+  },
+  {
+    "key": "workout_push_—_shoulder_focus",
+    "source": "Push — Shoulder Focus"
+  },
+  {
+    "key": "workout_pull_—_arm_focus",
+    "source": "Pull — Arm Focus"
+  },
+  {
+    "key": "workout_chest_focus",
+    "source": "Chest Focus"
+  },
+  {
+    "key": "workout_back_focus",
+    "source": "Back Focus"
+  },
+  {
+    "key": "workout_shoulder_focus",
+    "source": "Shoulder Focus"
+  },
+  {
+    "key": "workout_arm_focus",
+    "source": "Arm Focus"
+  },
+  {
+    "key": "workout_quad_focus",
+    "source": "Quad Focus"
+  },
+  {
+    "key": "workout_hamstring_focus",
+    "source": "Hamstring Focus"
+  },
+  {
+    "key": "workout_push_chest_focus",
+    "source": "Push Chest Focus"
+  },
+  {
+    "key": "workout_pull_back_focus",
+    "source": "Pull Back Focus"
+  },
+  {
+    "key": "workout_push_shoulder_focus",
+    "source": "Push Shoulder Focus"
+  },
+  {
+    "key": "workout_pull_arm_focus",
+    "source": "Pull Arm Focus"
+  },
+  {
+    "key": "workout_rest_day",
+    "source": "Rest Day"
+  },
+  {
+    "key": "exercise_Incline Dumbbell Bench press",
+    "source": "Incline Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_Incline Dumbbell bench press",
+    "source": "Incline Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_Incline Dumbbell Bench Press",
+    "source": "Incline Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_incline dumbbell bench press",
+    "source": "Incline Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_Incline Dumbbell Press",
+    "source": "Incline Dumbbell Press"
+  },
+  {
+    "key": "exercise_Seated Row Machine",
+    "source": "Seated Row Machine"
+  },
+  {
+    "key": "exercise_Seated Row",
+    "source": "Seated Row"
+  },
+  {
+    "key": "exercise_seated row",
+    "source": "Seated Row"
+  },
+  {
+    "key": "exercise_Seated Rows",
+    "source": "Seated Rows"
+  },
+  {
+    "key": "exercise_Seated rows",
+    "source": "Seated Rows"
+  },
+  {
+    "key": "exercise_seated rows",
+    "source": "Seated Rows"
+  },
+  {
+    "key": "exercise_Seated Cable Row",
+    "source": "Seated Cable Row"
+  },
+  {
+    "key": "exercise_Seated cable row",
+    "source": "Seated Cable Row"
+  },
+  {
+    "key": "exercise_seated cable row",
+    "source": "Seated Cable Row"
+  },
+  {
+    "key": "exercise_seated cable row",
+    "source": "Seated Cable Row"
+  },
+  {
+    "key": "exercise_One Arm Cable Seated Row",
+    "source": "One Arm Cable Seated Row"
+  },
+  {
+    "key": "exercise_Seated Dumbbell Tricep Extension",
+    "source": "Seated Dumbbell Tricep Extension"
+  },
+  {
+    "key": "exercise_Seated Leg Curl",
+    "source": "Seated Leg Curl"
+  },
+  {
+    "key": "exercise_Seated Calf Raise",
+    "source": "Seated Calf Raise"
+  },
+  {
+    "key": "exercise_Seated Machine Press",
+    "source": "Seated Machine Press"
+  },
+  {
+    "key": "exercise_T-bar Row Machine",
+    "source": "T-bar Row Machine"
+  },
+  {
+    "key": "exercise_T-Bar Row",
+    "source": "T-bar Row"
+  },
+  {
+    "key": "exercise_Dumbbell Bench Press",
+    "source": "Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_Dumbbell bench press",
+    "source": "Dumbbell Bench Press"
+  },
+  {
+    "key": "exercise_seated dumbbell shoulder press",
+    "source": "Seated Dumbbell Shoulder Press"
+  },
+  {
+    "key": "exercise_Seated Dumbbell Shoulder Press",
+    "source": "Seated Dumbbell Shoulder Press"
+  },
+  {
+    "key": "exercise_Seated dumbbell shoulder press",
+    "source": "Seated Dumbbell Shoulder Press"
+  },
+  {
+    "key": "exercise_Dumbbell Shoulder Press",
+    "source": "Dumbbell Shoulder Press"
+  },
+  {
+    "key": "btn_superset",
+    "source": "What is a Superset?"
+  },
+  {
+    "key": "title_superset",
+    "source": "What is a Superset?"
+  },
+  {
+    "key": "desc_superset",
+    "source": "A Superset is an advanced training technique where you perform two exercises back-to-back with no rest in between. This increases workout intensity, saves time, and maximizes muscle pump and metabolic stress for better growth."
+  }
+]

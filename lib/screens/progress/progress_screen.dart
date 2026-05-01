@@ -15,12 +15,29 @@ class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
 
   @override
-  State<ProgressScreen> createState() => _ProgressScreenState();
+  State<ProgressScreen> createState() => ProgressScreenState();
 }
 
-class _ProgressScreenState extends State<ProgressScreen> {
+class ProgressScreenState extends State<ProgressScreen> {
+  final ScrollController _scrollController = ScrollController();
   SharedPreferences? _prefs;
   String _userName = 'CHAMP';
+
+  void scrollToTop() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -49,6 +66,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: CustomScrollView(
+          controller: _scrollController,
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(child: _buildHeader(context)),
@@ -209,9 +227,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
         childAspectRatio: 1.25, // Increased for more text breathing room
         children: [
           _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+${workoutProvider.getWeekCompletionCount(activeProgram?.id ?? "")} ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
-          _buildStatCard('⏱️', Localizations.localeOf(context).languageCode == 'ar' ? '٣٤ س' : '34h', L10n.s(context, 'training_time'), Localizations.localeOf(context).languageCode == 'ar' ? '↑ ١٢٪ عن الأسبوع الماضي' : '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
+          _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), Localizations.localeOf(context).languageCode == 'ar' ? '↑ 12% عن الأسبوع الماضي' : '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
           _buildStatCard('⚡', '12', L10n.s(context, 'streak'), L10n.s(context, 'personal_best'), AppColors.gold, AppColors.gold3, AppColors.gold2),
-          _buildStatCard('🏋️', Localizations.localeOf(context).languageCode == 'ar' ? '٤.٢ ط' : '4.2T', L10n.s(context, 'total_volume'), '↑ 8% ${L10n.s(context, 'week')}', AppColors.text, AppColors.greenBg, AppColors.greenText),
+          _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% ${L10n.s(context, 'week')}', AppColors.text, AppColors.greenBg, AppColors.greenText),
         ],
       ),
     );
@@ -417,7 +435,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              lastSession.dayName.toUpperCase(),
+                              L10n.getLocalizedDayName(context, lastSession.dayName).toUpperCase(),
                               style: GoogleFonts.bebasNeue(
                                 fontSize: lastSession.dayName.length > 18 ? 19 : 24,
                                 color: AppColors.text,
@@ -466,7 +484,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                         border: Border.all(color: AppColors.gold.withOpacity(0.2)),
                       ),
                       child: Text(
-                        m.toUpperCase(),
+                        L10n.getLocalizedMuscleName(context, m).toUpperCase(),
                         style: GoogleFonts.dmSans(
                           fontSize: 10,
                           color: AppColors.gold,

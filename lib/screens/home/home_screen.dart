@@ -265,12 +265,12 @@ class HomeScreenState extends State<HomeScreen> {
           final program = mockFemalePrograms[index];
           String? subtitle;
           if (program.id == 'athletic_lean') {
-            subtitle = L10n.s(context, 'wellness_al_sub');
+            subtitle = L10n.s(context, 'wellness_athletic_sub');
           } else if (program.id == 'bikini_competition') {
             subtitle = L10n.s(context, 'wellness_bikini_sub');
-          } else if (program.id == 'powerlifter') {
+          } else if (program.id == 'powerlifter_female') {
             subtitle = L10n.s(context, 'wellness_power_sub');
-          } else if (program.id == 'sculpt_cardio') {
+          } else if (program.id == 'sculpt_and_cardio') {
             subtitle = L10n.s(context, 'wellness_sculpt_sub');
           } else {
             subtitle = program.alias;
