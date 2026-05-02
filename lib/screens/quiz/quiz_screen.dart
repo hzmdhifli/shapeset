@@ -79,7 +79,7 @@ class QuizScreenState extends State<QuizScreen> {
           subtext: L10n.s(context, 'quiz_muscle_sub'),
           options: [
             QuizOption(title: L10n.s(context, 'quiz_body_chest'), sub: L10n.s(context, 'quiz_goal_mass_sub'), icon: "👕", values: ["arnold", "cbum", "simeonpanda"]),
-            QuizOption(title: L10n.s(context, 'quiz_body_legs'), sub: L10n.s(context, 'quiz_goal_strength_sub'), icon: "🦵", values: ["platz", "jaycutler", "ramon"]),
+            QuizOption(title: L10n.s(context, 'quiz_body_legs'), sub: L10n.s(context, 'quiz_goal_strength_sub'), icon: "🦵", values: ["platz", "jaycutler", "ramon", "ronaldo"]),
             QuizOption(title: L10n.s(context, 'quiz_body_shoulders'), sub: L10n.s(context, 'quiz_goal_aesthetic_sub'), icon: "🛡️", values: ["jeffseid", "ryanterry", "mikethurston"]),
             QuizOption(title: L10n.s(context, 'quiz_body_arms'), sub: L10n.s(context, 'quiz_goal_mass_sub'), icon: "🦾", values: ["philheath", "flex", "ulissesjr"]),
             QuizOption(title: L10n.s(context, 'quiz_body_symmetry'), sub: L10n.s(context, 'quiz_goal_symmetry_sub'), icon: "🎯", values: ["dexter", "flex", "terrenceruffin"]),
@@ -105,7 +105,7 @@ class QuizScreenState extends State<QuizScreen> {
             QuizOption(title: L10n.s(context, 'quiz_style_vol'), sub: L10n.s(context, 'quiz_style_vol_sub'), icon: "🌊", values: ["arnold", "jaycutler", "ronnie"]),
             QuizOption(title: L10n.s(context, 'quiz_style_heavy'), sub: L10n.s(context, 'quiz_style_heavy_sub'), icon: "💣", values: ["mentzer", "larrywheels", "franco"]),
             QuizOption(title: L10n.s(context, 'quiz_style_mm'), sub: L10n.s(context, 'quiz_style_mm_sub'), icon: "🧠", values: ["philheath", "flex", "cbum"]),
-            QuizOption(title: L10n.s(context, 'quiz_style_exp'), sub: L10n.s(context, 'quiz_style_exp_sub'), icon: "⚡", values: ["davidlaid", "larrywheels", "ramon"]),
+            QuizOption(title: L10n.s(context, 'quiz_style_exp'), sub: L10n.s(context, 'quiz_style_exp_sub'), icon: "⚡", values: ["davidlaid", "larrywheels", "ramon", "ronaldo"]),
             QuizOption(title: L10n.s(context, 'quiz_style_aes'), sub: L10n.s(context, 'quiz_style_aes_sub'), icon: "📸", values: ["jeffseid", "ryanterry", "terrenceruffin"]),
             QuizOption(title: L10n.s(context, 'quiz_style_cond'), sub: L10n.s(context, 'quiz_style_cond_sub'), icon: "🐺", values: ["hadichoopan", "ulissesjr", "dexter"]),
           ],

@@ -206,8 +206,6 @@ class _SignupScreenState extends State<SignupScreen> {
       {'code': 'de', 'name': 'Deutsch'},
       {'code': 'ar', 'name': 'العربية (Arabic)'},
       {'code': 'es', 'name': 'Español (Spanish)'},
-      {'code': 'hi', 'name': 'हिन्दी (Hindi)'},
-      {'code': 'zh', 'name': '中文 (Chinese)'},
     ];
 
     showDialog(

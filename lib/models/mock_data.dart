@@ -14,9 +14,10 @@ final Map<String, List<String>> exercisePools = {
   'Chest': ["Barbell Bench Press","Smith Machine Bench Press","Smith Machine Incline Bench Press","Dumbbell Bench Press","Incline Dumbbell Bench Press","Dumbbell Fly","Standing Cable Fly","Barbell Incline Bench Press","Dips","Weighted Dips","Incline Dumbbell Fly","Push Up","Weighted Push Up","Hindu Push Up","Archer Push Up","Close-grip Push Up","Chest Press Machine","Pec Deck Fly Machine","Incline Bench Press Machine","Dumbbell Pullover","Seated Dips Machine","Low-pulley Cable Fly","Hammer Bench Press","Spoto Bench Press","Assisted Dip Machine","Barbell Floor Chest Press","Clap Push Up","Decline Dumbbell Fly","Incline Push Up","Knee Push Up","Pike Push Up","Decline Chest Press Machine","Incline Dumbbell Twist Press","Incline Cable Fly","Incline Chest Press Machine","Dumbbell Squeeze Press"],
   'Biceps': ["Dumbbell Bicep Curl","Cable Curl","EZ Bar Curl","Dumbbell Hammer Curl","Dumbbell Preacher Curl","Barbbell Preacher Curl","EZ Bar Preacher Curl","Preacher Curl Machine","Arm Curl Machine","Cable Hammer Curl","Incline Dumbbell Curl","Reverse Barbell Curl","Barbell Wrist Curl","EZ Bar Wrist Curl","Dumbbell Wrist Curl","Reverse Barbell Wrist Curl","Reverse Dumbbell Wrist Curl","Wrist Roller"],
   'Triceps': ["Dumbbell Tricep Extension","Dumbbell Kickback","Cable Push Down","Close-grip Bench Press","Seated Dumbbell Tricep Extension","Cable Tricep Extension","Skull Crusher","Lying Tricep Extension","Cable Overhead Tricep Extension","Cable Lying Tricep Extension","Bench Dips","Tricep Extension Machine","Seated Dips Machine"],
-  'Abs': ["Sit Up","Crunch","V-up","Heel Touch","Leg Raise","Hanging Leg Raise","Hollow Rock","Hollow Position","Plank","Dumbbell Side Bend","Abs Roll Out","Air Bicycle Abs","Hanging Knee Raise","Abdominal Crunch Machine","Hang Clean","Hang Snatch","Pilates Jackknife","Reverse Crunch","Side Plank","45 Degree Side Bend","RKC Plank","Cable Side Bend","Weighted Decline Crunch","Decline Reverse Crunch","Decline Sit Up","Weighted Decline Sit Up","Side Crunch","Cable Twist","Abdominal Hip Thrust","Weighted Abdominal Hip Thrust"],
+  'Abs': ["Sit Up","Crunch","V-up","Heel Touch","Leg Raise","Hanging Leg Raise","Hollow Rock","Hollow Position","Plank","Dumbbell Side Bend","Abs Roll Out","Air Bicycle Abs","Hanging Knee Raise","Abdominal Crunch Machine","Hang Clean","Hang Snatch","Pilates Jackknife","Reverse Crunch","Side Plank","45 Degree Side Bend","RKC Plank","Cable Side Bend","Weighted Decline Crunch","Decline Reverse Crunch","Decline Sit Up","Weighted Decline Sit Up","Side Crunch","Cable Twist","Abdominal Hip Thrust","Weighted Abdominal Hip Thrust","Burpee"],
   'Back': ["Conventional Deadlift","Trap-bar Deadlift","Romanian Deadlift","Deficit Deadlift","Paused Deadlift","Cable Pull Through","Glute-Ham Raise", "Lat Pulldown", "Barbell Row", "Seated Row", "Pull-Ups", "One-Arm DB Row", "Face Pulls", "Barbell Bent-over Row", "Weighted Pull-up", "Cable Row", "Dumbbell Pullover"],
-  'Cardio': ["Climbing Stairs", "Running", "Cycling", "Elliptical"]
+  'Cardio': ["Climbing Stairs", "Running", "Cycling", "Elliptical","Treadmill(HIIT)"],
+  'Full Body': ["Clean (Lifting)", "Medicine Ball Throw", "Burpee"]
 };
 
 final Map<String, String> exerciseFormGifs = {
@@ -143,9 +144,7 @@ final Map<String, String> exerciseFormGifs = {
   'Shoulder Overhead Press': 'https://burnfit.io/wp-content/uploads/BB_PRESS.gif',
   'Barbell Bulgarian Split Squat': 'https://burnfit.io/wp-content/uploads/BB_SPLIT_SQT.gif',
   'Hip Thrust Machine': 'https://burnfit.io/wp-content/uploads/HIP_THRUST_MAC.gif',
-  'Dumbbell Sumo Deadlift': 'https://burnfit.io/wp-content/uplo'
-  ''
-  'ads/DB_SM_DL.gif',
+  'Dumbbell Sumo Deadlift': 'https://burnfit.io/wp-content/uploads/DB_SM_DL.gif',
   'Single Leg Glute Bridge': 'https://burnfit.io/wp-content/uploads/SL_GLUTE_BRDG.gif',
   'Lying Hip Abduction': 'https://burnfit.io/wp-content/uploads/LYING_HIP_ABD.gif',
   'Side Laying Clam': 'https://burnfit.io/wp-content/uploads/SIDE_LYING_CLAM.gif',
@@ -215,6 +214,14 @@ final Map<String, String> exerciseFormGifs = {
   'Barbell Lunge': 'https://burnfit.io/wp-content/uploads/LUNGE_TWIST.gif',
   'Glute Kickbacks': 'https://burnfit.io/wp-content/uploads/GLUTE_KB_MC.gif',
   'Glute kickbacks': 'https://burnfit.io/wp-content/uploads/GLUTE_KB_MC.gif',
+  'Burpee': 'https://burnfit.io/wp-content/uploads/BURPEE.gif',
+  'Clean (Lifting)': 'https://burnfit.io/wp-content/uploads/HANG_CLEAN.gif',
+  'Medicine Ball Throw': 'https://burnfit.io/wp-content/uploads/MEDICINE_BALL_THROW.gif',
+  'Dumbbell Row': 'https://burnfit.io/wp-content/uploads/OA_DB_ROW.gif',
+  'Kettlebell Swing': 'https://burnfit.io/wp-content/uploads/KB_SWING.gif',
+  'Cycling': 'https://burnfit.io/wp-content/uploads/CYCLING.gif',
+  'Heel Touch': 'https://burnfit.io/wp-content/uploads/HEEL_TOUCH.gif',
+  'Dumbbell Bulgarian Split Squat': 'https://burnfit.io/wp-content/uploads/DB_BULSPLIT_SQT.gif',
 };
 
 // Helper for creating WorkoutExercise with auto-gif lookup
@@ -2167,6 +2174,66 @@ final List<Program> mockPrograms = [
       ScheduleDay(dayNumber: 'Day 7', name: 'Rest', description: 'Massive Recovery', isTraining: false, exercises: [
         _we(name: 'Full rest, recovery focus', detail: 'Recovery', progress: 1.0),
       ]),
+    ],
+    meals: [],
+  ),
+  Program(
+    id: 'ronaldo',
+    type: ProgramType.muscle,
+    num: '24 / 24',
+    name: 'Cristiano Ronaldo',
+    alias: 'CR7',
+    badge: 'Explosive · Functional',
+    quote: "I'm not a perfectionist, but I like to feel that things are done well.",
+    setsCount: '3',
+    style: 'FNC',
+    intensity: 'HIGH',
+    tags: ['Speed', 'Agility', 'Abs'],
+    imagePath: 'assets/images/cr7.jpg',
+    initials: 'CR',
+    color: const Color(0xFFC8102E),
+    textColor: const Color(0xFFFFFFFF),
+    description: "Cristiano Ronaldo's training focuses on explosive power, agility, and core stability. This functional approach ensures peak performance on the field and legendary physique definition.",
+    schedule: [
+      ScheduleDay(dayNumber: 'Day 1', name: 'Lower Body Power & Plyometrics', description: 'Explosive speed and vertical jump', isTraining: true, exercises: [
+        _we(name: 'Back Squat', detail: '3x8', progress: 0.90),
+        _we(name: 'Box Jump', detail: '3x10', progress: 0.92),
+        _we(name: 'Jump Squat', detail: '3x10', progress: 0.90),
+        _we(name: 'Dumbbell Bulgarian Split Squat', detail: '3x8/leg', progress: 0.88),
+        _we(name: 'Standing Calf Raise', detail: '3x15', progress: 0.85),
+        _we(name: 'Running', detail: '8x100m Sprints', progress: 0.95),
+      ]),
+      ScheduleDay(dayNumber: 'Day 2', name: 'Upper Body Strength & Functional Circuits', description: 'Pushing power and athletic balance', isTraining: true, exercises: [
+        _we(name: 'Barbell Bench Press', detail: '3x12', progress: 0.90),
+        _we(name: 'Arnold Dumbbell Press', detail: '3x12', progress: 0.88),
+        _we(name: 'Weighted Dips', detail: '3x10', progress: 0.85),
+        _we(name: 'Burpee', detail: '3x15', progress: 0.92),
+        _we(name: 'Push Up', detail: '3xTo failure', progress: 0.85),
+      ]),
+      ScheduleDay(dayNumber: 'Day 3', name: 'Speed, Agility & Quads', description: 'Quickness and stop-start power', isTraining: true, exercises: [
+        _we(name: 'Clean (Lifting)', detail: '5x5', progress: 0.95),
+        _we(name: 'Lunge', detail: '3x12/leg', progress: 0.88),
+        _we(name: 'Leg Extension', detail: '3x15', progress: 0.85),
+        _we(name: 'Leg Press', detail: '3x12', progress: 0.88),
+        _we(name: 'Running', detail: '10x1min HIIT', progress: 0.92),
+      ]),
+      ScheduleDay(dayNumber: 'Day 4', name: 'Core Stability & Posterior Chain', description: 'The "Ronaldo Abs" and injury prevention', isTraining: true, exercises: [
+        _we(name: 'Romanian Deadlift', detail: '3x10', progress: 0.90),
+        _we(name: 'Hanging Leg Raise', detail: '3x15', progress: 0.95),
+        _we(name: 'Plank', detail: '3x2 min', progress: 0.90),
+        _we(name: 'Side Plank', detail: '3x45s/side', progress: 0.88),
+        _we(name: 'Hyperextension', detail: '3x15', progress: 0.85),
+        _we(name: 'Heel Touch', detail: '3x30', progress: 0.92),
+      ]),
+      ScheduleDay(dayNumber: 'Day 5', name: 'Full Body Functional & Cardio', description: 'High-intensity conditioning', isTraining: true, exercises: [
+        _we(name: 'Pull Up', detail: '3xTo failure', progress: 0.90),
+        _we(name: 'Dumbbell Row', detail: '3x12', progress: 0.88),
+        _we(name: 'Push Press', detail: '3x10', progress: 0.90),
+        _we(name: 'Kettlebell Swing', detail: '3x20', progress: 0.92),
+        _we(name: 'Cycling', detail: '20 min Cardio', progress: 0.85),
+      ]),
+      ScheduleDay(dayNumber: 'Day 6', name: 'Rest', description: 'Recovery and muscle repair', isTraining: false),
+      ScheduleDay(dayNumber: 'Day 7', name: 'Rest', description: 'Active recovery or pure rest', isTraining: false),
     ],
     meals: [],
   ),

@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter/foundation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide User, OAuthProvider;
 
 
 class AuthService {
@@ -79,7 +80,7 @@ class AuthService {
     }
   }
 
-  /// Saves the signed-in user's info to SharedPreferences for UI use
+  /// Saves the signed-in user's info to SharedPreferences and Supabase
   static Future<void> _saveUserToPrefs(User user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('userName', user.displayName ?? 'Athlete');
@@ -88,5 +89,20 @@ class AuthService {
       await prefs.setString('userPhoto', user.photoURL!);
     }
     await prefs.setBool('isLoggedIn', true);
+
+    // CRITICAL: Sync with Supabase profiles table
+    // This ensures the Lemon Squeezy webhook can find this user by email
+    try {
+      final supabase = Supabase.instance.client;
+      await supabase.from('profiles').upsert({
+        'id': user.uid, // Using Firebase UID
+        'email': user.email,
+        'full_name': user.displayName,
+        // is_pro will default to false in Supabase if not set
+      }, onConflict: 'email'); 
+      debugPrint('Supabase profile synced for: ${user.email}');
+    } catch (e) {
+      debugPrint('Error syncing Supabase profile: $e');
+    }
   }
 }

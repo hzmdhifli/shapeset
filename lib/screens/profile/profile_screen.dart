@@ -16,6 +16,8 @@ import '../../services/auth_service.dart';
 import '../../models/program.dart';
 import '../../models/mock_data.dart';
 import '../../services/workout_provider.dart';
+import '../../services/subscription_provider.dart';
+import '../subscription/paywall_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -218,24 +220,32 @@ class ProfileScreenState extends State<ProfileScreen> {
                   title: L10n.s(context, 'fitness_profile'),
                   subtitle: goalsSubtitle,
                 ),
-                _buildSettingRow(
-                  icon: Icons.verified_user_outlined,
-                  iconColor: AppColors.greenText,
-                  iconBg: AppColors.greenBg,
-                  title: L10n.s(context, 'subscription'),
-                  subtitle: L10n.s(context, 'athlete_pro_active'),
-                  trailing: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.gold,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Text(
-                      L10n.s(context, 'pro_badge'),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                Consumer<SubscriptionProvider>(
+                  builder: (context, sub, child) => _buildSettingRow(
+                    onTap: sub.isPro ? null : () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                      );
+                    },
+                    icon: Icons.verified_user_outlined,
+                    iconColor: sub.isPro ? AppColors.greenText : AppColors.muted,
+                    iconBg: sub.isPro ? AppColors.greenBg : AppColors.background3,
+                    title: L10n.s(context, 'subscription'),
+                    subtitle: sub.isPro ? L10n.s(context, 'athlete_pro_active') : L10n.s(context, 'free_tier'),
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: sub.isPro ? AppColors.gold : AppColors.muted.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Text(
+                        sub.isPro ? L10n.s(context, 'pro_badge') : L10n.s(context, 'free_tier'),
+                        style: TextStyle(
+                          color: sub.isPro ? Colors.black : AppColors.muted,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -306,8 +316,6 @@ class ProfileScreenState extends State<ProfileScreen> {
                               _buildLangItem(context, settings, 'Español', 'es'),
                               _buildLangItem(context, settings, 'Português', 'pt'),
                               _buildLangItem(context, settings, 'Deutsch', 'de'),
-                              _buildLangItem(context, settings, 'हिन्दी', 'hi'),
-                              _buildLangItem(context, settings, '中文', 'zh'),
                             ],
                           ),
                         ),
@@ -461,6 +469,27 @@ class ProfileScreenState extends State<ProfileScreen> {
               ]),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 24)),
+            
+            // Testing / Debug Row
+            SliverToBoxAdapter(
+              child: Consumer<SubscriptionProvider>(
+                builder: (context, sub, child) => sub.isPro ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  child: OutlinedButton(
+                    onPressed: () => sub.setPro(false),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.muted,
+                      side: BorderSide(color: AppColors.border.withOpacity(0.5)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: const Text('DEBUG: RESET TO FREE TIER', style: TextStyle(fontSize: 10, letterSpacing: 1.2)),
+                  ),
+                ) : const SizedBox.shrink(),
+              ),
+            ),
+            
+            const SliverToBoxAdapter(child: SizedBox(height: 12)),
             SliverToBoxAdapter(child: _buildLogoutButton()),
             const SliverToBoxAdapter(child: SizedBox(height: 16)),
             SliverToBoxAdapter(
@@ -1422,8 +1451,6 @@ class ProfileScreenState extends State<ProfileScreen> {
       case 'es': return 'Español';
       case 'pt': return 'Português';
       case 'de': return 'Deutsch';
-      case 'hi': return 'हिन्दी';
-      case 'zh': return '中文';
       default: return 'English';
     }
   }

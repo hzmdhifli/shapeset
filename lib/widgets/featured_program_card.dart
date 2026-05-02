@@ -11,10 +11,11 @@ class FeaturedProgramCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        final ronaldo = mockPrograms.firstWhere((p) => p.id == 'ronaldo', orElse: () => mockPrograms[0]);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProgramDetailScreen(program: mockPrograms[0]),
+            builder: (context) => ProgramDetailScreen(program: ronaldo),
           ),
         );
       },
@@ -65,15 +66,15 @@ class FeaturedProgramCard extends StatelessWidget {
                       _buildTag(context),
                       const SizedBox(height: 7),
                       Text(
-                        'CRISTIANO\nRONALDO',
+                        L10n.s(context, 'program_ronaldo').toUpperCase().replaceAll(' ', '\n'),
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(
                               fontSize: 26,
                               height: 1.1,
                             ),
                       ),
-                      const Text(
-                        'Full Body Performance · 12 Weeks',
-                        style: TextStyle(
+                      Text(
+                        '${L10n.s(context, 'badge_ronaldo')} · 12 Weeks',
+                        style: const TextStyle(
                           color: Color(0x8CFFFFFF),
                           fontSize: 12,
                         ),

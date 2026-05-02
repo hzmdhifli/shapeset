@@ -289,6 +289,13 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
       result = result.replaceAll(RegExp(r'supersets?:?\s*', caseSensitive: false), 'مجموعات ');
     }
     
+    // Ronaldo & General Specifics
+    result = result.replaceAll(RegExp(r'To failure', caseSensitive: false), 'حتى الفشل العضلي');
+    result = result.replaceAll(RegExp(r'100m Sprints', caseSensitive: false), 'سبرنت 100 متر');
+    result = result.replaceAll(RegExp(r'1min HIIT', caseSensitive: false), '1 دقيقة HIIT');
+    result = result.replaceAll(RegExp(r'45s/side', caseSensitive: false), '45 ثانية لكل جانب');
+    result = result.replaceAll(RegExp(r'/leg', caseSensitive: false), ' لكل جانب');
+    
     result = result.replaceAll(RegExp(r'\bsets?\b', caseSensitive: false), 'مجموعات');
     result = result.replaceAll(RegExp(r'\breps?\b', caseSensitive: false), 'تكرارًا');
     result = result.replaceAll(RegExp(r'\bto\b', caseSensitive: false), 'إلى');

@@ -8,8 +8,12 @@ import '../workout/workout_session_screen.dart';
 import '../../services/localization_service.dart';
 import '../../models/mock_data.dart';
 import '../../services/workout_provider.dart';
+import '../../services/subscription_provider.dart';
+import '../subscription/paywall_screen.dart';
+import '../auth/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'dart:ui' as ui;
 
 class ProgramDetailScreen extends StatefulWidget {
   final Program program;
@@ -22,11 +26,40 @@ class ProgramDetailScreen extends StatefulWidget {
 
 class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   int _selectedSplitIndex = 0;
+  late ScrollController _scrollController;
+  final ValueNotifier<double> _scrollOffsetNotifier = ValueNotifier(0);
+  final GlobalKey _headerKey = GlobalKey();
+  double _headerHeight = 500; // Estimated baseline
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController()..addListener(_onScroll);
     _initCaches();
+    
+    // Get actual header height after first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_headerKey.currentContext != null) {
+        final box = _headerKey.currentContext!.findRenderObject() as RenderBox;
+        setState(() {
+          _headerHeight = box.size.height;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    _scrollOffsetNotifier.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.hasClients) {
+      _scrollOffsetNotifier.value = _scrollController.offset;
+    }
   }
 
   void _initCaches() {
@@ -67,6 +100,13 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
       // Standard simple terminology for other programs
       result = result.replaceAll(RegExp(r'supersets?:?\s*', caseSensitive: false), 'مجموعات ');
     }
+    
+    // Ronaldo & General Specifics
+    result = result.replaceAll(RegExp(r'To failure', caseSensitive: false), 'حتى الفشل العضلي');
+    result = result.replaceAll(RegExp(r'100m Sprints', caseSensitive: false), 'سبرنت 100 متر');
+    result = result.replaceAll(RegExp(r'1min HIIT', caseSensitive: false), '1 دقيقة HIIT');
+    result = result.replaceAll(RegExp(r'45s/side', caseSensitive: false), '45 ثانية لكل جانب');
+    result = result.replaceAll(RegExp(r'/leg', caseSensitive: false), ' لكل جانب');
     
     result = result.replaceAll(RegExp(r'\bsets?\b', caseSensitive: false), 'مجموعات');
     result = result.replaceAll(RegExp(r'\breps?\b', caseSensitive: false), 'تكرارًا');
@@ -235,189 +275,407 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
         ? widget.program.splits![_selectedSplitIndex].days 
         : (widget.program.schedule.isNotEmpty ? widget.program.schedule : []);
 
-    return GestureDetector(
-      onTap: () {
-        // Clear focus if needed
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        body: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-          // Hero Header
-          SliverToBoxAdapter(
-            child: _buildHero(context),
-          ),
-          
-          // Stats and Info
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildStatsRow(context),
-                  const SizedBox(height: 12),
-                  _buildStyleBadge(),
-                  const SizedBox(height: 8),
-                  _buildQuote(),
-                  const SizedBox(height: 32),
+    return Consumer<SubscriptionProvider>(
+      builder: (context, sub, child) {
+        final bool isPro = sub.isPro;
+
+        return Scaffold(
+          backgroundColor: AppColors.background,
+          body: Stack(
+            children: [
+              CustomScrollView(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  // Hero Header
+                  SliverToBoxAdapter(
+                    key: _headerKey,
+                    child: _buildHero(context),
+                  ),
                   
-                  if (hasSplits) ...[
-                    _buildSectionTitle(context, 'gym_program_builder'),
-                    const SizedBox(height: 16),
-                    _buildSplitTabs(),
-                    const SizedBox(height: 24),
-                    Text(
-                      widget.program.splits![_selectedSplitIndex].description,
-                      style: GoogleFonts.dmSans(
-                        fontSize: 12,
-                        color: AppColors.muted,
-                        height: 1.5,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                  ] else ...[
-                    _buildSectionTitle(context, 'training_program'),
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.gold.withOpacity(0.08),
-                            AppColors.gold.withOpacity(0.02),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.gold.withOpacity(0.2)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.gold.withOpacity(0.03),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Row(
+                  // Stats and Info
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: AppColors.gold.withOpacity(0.1),
-                              shape: BoxShape.circle,
+                          _buildStatsRow(context),
+                          const SizedBox(height: 12),
+                          _buildStyleBadge(),
+                          const SizedBox(height: 8),
+                          _buildQuote(),
+                          const SizedBox(height: 32),
+                          
+                          if (hasSplits) ...[
+                            _buildSectionTitle(context, 'gym_program_builder'),
+                            const SizedBox(height: 16),
+                            _buildSplitTabs(),
+                            const SizedBox(height: 24),
+                            Text(
+                              widget.program.splits![_selectedSplitIndex].description,
+                              style: GoogleFonts.dmSans(
+                                fontSize: 12,
+                                color: AppColors.muted,
+                                height: 1.5,
+                              ),
                             ),
-                            child: const Icon(Icons.tips_and_updates_outlined, size: 18, color: AppColors.gold),
-                          ),
-                          const SizedBox(width: 14),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  L10n.s(context, 'training_tip'),
-                                  style: GoogleFonts.bebasNeue(
-                                    fontSize: 14,
-                                    color: AppColors.gold,
-                                    letterSpacing: 1.5,
-                                  ),
+                            const SizedBox(height: 20),
+                          ] else ...[
+                            _buildSectionTitle(context, 'training_program'),
+                            const SizedBox(height: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    AppColors.gold.withOpacity(0.08),
+                                    AppColors.gold.withOpacity(0.02),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                 ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  L10n.s(context, 'tip_details'),
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 11,
-                                    color: AppColors.text.withOpacity(0.8),
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.4,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: AppColors.gold.withOpacity(0.2)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.gold.withOpacity(0.03),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.gold.withOpacity(0.1),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(Icons.tips_and_updates_outlined, size: 18, color: AppColors.gold),
+                                  ),
+                                  const SizedBox(width: 14),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          L10n.s(context, 'training_tip'),
+                                          style: GoogleFonts.bebasNeue(
+                                            fontSize: 14,
+                                            color: AppColors.gold,
+                                            letterSpacing: 1.5,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          L10n.s(context, 'tip_details'),
+                                          style: GoogleFonts.dmSans(
+                                            fontSize: 11,
+                                            color: AppColors.text.withOpacity(0.8),
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.4,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 24),
+                          ],
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
-                  ],
+                  ),
+
+                  // Lazy loaded list of days
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final day = days[index];
+                          final workoutProvider = Provider.of<WorkoutProvider>(context);
+                          final isCompleted = workoutProvider.isDayCompleted(widget.program.id, day.dayNumber);
+                          
+                          // Determine active day
+                          bool isActive = false;
+                          if (day.isTraining && !isCompleted) {
+                            final firstUncompleted = days.firstWhere((d) => d.isTraining && !workoutProvider.isDayCompleted(widget.program.id, d.dayNumber), orElse: () => days.last);
+                            isActive = (firstUncompleted.dayNumber == day.dayNumber);
+                          }
+                          return _buildDayCard(day, isActive, isCompleted);
+                        },
+                        childCount: days.length,
+                      ),
+                    ),
+                  ),
+
+                  // Footer
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 28, 20, 60),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildSectionTitle(context, 'focus_areas'),
+                          const SizedBox(height: 12),
+                          _buildTags(),
+                          _buildMentzerSpecialButton(context),
+                          _buildCBumFocusButton(context),
+                          _buildSupersetSpecialButton(context),
+                          const SizedBox(height: 32),
+                          _buildCTA(context),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
+              ),
+
+              // Paywall Blur Gate (Scroll Triggered)
+              if (!isPro)
+                ValueListenableBuilder<double>(
+                  valueListenable: _scrollOffsetNotifier,
+                  builder: (context, offset, _) {
+                    return _buildPaywallGate(context, offset);
+                  },
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPaywallGate(BuildContext context, double offset) {
+    const double threshold = 150.0; // Distance to reach full blur
+    final double progress = (offset / threshold).clamp(0.0, 1.0);
+    final double sigma = progress * 25.0; // Deep progressive blur
+    
+    // Calculate header visibility to anchor the blur layer
+    // The header never blurs, so the blur layer starts right at its bottom
+    final double currentHeaderVisibleHeight = (_headerHeight - offset).clamp(0.0, _headerHeight);
+
+    return Stack(
+      children: [
+        // 1. Progressive Blur Layer
+        if (progress > 0.01)
+          Positioned(
+            top: currentHeaderVisibleHeight,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: IgnorePointer(
+              child: ClipRect(
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 100),
+                    color: AppColors.background.withOpacity(progress * 0.6),
+                  ),
+                ),
               ),
             ),
           ),
 
-          // Lazy loaded list of days
-          if (hasSplits)
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final day = days[index];
-                    final workoutProvider = Provider.of<WorkoutProvider>(context);
-                    final isCompleted = workoutProvider.isDayCompleted(widget.program.id, day.dayNumber);
-                    
-                    // For splits, we can still highlight the next uncompleted training day if we want
-                    bool isActive = false;
-                    if (day.isTraining && !isCompleted) {
-                      final firstUncompleted = days.firstWhere((d) => d.isTraining && !workoutProvider.isDayCompleted(widget.program.id, d.dayNumber), orElse: () => days.last);
-                      isActive = (firstUncompleted.dayNumber == day.dayNumber);
-                    }
-                    return _buildDayCard(day, isActive, isCompleted);
-                  },
-                  childCount: days.length,
-                ),
-              ),
-            )
-          else
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final day = days[index];
-                    final workoutProvider = Provider.of<WorkoutProvider>(context);
-                    final isCompleted = workoutProvider.isDayCompleted(widget.program.id, day.dayNumber);
-                    
-                    // The "active" day is the first training day that is not completed
-                    bool isActive = false;
-                    if (day.isTraining && !isCompleted) {
-                      final firstUncompleted = days.firstWhere((d) => d.isTraining && !workoutProvider.isDayCompleted(widget.program.id, d.dayNumber), orElse: () => days.last);
-                      if (firstUncompleted.dayNumber == day.dayNumber) {
-                        isActive = true;
-                      }
-                    }
-
-                    return _buildDayCard(day, isActive, isCompleted);
-                  },
-                  childCount: days.length,
-                ),
+        // 2. Centered Sticky Overlay (Fades in at full intensity)
+        Positioned.fill(
+          top: currentHeaderVisibleHeight,
+          child: IgnorePointer(
+            ignoring: progress < 1.0, // Only capture taps when fully visible
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 400),
+              opacity: progress >= 1.0 ? 1.0 : 0.0,
+              curve: Curves.easeIn,
+              child: Center(
+                child: _buildPaywallCard(context),
               ),
             ),
+          ),
+        ),
+      ],
+    );
+  }
 
-          // Footer
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 28, 20, 60),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildPaywallCard(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: Container(
+        padding: const EdgeInsets.all(32),
+        margin: const EdgeInsets.symmetric(horizontal: 24),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(32),
+          border: Border.all(color: AppColors.gold.withOpacity(0.3), width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.6),
+              blurRadius: 40,
+              spreadRadius: 10,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.gold.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.gold,
+                size: 32,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              L10n.s(context, 'unlock_program_title').toUpperCase(),
+              style: GoogleFonts.bebasNeue(
+                fontSize: 32,
+                color: AppColors.text,
+                letterSpacing: 2,
+                height: 1,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              L10n.s(context, 'unlock_program_subtext'),
+              style: GoogleFonts.dmSans(
+                fontSize: 14,
+                color: AppColors.muted,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.white.withOpacity(0.05)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildSectionTitle(context, 'focus_areas'),
-                  const SizedBox(height: 12),
-                  _buildTags(),
-                  _buildMentzerSpecialButton(context),
-                  _buildCBumFocusButton(context),
-                  _buildSupersetSpecialButton(context),
-                  const SizedBox(height: 32),
-                  _buildCTA(context),
+                  Column(
+                    children: [
+                      Text(
+                        L10n.s(context, 'month_price').split(' / ')[0],
+                        style: GoogleFonts.dmSans(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.text,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        L10n.s(context, 'month_price').split(' / ')[1].toUpperCase(),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 10,
+                          color: AppColors.muted,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 24,
+                    width: 1,
+                    color: Colors.white.withOpacity(0.1),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        L10n.s(context, 'year_price').split(' / ')[0],
+                        style: GoogleFonts.dmSans(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.gold,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        L10n.s(context, 'year_price').split(' / ')[1].toUpperCase(),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 10,
+                          color: AppColors.muted,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 32),
+            SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.gold,
+                  foregroundColor: Colors.black,
+                  elevation: 8,
+                  shadowColor: AppColors.gold.withOpacity(0.4),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                ),
+                child: Text(
+                  L10n.s(context, 'subscribe_now').toUpperCase(),
+                  style: GoogleFonts.bebasNeue(
+                    fontSize: 20,
+                    letterSpacing: 2,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              },
+              child: RichText(
+                text: TextSpan(
+                  style: GoogleFonts.dmSans(fontSize: 14),
+                  children: [
+                    TextSpan(
+                      text: "${L10n.s(context, 'already_subscribed')} ",
+                      style: const TextStyle(color: AppColors.muted),
+                    ),
+                    TextSpan(
+                      text: L10n.s(context, 'sign_in'),
+                      style: const TextStyle(
+                        color: AppColors.gold,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
     );
   }
 
@@ -431,26 +689,47 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
           final bool isSelected = idx == _selectedSplitIndex;
           return Padding(
             padding: const EdgeInsets.only(right: 8),
-            child: ChoiceChip(
-              label: Text(
-                split.name,
-                style: GoogleFonts.dmSans(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: isSelected ? Colors.black : AppColors.muted,
-                ),
-              ),
-              selected: isSelected,
-              onSelected: (val) {
-                if (val) setState(() => _selectedSplitIndex = idx);
+            child: Consumer<SubscriptionProvider>(
+              builder: (context, sub, child) {
+                final isLocked = !sub.isPro && idx > 0;
+                return ChoiceChip(
+                  label: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        split.name,
+                        style: GoogleFonts.dmSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: isSelected ? Colors.black : (isLocked ? AppColors.muted.withOpacity(0.5) : AppColors.muted),
+                        ),
+                      ),
+                      if (isLocked) ...[
+                        const SizedBox(width: 4),
+                        const Icon(Icons.lock_outline_rounded, size: 10, color: AppColors.muted),
+                      ],
+                    ],
+                  ),
+                  selected: isSelected,
+                  onSelected: (val) {
+                    if (isLocked) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                      );
+                      return;
+                    }
+                    if (val) setState(() => _selectedSplitIndex = idx);
+                  },
+                  selectedColor: AppColors.gold,
+                  backgroundColor: AppColors.surface,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(color: isSelected ? AppColors.gold : AppColors.border),
+                  ),
+                  showCheckmark: false,
+                );
               },
-              selectedColor: AppColors.gold,
-              backgroundColor: AppColors.surface,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-                side: BorderSide(color: isSelected ? AppColors.gold : AppColors.border),
-              ),
-              showCheckmark: false,
             ),
           );
         }).toList(),
@@ -596,32 +875,78 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
           ),
         ),
         
-        // Back Button
+        // Back and Export Buttons
         SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(left: 20, top: 12),
-            child: InkWell(
-              onTap: () => Navigator.pop(context),
-              borderRadius: BorderRadius.circular(100),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.border, width: 1.5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () => Navigator.pop(context),
+                  borderRadius: BorderRadius.circular(100),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.border, width: 1.5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
-                  ],
+                    child: const Directionality(
+                      textDirection: ui.TextDirection.ltr,
+                      child: Icon(Icons.arrow_back_rounded, color: Colors.black, size: 20),
+                    ),
+                  ),
                 ),
-                child: const Directionality(
-                  textDirection: ui.TextDirection.ltr,
-                  child: Icon(Icons.arrow_back_rounded, color: Colors.black, size: 20),
+                Consumer<SubscriptionProvider>(
+                  builder: (context, sub, child) {
+                    final isLocked = !sub.isPro;
+                    return InkWell(
+                      onTap: () {
+                        if (isLocked) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                          );
+                        } else {
+                          // Handle Export
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Exporting program as PDF...')),
+                          );
+                        }
+                      },
+                      borderRadius: BorderRadius.circular(100),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.border, width: 1.5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          isLocked ? Icons.lock_outline_rounded : Icons.ios_share_rounded,
+                          color: isLocked ? AppColors.muted : Colors.black,
+                          size: 20,
+                        ),
+                      ),
+                    );
+                  }
                 ),
-              ),
+              ],
             ),
           ),
         ),
@@ -1017,13 +1342,31 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                       badgeText = localizedName.toUpperCase();
                     }
 
-                    return Text(
-                      badgeText,
-                      style: GoogleFonts.bebasNeue(
-                        fontSize: badgeText.length > 15 ? 10 : 15,
-                        color: isCompleted ? AppColors.muted : (isActive ? Colors.black : AppColors.gold),
-                        letterSpacing: badgeText.length > 15 ? 0.5 : 1.2,
-                      ),
+                    return Consumer<SubscriptionProvider>(
+                      builder: (context, sub, child) {
+                        final isLocked = !sub.canAccessDay(day.dayNumber);
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              badgeText,
+                              style: GoogleFonts.bebasNeue(
+                                fontSize: badgeText.length > 15 ? 10 : 15,
+                                color: isCompleted ? AppColors.muted : (isActive ? Colors.black : AppColors.gold),
+                                letterSpacing: badgeText.length > 15 ? 0.5 : 1.2,
+                              ),
+                            ),
+                            if (isLocked) ...[
+                              const SizedBox(width: 6),
+                              Icon(
+                                Icons.lock_outline_rounded,
+                                size: 14,
+                                color: isActive ? Colors.black : AppColors.gold,
+                              ),
+                            ],
+                          ],
+                        );
+                      }
                     );
                   })(),
                 ),
@@ -1260,41 +1603,57 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                       ),
                     ],
                   )
-                : SizedBox(
-                    width: double.infinity,
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Set this program as active
-                        Provider.of<WorkoutProvider>(context, listen: false)
-                            .setActiveProgram(widget.program.id);
-                            
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WorkoutSessionScreen(
-                              exercises: day.exercises,
-                              sessionTitle: day.name,
-                              programId: widget.program.id,
-                              dayId: day.dayNumber,
+                : Consumer<SubscriptionProvider>(
+                    builder: (context, sub, child) {
+                      final isLocked = !sub.canAccessDay(day.dayNumber);
+                      
+                      return SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (isLocked) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                              );
+                              return;
+                            }
+                            // Set this program as active
+                            Provider.of<WorkoutProvider>(context, listen: false)
+                                .setActiveProgram(widget.program.id);
+                                
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => WorkoutSessionScreen(
+                                  exercises: day.exercises,
+                                  sessionTitle: day.name,
+                                  programId: widget.program.id,
+                                  dayId: day.dayNumber,
+                                ),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: isLocked ? AppColors.surface : AppColors.gold,
+                            foregroundColor: isLocked ? AppColors.muted : Colors.black,
+                            elevation: isActive ? 4 : 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              side: isLocked ? const BorderSide(color: AppColors.border) : BorderSide.none,
                             ),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.gold,
-                        foregroundColor: Colors.black,
-                        elevation: isActive ? 4 : 0,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      ),
-                      child: Text(
-                        L10n.s(context, 'start_session').toUpperCase(),
-                        style: GoogleFonts.bebasNeue(
-                          fontSize: 18,
-                          letterSpacing: 2,
+                          child: Text(
+                            (isLocked ? L10n.s(context, 'go_pro_btn') : L10n.s(context, 'start_session')).toUpperCase(),
+                            style: GoogleFonts.bebasNeue(
+                              fontSize: 18,
+                              letterSpacing: 2,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
             ),
           ] else 

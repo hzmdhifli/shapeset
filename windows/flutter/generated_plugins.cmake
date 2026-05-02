@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  app_links
   awesome_notifications
   file_selector_windows
   firebase_auth

@@ -13,10 +13,18 @@ import 'theme/app_colors.dart';
 import 'screens/auth/splash_screen.dart';
 import 'services/localization_service.dart';
 import 'services/workout_provider.dart';
+import 'services/subscription_provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // Initialize Supabase
+  await Supabase.initialize(
+    url: 'https://zcbujmjqfozuujioxrio.supabase.co',
+    anonKey: 'sb_publishable_p4PBU3piZ1SHgV6CfPAZGA_sinYhpUn',
+  );
   
   // Initialize Notifications
   AwesomeNotifications().initialize(
@@ -39,6 +47,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider(create: (_) => WorkoutProvider()),
+        ChangeNotifierProvider(create: (_) => SubscriptionProvider()),
       ],
       child: const AthleteApp(),
     ),
@@ -129,8 +138,6 @@ class AthleteApp extends StatelessWidget {
         Locale('fr'),
         Locale('ar'),
         Locale('es'),
-        Locale('hi'),
-        Locale('zh'),
         Locale('pt'),
         Locale('de'),
       ],
