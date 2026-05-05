@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart' as gestures;
+import 'package:flutter/rendering.dart';
+import 'dart:ui' as ui;
+import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../theme/app_colors.dart';
+import '../../models/program.dart';
+import '../workout/workout_session_screen.dart';
+import '../../services/localization_service.dart';
+import '../../models/mock_data.dart';
+import '../../services/workout_provider.dart';
+import '../../services/subscription_provider.dart';
+import '../subscription/paywall_screen.dart';
+import '../auth/login_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
+class ProgramDetailScreen extends StatefulWidget {
+  final Program program;
+
+  const ProgramDetailScreen({super.key, required this.program});
+
+  @override
+  State<ProgramDetailScreen> createState() => _ProgramDetailScreenState();
+}
+
+class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
+  int _selectedSplitIndex = 0;
+  late ScrollController _scrollController;
+  final ValueNotifier<double> _scrollOffsetNotifier = ValueNotifier(0);
+  final GlobalKey _headerKey = GlobalKey();
+  double _headerHeight = 500; // Estimated baseline
+  ScrollHoldController? _hold;
+  gestures.Drag? _drag;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()..addListener(_onScroll);
+    _initCaches();
+    
+    // Get actual header height after first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_headerKey.currentContext != null) {
+        final box = _headerKey.currentContext!.findRenderObject() as RenderBox;
+        setState(() {
+          _headerHeight = box.size.height;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    _scrollOffsetNotifier.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.hasClients) {
+      _scrollOffsetNotifier.value = _scrollController.offset;
+    }
+  }
+
+  void _initCaches() {
+    initGlobalCaches((muscle, exercises) {
+      return exercises.map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value, style: const TextStyle(fontSize: 13)),
+        );
+      }).toList();
+    });
+  }
+
+  String _getMuscleForExercise(String exName) {
+    return exerciseToMuscle[exName] ?? 'other';
+  }

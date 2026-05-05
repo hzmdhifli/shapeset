@@ -152,14 +152,15 @@ class AthleteApp extends StatelessWidget {
 }
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final int initialIndex;
+  const MainScreen({super.key, this.initialIndex = 0});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
+  late int _currentIndex;
   final GlobalKey<HomeScreenState> _homeKey = GlobalKey<HomeScreenState>();
   final GlobalKey<QuizScreenState> _quizKey = GlobalKey<QuizScreenState>();
   final GlobalKey<ProgressScreenState> _progressKey = GlobalKey<ProgressScreenState>();
@@ -169,6 +170,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex;
     _screens = [
       HomeScreen(key: _homeKey),
       QuizScreen(key: _quizKey),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart' as gestures;
+import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,7 +15,6 @@ import '../subscription/paywall_screen.dart';
 import '../auth/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'dart:ui' as ui;
 
 class ProgramDetailScreen extends StatefulWidget {
   final Program program;
@@ -30,6 +31,8 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   final ValueNotifier<double> _scrollOffsetNotifier = ValueNotifier(0);
   final GlobalKey _headerKey = GlobalKey();
   double _headerHeight = 500; // Estimated baseline
+  ScrollHoldController? _hold;
+  gestures.Drag? _drag;
 
   @override
   void initState() {
@@ -491,8 +494,30 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
               duration: const Duration(milliseconds: 400),
               opacity: progress >= 1.0 ? 1.0 : 0.0,
               curve: Curves.easeIn,
-              child: Center(
-                child: _buildPaywallCard(context),
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onVerticalDragStart: (details) {
+                  if (_scrollController.hasClients) {
+                    _hold = _scrollController.position.hold(() {});
+                    _drag = _scrollController.position.drag(details, () {
+                      _drag = null;
+                    }) as gestures.Drag;
+                  }
+                },
+                onVerticalDragUpdate: (details) {
+                  _drag?.update(details);
+                },
+                onVerticalDragEnd: (details) {
+                  _drag?.end(details);
+                  _hold?.cancel();
+                },
+                onVerticalDragCancel: () {
+                  _drag?.cancel();
+                  _hold?.cancel();
+                },
+                child: Center(
+                  child: _buildPaywallCard(context),
+                ),
               ),
             ),
           ),
