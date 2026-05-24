@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../theme/app_colors.dart';
 import '../../services/localization_service.dart';
 import '../../services/subscription_provider.dart';
+import '../../services/auth_service.dart';
 
 class PaywallScreen extends StatefulWidget {
   const PaywallScreen({super.key});
@@ -16,43 +17,90 @@ class PaywallScreen extends StatefulWidget {
 
 class _PaywallScreenState extends State<PaywallScreen> {
   bool _isYearly = true;
+  String _paymentMethod = 'card'; // 'card' or 'paypal'
 
   // Real Lemon Squeezy Checkout URLs
-  final String _monthlyUrl = 'https://hazemdhifli.lemonsqueezy.com/checkout/buy/2e2c35ae-7211-4677-b159-845aee137337';
-  final String _yearlyUrl = 'https://hazemdhifli.lemonsqueezy.com/checkout/buy/c4299c2e-e643-45c4-b12d-17c8ecf5168d';
+  final String _monthlyUrl = 'https://hazemdhifli.lemonsqueezy.com/checkout/buy/c4299c2e-e643-45c4-b12d-17c8ecf5168d?enabled=1599733';
+  final String _yearlyUrl = 'https://hazemdhifli.lemonsqueezy.com/checkout/buy/2e2c35ae-7211-4677-b159-845aee137337?enabled=1599808';
+
+  SubscriptionProvider? _subscriptionProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _subscriptionProvider = context.read<SubscriptionProvider>();
+      _subscriptionProvider?.addListener(_onSubscriptionChanged);
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscriptionProvider?.removeListener(_onSubscriptionChanged);
+    super.dispose();
+  }
+
+  void _onSubscriptionChanged() {
+    if (mounted && (_subscriptionProvider?.isPro ?? false)) {
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Pro Plan Activated Successfully!'),
+            backgroundColor: AppColors.gold,
+          ),
+        );
+      }
+    }
+  }
 
   Future<void> _launchCheckout() async {
-    final String urlString = _isYearly ? _yearlyUrl : _monthlyUrl;
+    final user = AuthService.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please sign in to continue')),
+      );
+      return;
+    }
+
+    String urlString = _isYearly ? _yearlyUrl : _monthlyUrl;
+    
+    // Append User ID to the URL to ensure correct account linking regardless of payment email
+    final String separator = urlString.contains('?') ? '&' : '?';
+    urlString += '${separator}checkout[custom][user_id]=${user.uid}';
+    
+    // Pre-fill the email in the checkout if available
+    if (user.email != null) {
+      urlString += '&checkout[email]=${user.email}';
+    }
+
     final Uri url = Uri.parse(urlString);
     
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_paymentMethod == 'paypal' 
+            ? 'Opening secure PayPal checkout...' 
+            : 'Opening secure checkout...'),
+          duration: const Duration(seconds: 2),
+          backgroundColor: AppColors.gold.withOpacity(0.9),
+        ),
+      );
+    }
+
     try {
       if (await canLaunchUrl(url)) {
         await launchUrl(
           url,
           mode: LaunchMode.externalApplication,
         );
-        // Note: Real verification happens via webhooks or polling your backend.
-        // For testing, you can still use the debug button in Profile to unlock.
       }
     } catch (e) {
       debugPrint('Could not launch checkout: $e');
     }
   }
 
-  // White Test: Simulate successful payment locally
-  Future<void> _simulateSuccess() async {
-    final subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
-    await subProvider.setPro(true);
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Test: Subscription Activated!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-      Navigator.pop(context); // Return to profile/home
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -273,27 +321,42 @@ class _PaywallScreenState extends State<PaywallScreen> {
                                 ),
                               ],
                               const SizedBox(height: 30),
-                              SizedBox(
-                                width: double.infinity,
-                                height: 56,
-                                child: ElevatedButton(
-                                  onPressed: _launchCheckout,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.gold,
-                                    foregroundColor: Colors.black,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                                    elevation: 8,
-                                    shadowColor: AppColors.gold.withOpacity(0.4),
-                                  ),
-                                  child: Text(
-                                    L10n.s(context, 'upgrade_now').toUpperCase(),
-                                    style: GoogleFonts.bebasNeue(
-                                      fontSize: 20,
-                                      letterSpacing: 2,
+                              
+                              // Payment Method Selector
+                              _buildPaymentMethodSelector(),
+                              const SizedBox(height: 24),
+
+                              if (_paymentMethod == 'card')
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 56,
+                                  child: ElevatedButton(
+                                    onPressed: _launchCheckout,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.gold,
+                                      foregroundColor: Colors.black,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                      elevation: 8,
+                                      shadowColor: AppColors.gold.withOpacity(0.4),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.shield_outlined, size: 20),
+                                        const SizedBox(width: 12),
+                                        Text(
+                                          L10n.s(context, 'upgrade_now').toUpperCase(),
+                                          style: GoogleFonts.bebasNeue(
+                                            fontSize: 20,
+                                            letterSpacing: 2,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                              ),
+                                )
+                              else
+                                _buildPayPalButton(),
                             ],
                           ),
                         ),
@@ -313,18 +376,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 20),
-                        // WHITE TEST BUTTON
-                        TextButton(
-                          onPressed: _simulateSuccess,
-                          child: Text(
-                            'WHITE TEST: SIMULATE SUCCESS',
-                            style: TextStyle(
-                              color: AppColors.gold.withOpacity(0.3),
-                              fontSize: 9,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                        ),
+
                       ],
                     ),
                   ),
@@ -398,6 +450,127 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 ),
               ),
             ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentMethodSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          L10n.s(context, 'select_payment').toUpperCase(),
+          style: GoogleFonts.bebasNeue(
+            fontSize: 14,
+            color: AppColors.muted,
+            letterSpacing: 1.5,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _buildPaymentOption(
+                id: 'card',
+                label: L10n.s(context, 'credit_card'),
+                icon: Icons.credit_card_rounded,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildPaymentOption(
+                id: 'paypal',
+                label: 'PayPal',
+                icon: Icons.account_balance_wallet_rounded,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPaymentOption({
+    required String id,
+    required String label,
+    required IconData icon,
+  }) {
+    final bool isSelected = _paymentMethod == id;
+    return GestureDetector(
+      onTap: () => setState(() => _paymentMethod = id),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.gold.withOpacity(0.1) : Colors.black.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected ? AppColors.gold : Colors.white.withOpacity(0.05),
+            width: 1.5,
+          ),
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              color: isSelected ? AppColors.gold : AppColors.muted,
+              size: 20,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              label,
+              style: GoogleFonts.dmSans(
+                fontSize: 11,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                color: isSelected ? AppColors.gold : AppColors.muted,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPayPalButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 56,
+      child: ElevatedButton(
+        onPressed: _launchCheckout,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFFFFC439), // PayPal Gold
+          foregroundColor: const Color(0xFF003087), // PayPal Blue
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          elevation: 8,
+          shadowColor: const Color(0xFFFFC439).withOpacity(0.4),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Styled text to mimic PayPal logo
+            Text(
+              'Pay',
+              style: GoogleFonts.dmSans(
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                fontSize: 22,
+                color: const Color(0xFF003087),
+              ),
+            ),
+            Text(
+              'Pal',
+              style: GoogleFonts.dmSans(
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                fontSize: 22,
+                color: const Color(0xFF009CDE),
+              ),
+            ),
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import '../../main.dart';
 import '../../theme/app_colors.dart';
@@ -125,6 +126,43 @@ class ProfileScreenState extends State<ProfileScreen> {
     _loadPrefs();
   }
 
+  Future<void> _manageSubscription() async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: BorderSide(color: AppColors.gold.withOpacity(0.2))),
+        title: Text(L10n.s(context, 'manage_subscription').toUpperCase(), 
+          style: GoogleFonts.bebasNeue(color: AppColors.text, letterSpacing: 2, fontSize: 24)),
+        content: Text(L10n.s(context, 'manage_subscription_desc'), 
+          style: GoogleFonts.dmSans(color: AppColors.muted, fontSize: 13, height: 1.5)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(L10n.s(context, 'cancel').toUpperCase(), 
+              style: GoogleFonts.bebasNeue(color: AppColors.muted, letterSpacing: 1)),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final Uri url = Uri.parse('https://hazemdhifli.lemonsqueezy.com/billing');
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url, mode: LaunchMode.externalApplication);
+              }
+              if (mounted) Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.gold, 
+              foregroundColor: Colors.black,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text(L10n.s(context, 'open_portal').toUpperCase(), 
+              style: GoogleFonts.bebasNeue(letterSpacing: 1)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_prefs == null) {
@@ -222,11 +260,15 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Consumer<SubscriptionProvider>(
                   builder: (context, sub, child) => _buildSettingRow(
-                    onTap: sub.isPro ? null : () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const PaywallScreen()),
-                      );
+                    onTap: () {
+                      if (sub.isPro) {
+                        _manageSubscription();
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                        );
+                      }
                     },
                     icon: Icons.verified_user_outlined,
                     iconColor: sub.isPro ? AppColors.greenText : AppColors.muted,
@@ -793,7 +835,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        childAspectRatio: 1.25,
+        childAspectRatio: 1.1,
         children: [
           _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+3 ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
           _buildStatCard('⚡', '12', L10n.s(context, 'streak'), L10n.s(context, 'personal_best'), AppColors.gold, AppColors.gold3, AppColors.gold2),
@@ -806,7 +848,7 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildStatCard(String icon, String val, String label, String delta, Color valColor, Color deltaBg, Color deltaText) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(14),
@@ -842,17 +884,17 @@ class ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(height: 6),
           Flexible(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
                 color: deltaBg,
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(6),
               ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  delta,
-                  style: TextStyle(color: deltaText, fontSize: 10, fontWeight: FontWeight.w500),
-                ),
+              child: Text(
+                delta,
+                style: TextStyle(color: deltaText, fontSize: 12, fontWeight: FontWeight.w600, height: 1.1),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
             ),
           ),

@@ -10,14 +10,18 @@ class L10n {
       'no_account': "Don't have an account? ",
       'sign_up_free': 'Sign up free',
       'secure_access': 'SECURE ACCESS',
-      'encryption_info': 'We use industry-standard encryption to protect your data.',
+      'encryption_info':
+          'We use industry-standard encryption to protect your data.',
       'create_account': 'CREATE YOUR\nACCOUNT',
-      'join_thousands': "Join thousands of athletes training with the world's best programs.",
-      'sync_info': 'Your name, email, and profile photo will be automatically synced from your Google account.',
+      'join_thousands':
+          "Join thousands of athletes training with the world's best programs.",
+      'sync_info':
+          'Your name, email, and profile photo will be automatically synced from your Google account.',
       'have_account': 'Already have an account? ',
       'sign_in': 'Sign in',
       'get_started_fast': 'GET STARTED FAST',
-      'one_tap_login': 'One-tap login means you can start your first workout in less than 30 seconds.',
+      'one_tap_login':
+          'One-tap login means you can start your first workout in less than 30 seconds.',
       'select_language': 'Select Language',
       'my_profile': 'MY PROFILE',
       'edit_profile': 'Edit Profile',
@@ -48,7 +52,8 @@ class L10n {
       'no_athletes': 'No athletes found',
       'hero_category': 'BODYBUILDING LEGENDS',
       'hero_title': 'CHOOSE YOUR\nPROGRAM',
-      'hero_subtitle': 'Select an athlete to explore their full training system.',
+      'hero_subtitle':
+          'Select an athlete to explore their full training system.',
       'step': 'Step',
       'of': 'of',
       'continue': 'CONTINUE →',
@@ -56,7 +61,8 @@ class L10n {
       'start_training': 'START TRAINING →',
       'skip_setup': 'SKIP FOR NOW',
       'goal_title': 'WHAT\'S YOUR\nMAIN GOAL?',
-      'goal_sub': 'We\'ll personalize your program recommendations around this.',
+      'goal_sub':
+          'We\'ll personalize your program recommendations around this.',
       'build_muscle': 'Build Muscle',
       'build_muscle_desc': 'Mass & strength gain',
       'lose_fat': 'Lose Fat',
@@ -74,7 +80,8 @@ class L10n {
       'advanced': 'Advanced',
       'advanced_sub': '3+ years — serious athlete',
       'metrics_title': 'YOUR BODY\nMETRICS',
-      'metrics_sub': 'Used to tailor your nutrition plan and track your transformation.',
+      'metrics_sub':
+          'Used to tailor your nutrition plan and track your transformation.',
       'weight': 'Weight',
       'height': 'Height',
       'age': 'Age',
@@ -83,7 +90,8 @@ class L10n {
       'male': 'Male',
       'female': 'Female',
       'days_title': 'HOW MANY DAYS\nPER WEEK?',
-      'days_sub': 'Consistency beats intensity. Choose what you can realistically commit to.',
+      'days_sub':
+          'Consistency beats intensity. Choose what you can realistically commit to.',
       'days_3': '3 Days',
       'days_3_desc': 'Full body focus',
       'days_4': '4 Days',
@@ -93,12 +101,14 @@ class L10n {
       'days_6': '6 Days',
       'days_6_desc': 'Full commitment',
       'welcome_user': 'WELCOME,\n',
-      'success_sub': 'Your profile is set up and your personalized\nprogram recommendations are ready.',
+      'success_sub':
+          'Your profile is set up and your personalized\nprogram recommendations are ready.',
       'quiz_title': 'FIND YOUR MATCH',
       'quiz_continue': 'CONTINUE →',
       'quiz_match': 'SEE MY MATCH →',
       'quiz_result_label': 'YOUR PERFECT MATCH',
-      'quiz_result_desc': 'Your drive for performance and muscle perfectly matches {name}\'s methodology.',
+      'quiz_result_desc':
+          'Your drive for performance and muscle perfectly matches {name}\'s methodology.',
       'view_program': 'VIEW FULL PROGRAM →',
       'retake_quiz': 'Retake the Quiz',
       'sessions_completed': 'Sessions Completed',
@@ -137,7 +147,8 @@ class L10n {
       'fitness_profile': 'Fitness Profile',
       'subscription': 'Subscription',
       'privacy_settings': 'PRIVACY SETTINGS',
-      'privacy_desc': 'Your profile is currently private. Only you can see your progress.',
+      'privacy_desc':
+          'Your profile is currently private. Only you can see your progress.',
       'close': 'CLOSE',
       'back': 'Back',
       'exercises': 'Exercises',
@@ -185,7 +196,8 @@ class L10n {
       'program_completions': 'PROGRAM COMPLETIONS',
       'times_finished': '{num} times finished',
       'training_tip': 'TRAINING TIP',
-      'tip_details': '"3x8-12" means 3 sets, each one between 8 (min) and 12 (max) repetitions.',
+      'tip_details':
+          '"3x8-12" means 3 sets, each one between 8 (min) and 12 (max) repetitions.',
       'got_it': 'GOT IT',
       'keep_going': 'KEEP\nGOING',
       'muscles_trained': 'MUSCLES TRAINED',
@@ -207,14 +219,16 @@ class L10n {
       'cancel': 'CANCEL',
       'send': 'SEND',
       'tell_us_thoughts': 'Tell us what you think...',
-      'terms_agree': 'By using ATHLÈTE, you agree to our Terms of Service and Privacy Policy.',
+      'terms_agree':
+          'By using ATHLÈTE, you agree to our Terms of Service and Privacy Policy.',
       'name_label': 'Name',
       'age_yrs': '{age} yrs',
       'height_cm': '{height} cm',
       'weight_kg': '{weight} kg',
       'profile_subtitle_hint': 'Name, age, weight, height',
       'goals_subtitle_hint': 'Muscle building · Fat loss · Endurance',
-      'progress_auto_save': 'Your progress will be automatically saved to your account.',
+      'progress_auto_save':
+          'Your progress will be automatically saved to your account.',
       'signin_failed': 'Sign-in failed: {error}',
       'apple_signin_failed': 'Apple sign-in failed: {error}',
       'athlete_pro_active': 'ATHLÈTE Pro · Active',
@@ -245,16 +259,20 @@ class L10n {
       'starting_ex': 'Starting {name}...',
       'btn_static_hold': 'Static Hold',
       'title_static_hold': 'What is a Static Hold?',
-      'desc_static_hold': 'A Static Hold is a training technique involving holding the weight in the fully contracted position for as long as possible. In Mike Mentzer\'s methodology, this is used after reaching failure to completely exhaust the muscle fibers and trigger maximum growth.',
+      'desc_static_hold':
+          'A Static Hold is a training technique involving holding the weight in the fully contracted position for as long as possible. In Mike Mentzer\'s methodology, this is used after reaching failure to completely exhaust the muscle fibers and trigger maximum growth.',
       'btn_superset': 'What is a Superset?',
       'title_superset': 'What is a Superset?',
-      'desc_superset': 'A Superset is an advanced training technique where you perform two exercises back-to-back with no rest in between. This increases workout intensity, saves time, and maximizes muscle pump and metabolic stress for better growth.',
+      'desc_superset':
+          'A Superset is an advanced training technique where you perform two exercises back-to-back with no rest in between. This increases workout intensity, saves time, and maximizes muscle pump and metabolic stress for better growth.',
       'training_tip_title': 'TRAINING TIP',
-      'training_tip_desc': '"3x8-12" means 3 sets, each one between 8 (min) and 12 (max) repetitions.',
+      'training_tip_desc':
+          '"3x8-12" means 3 sets, each one between 8 (min) and 12 (max) repetitions.',
       'water_reminder': 'Hey, Get some water',
       'complete_set_btn': 'COMPLETE SET',
       'skip_rest_btn': 'SKIP REST',
-      'focus_muscle_tip': 'Focus on your {muscle} muscles. Ensure controlled movement throughout the entire range of motion.',
+      'focus_muscle_tip':
+          'Focus on your {muscle} muscles. Ensure controlled movement throughout the entire range of motion.',
       'personal_best': 'Personal best!',
       'first_sweat_title': 'First Sweat',
       'first_sweat_desc': 'Completed your first session',
@@ -310,6 +328,8 @@ class L10n {
       'program_hadichoopan': 'Hadi Choopan',
       'program_bigramy': 'Big Ramy',
       'program_davidlaid': 'David Laid',
+      'program_ronaldo': 'Ronaldo',
+      'badge_ronaldo': 'Explosive · Functional',
       'program_athletic_lean': 'Athletic & Lean',
       'program_bikini_competition': 'Bikini/Competition',
       'program_powerlifter_female': 'Powerlifter',
@@ -322,7 +342,8 @@ class L10n {
       'featured_tag': 'FEATURED',
       'featured_program_tag': '⚡ FEATURED PROGRAM',
       'unlock_program_title': 'Unlock This Program',
-      'unlock_program_subtext': 'Subscribe to access all training days, exercises, and athlete programs',
+      'unlock_program_subtext':
+          'Subscribe to access all training days, exercises, and athlete programs',
       'subscribe_now': 'Subscribe Now',
       'already_subscribed': 'Already subscribed?',
       'month_price': '\$9.99 / Month',
@@ -330,7 +351,8 @@ class L10n {
       'restore_purchase': 'Restore Purchase',
       'pro_badge': 'PRO',
       'pro_title': 'ATHLÈTE PRO',
-      'pro_subtitle': 'Unlock the ultimate training experience and transform your physique with the world\'s best.',
+      'pro_subtitle':
+          'Unlock the ultimate training experience and transform your physique with the world\'s best.',
       'pro_feature_1': 'Access to all 20+ Athlete Programs',
       'pro_feature_2': 'Full training logs & history',
       'pro_feature_3': 'Detailed exercise instructions & GIFs',
@@ -342,6 +364,14 @@ class L10n {
       'per_month': 'per month',
       'save_33': 'SAVE 33%',
       'upgrade_now': 'Upgrade Now',
+      'pay_with_paypal': 'Pay with PayPal',
+      'secure_checkout': 'Secure Checkout',
+      'select_payment': 'Select Payment Method',
+      'credit_card': 'Credit / Debit Card',
+      'manage_subscription': 'Manage Subscription',
+      'manage_subscription_desc':
+          'You can cancel or change your plan through the Lemon Squeezy customer portal.',
+      'open_portal': 'OPEN CUSTOMER PORTAL',
     },
     'ar': {
       'welcome_back': 'أهلاً بعودتك',
@@ -353,12 +383,15 @@ class L10n {
       'secure_access': 'وصول آمن',
       'encryption_info': 'نحن نستخدم تشفيراً بمعايير الصناعة لحماية بياناتك.',
       'create_account': 'أنشئ\nحسابك',
-      'join_thousands': 'انضم إلى آلاف الرياضيين الذين يتدربون بأفضل البرامج العالمية.',
-      'sync_info': 'سيتم مزامنة اسمك وبريدك الإلكتروني وصورتك الشخصية تلقائياً من حساب Google الخاص بك.',
+      'join_thousands':
+          'انضم إلى آلاف الرياضيين الذين يتدربون بأفضل البرامج العالمية.',
+      'sync_info':
+          'سيتم مزامنة اسمك وبريدك الإلكتروني وصورتك الشخصية تلقائياً من حساب Google الخاص بك.',
       'have_account': 'لديك حساب بالفعل؟ ',
       'sign_in': 'تسجيل الدخول',
       'get_started_fast': 'ابدأ بسرعة',
-      'one_tap_login': 'تسجيل الدخول بنقرة واحدة يعني أنه يمكنك بدء تمرينك الأول في أقل من 30 ثانية.',
+      'one_tap_login':
+          'تسجيل الدخول بنقرة واحدة يعني أنه يمكنك بدء تمرينك الأول في أقل من 30 ثانية.',
       'select_language': 'اختر اللغة',
       'my_profile': 'ملفي الشخصي',
       'edit_profile': 'تعديل الملف الشخصي',
@@ -383,7 +416,8 @@ class L10n {
       'terms': 'الشروط والخصوصية',
       'log_out': 'تسجيل الخروج',
       'unlock_program_title': 'فتح هذا البرنامج',
-      'unlock_program_subtext': 'اشترك للوصول إلى جميع أيام التدريب والتمارين وبرامج الرياضيين',
+      'unlock_program_subtext':
+          'اشترك للوصول إلى جميع أيام التدريب والتمارين وبرامج الرياضيين',
       'subscribe_now': 'اشترك الآن',
       'already_subscribed': 'هل أنت مشترك بالفعل؟',
       'month_price': '9.99 دولار / شهر',
@@ -391,7 +425,8 @@ class L10n {
       'restore_purchase': 'استعادة المشتريات',
       'pro_badge': 'برو',
       'pro_title': 'رياضي برو',
-      'pro_subtitle': 'افتح تجربة التدريب القصوى وحول جسمك مع الأفضل في العالم.',
+      'pro_subtitle':
+          'افتح تجربة التدريب القصوى وحول جسمك مع الأفضل في العالم.',
       'pro_feature_1': 'الوصول إلى جميع برامج الرياضيين (20+)',
       'pro_feature_2': 'سجلات وتاريخ التدريب الكامل',
       'pro_feature_3': 'تعليمات تمارين مفصلة وصور متحركة',
@@ -443,7 +478,8 @@ class L10n {
       'male': 'ذكر',
       'female': 'أنثى',
       'days_title': 'كم يوماً\nفي الأسبوع؟',
-      'days_sub': 'الاستمرارية أهم من الكثافة. اختر ما يمكنك الالتزام به واقعياً.',
+      'days_sub':
+          'الاستمرارية أهم من الكثافة. اختر ما يمكنك الالتزام به واقعياً.',
       'days_3': '3 أيام',
       'days_3_desc': 'تركيز على كامل الجسم',
       'days_4': '4 أيام',
@@ -458,7 +494,8 @@ class L10n {
       'quiz_continue': 'استمرار ←',
       'quiz_match': 'رؤية ما يناسبني ←',
       'quiz_result_label': 'خيارك المثالي',
-      'quiz_result_desc': 'شغفك بالأداء والعضلات يتناسب تماماً مع منهجية {name}.',
+      'quiz_result_desc':
+          'شغفك بالأداء والعضلات يتناسب تماماً مع منهجية {name}.',
       'view_program': 'رؤية البرنامج الكامل ←',
       'retake_quiz': 'إعادة الاختبار',
       'sessions_completed': 'الجلسات المكتملة',
@@ -580,7 +617,8 @@ class L10n {
       'quiz_res_athletic': 'رياضي ومنحوت',
       'quiz_res_power': 'القوة والقدرة',
       'quiz_res_sculpt': 'نحت و HIIT',
-      'quiz_analysis_result': 'يظهر تحليلنا أنك تتماشى تماماً مع أسلوب تدريب {alias}. يركز هذا البرنامج على {style} وهو متوازن لمستويات كثافة {intensity}.',
+      'quiz_analysis_result':
+          'يظهر تحليلنا أنك تتماشى تماماً مع أسلوب تدريب {alias}. يركز هذا البرنامج على {style} وهو متوازن لمستويات كثافة {intensity}.',
       'quiz_goal_q': 'ما هو هدفك الأول من التدريب؟',
       'quiz_goal_sub': 'حدد هدفك النهائي في الجيم.',
       'quiz_goal_mass': 'بناء أضخم جسم ممكن',
@@ -698,7 +736,8 @@ class L10n {
       'featured_tag': 'مميز',
       'featured_program_tag': '⚡ برنامج مميز',
       'unlock_program_title': 'افتح هذا البرنامج',
-      'unlock_program_subtext': 'اشترك للوصول إلى جميع أيام التدريب والتمارين وبرامج الرياضيين',
+      'unlock_program_subtext':
+          'اشترك للوصول إلى جميع أيام التدريب والتمارين وبرامج الرياضيين',
       'subscribe_now': 'اشترك الآن',
       'already_subscribed': 'مشترك بالفعل؟',
       'sign_in': 'تسجيل الدخول',
@@ -708,7 +747,8 @@ class L10n {
       'quiz_type_power_sub': 'قوي، سميك، كثيف',
       'quiz_quote_q': 'اختر المقولة الأكثر تأثيراً فيك:',
       'quiz_quote_sub': 'عقلية البطل.',
-      'quiz_quote_ronnie': 'الكل يريد أن يصبح لاعب كمال أجسام لكن لا أحد يريد حمل الأوزان الثقيلة',
+      'quiz_quote_ronnie':
+          'الكل يريد أن يصبح لاعب كمال أجسام لكن لا أحد يريد حمل الأوزان الثقيلة',
       'quiz_quote_arnold': 'آخر ثلاث أو أربع تكرارات هي ما يجعل العضلة تنمو',
       'quiz_quote_alex': 'لا أفعل هذا من أجل الانتباه. أفعله لأنني أحبه',
       'quiz_quote_phil': 'كن جيداً جداً لدرجة أنهم لا يستطيعون تجاهلك',
@@ -754,10 +794,13 @@ class L10n {
       'intensity_MAX': 'قصوى',
       'intensity_MEDIUM': 'متوسطة',
       'quote_arnold': 'آخر ثلاث أو أربع تكرارات هي ما يجعل العضلة تنمو',
-      'quote_ronnie': 'الكل يريد أن يصبح لاعب كمال أجسام لكن لا أحد يريد حمل الأوزان الثقيلة',
+      'quote_ronnie':
+          'الكل يريد أن يصبح لاعب كمال أجسام لكن لا أحد يريد حمل الأوزان الثقيلة',
       'quote_cbum': 'التدريب من أجل الظل الكلاسيكي الخالد والتناسق المذهل.',
-      'quote_jaycutler': 'الاستمرارية والتدريب عالي الحجم لإجبار العضلات على النمو.',
-      'quote_philheath': 'استدارة عضلية ثلاثية الأبعاد عبر تقنية تمدد اللفافة العضلية.',
+      'quote_jaycutler':
+          'الاستمرارية والتدريب عالي الحجم لإجبار العضلات على النمو.',
+      'quote_philheath':
+          'استدارة عضلية ثلاثية الأبعاد عبر تقنية تمدد اللفافة العضلية.',
       'quote_athletic_lean': 'عضلات ورشاقة مع تفاصيل عضلية واضحة.',
       'quote_bikini_competition': 'التركيز على الجلوتس والأكتاف وحضور المسرح.',
       'quote_powerlifter_female': 'حمل الأوزان الثقيلة والوصول لأقصى قوة.',
@@ -858,7 +901,8 @@ class L10n {
       'tag_Shoulder': 'أكتاف',
       'tag_Legs': 'أرجل',
       'style_dual_split': 'بنية جسدية مزدوجة القوة',
-      'style_dual_split_desc': 'قوة بدنية مزدوجة، شريك أرنولد في التدريب وبطل مستر أولمبيا الأسطوري، قوة وكثافة خالصة',
+      'style_dual_split_desc':
+          'قوة بدنية مزدوجة، شريك أرنولد في التدريب وبطل مستر أولمبيا الأسطوري، قوة وكثافة خالصة',
       'sets_to_max': 'مجموعات (6، 4، 2) إلى الحد الأقصى',
       'superset': 'مجموعة شاملة',
       'tag_Superset': 'مجموعة شاملة',
@@ -877,21 +921,25 @@ class L10n {
       'timer_90': '90 ثانية',
       'rest_90s': '90 ثانية',
       'dual_split_title': 'بنية جسدية مزدوجة القوة',
-      'dual_split_desc': 'قوة بدنية مزدوجة، شريك أرنولد في التدريب وبطل مستر أولمبيا الأسطوري، قوة وكثافة خالصة',
+      'dual_split_desc':
+          'قوة بدنية مزدوجة، شريك أرنولد في التدريب وبطل مستر أولمبيا الأسطوري، قوة وكثافة خالصة',
       'exercise_Cable Row': 'تمرين التجديف بالكابلات أثناء الجلوس',
       'exercise_Smith Machine Shrug': 'تمرين رفع الكتفين على جهاز سميث',
-      'exercise_Barbell Incline Bench Press': 'تمرين الضغط بالبار على مقعد مائل',
+      'exercise_Barbell Incline Bench Press':
+          'تمرين الضغط بالبار على مقعد مائل',
       'exercise_Paused Back Squat': 'تمرين القرفصاء الخلفي مع التوقف',
       'exercise_Barbell Hip Thrust': 'تمرين رفع الورك بالبار',
       'exercise_Dumbbell Stiff Leg Deadlift': 'رفع الدمبل مع ثني الساقين',
       'exercise_Arm Curl Machine': 'آلة ثني الذراع',
       'exercise_Dumbbell Leg Curl': 'رفع الدمبل بالساق',
       'exercise_Shoulder Press Machine': 'آلة ضغط الكتف',
-      'exercise_Reverse Pec Deck Fly Machine': 'تمرين الكتف الخلفي بجهاز بيك ديك العكسي',
+      'exercise_Reverse Pec Deck Fly Machine':
+          'تمرين الكتف الخلفي بجهاز بيك ديك العكسي',
       'exercise_Cable Hammer Curl': 'تمرين المطرقة  بالكابل',
       'exercise_Behind Neck Press': 'الضغط خلف الرقبة',
       'exercise_Bentover Dumbbell Lateral Raise': 'رفع الدمبل الجانبي المنحني',
-      'exercise_Seated Dumbbell Tricep Extension': 'تمرين تمديد الترايسبس بالدمبل جالسا',
+      'exercise_Seated Dumbbell Tricep Extension':
+          'تمرين تمديد الترايسبس بالدمبل جالسا',
       'exercise_Bench Dips': 'تمرين الضغط الخلفي بالمقعد',
       'exercise_Donkey Kick': 'ركلة الحصان',
       'exercise_Back Squat': 'سكوات خلفي بالبار',
@@ -909,7 +957,8 @@ class L10n {
       'exercise_Dumbbell Lateral Raise': 'رفرفة أكتاف جانبي',
       'exercise_Barbell Bench Press': 'ضغط صدر بالبار',
       'exercise_Dumbbell Bench Press': 'ضغط صدر  بالدمبل',
-      'exercise_Incline Dumbbell Bench Press': 'تمرين الضغط بالدمبل على مقعد مائل',
+      'exercise_Incline Dumbbell Bench Press':
+          'تمرين الضغط بالدمبل على مقعد مائل',
       'exercise_Dips': 'غطس (متوازي)',
       'exercise_Pull Up': 'عقلة',
       'exercise_Lat Pulldown': 'سحب دفع علوي',
@@ -923,7 +972,8 @@ class L10n {
       'exercise_Cable Curl': 'تمرين ثني الذراعين بالكابل',
       'exercise_Barbell Preacher Curl': 'تمرين الكيرل بالبار',
       'exercise_Barbbell Preacher Curl': 'تمرين الكيرل بالبار',
-      'exercise_Dumbbell Tricep Extension': 'تمرين مدّ العضلة ثلاثية الرؤوس بالدمبل',
+      'exercise_Dumbbell Tricep Extension':
+          'تمرين مدّ العضلة ثلاثية الرؤوس بالدمبل',
       'exercise_EZ Bar Curl': 'تبادل بايسبس بار EZ',
       'exercise_Cable Push Down': 'سحب ترايسبس كابل',
       'exercise_Skull Crusher': 'تمرين ساحق الجماجم',
@@ -1074,7 +1124,8 @@ class L10n {
       'exercise_Cable Pull Through': 'سحب كابل بين الأرجل',
       'exercise_Cable Tricep Extension': 'تمديد ترايسبس كابل',
       'exercise_Lying Tricep Extension': 'تمديد ترايسبس مستلقياً',
-      'exercise_Cable Overhead Tricep Extension': 'تمديد ترايسبس كابل خلف الرأس',
+      'exercise_Cable Overhead Tricep Extension':
+          'تمديد ترايسبس كابل خلف الرأس',
       'exercise_Cable Lying Tricep Extension': 'تمديد ترايسبس كابل مستلقياً',
       'exercise_Tricep Extension Machine': 'جهاز تمديد الترايسبس',
       'exercise_V-up': 'تمرين V-up للبطن',
@@ -1090,11 +1141,14 @@ class L10n {
       'exercise_Pilates Jackknife': 'تمرين جاك نايف بيلاتس',
       'exercise_Reverse Crunch': 'طحن بطن عكسي',
       'exercise_Incline Dumbbell Curl': 'تمرين رفع الدمبل مائل',
-      'exercise_Seated Dumbbell Rear Lateral Raise': 'رفع الدمبل الجانبي مع الانحناء جالساً',
+      'exercise_Seated Dumbbell Rear Lateral Raise':
+          'رفع الدمبل الجانبي مع الانحناء جالساً',
       'exercise_EZ Bar Preacher Curl': 'تمرين ثني الذراعين على جهاز EZ Bar',
       'exercise_Bodyweight Calf Raise': 'تمرين رفع الكعب باستخدام وزن الجسم',
-      'exercise_Barbell Standing Calf Raise': 'تمرين رفع السمانة بالبار أثناء الوقوف',
-      'exercise_Standing Cable Fly': 'تمرين ”فلاي“ باستخدام الكابلات في وضع الوقوف',
+      'exercise_Barbell Standing Calf Raise':
+          'تمرين رفع السمانة بالبار أثناء الوقوف',
+      'exercise_Standing Cable Fly':
+          'تمرين ”فلاي“ باستخدام الكابلات في وضع الوقوف',
       'exercise_Dumbbell Romanian Deadlift': 'الرفعة الرومانية بالدمبل',
       'exercise_Dumbbell Kickback': 'تمرين الركلة الخلفية بالدمبل',
       'exercise_Dumbbell Preacher Curl': 'تمرين ثني الذراعين بالدمبل',
@@ -1154,7 +1208,8 @@ class L10n {
       'program_completions': 'إكمالات البرامج',
       'times_finished': 'تم إكماله {num} مرات',
       'training_tip': 'نصيحة تدريبية',
-      'tip_details': '"3x8-12" تعني 3 جولات، كل جولة بين 8 (كحد أدنى) و 12 (كحد أقصى) عدات.',
+      'tip_details':
+          '"3x8-12" تعني 3 جولات، كل جولة بين 8 (كحد أدنى) و 12 (كحد أقصى) عدات.',
       'got_it': 'فهمت',
       'keep_going': 'واصل\nالتقدم',
       'muscles_trained': 'العضلات المدربة',
@@ -1175,7 +1230,8 @@ class L10n {
       'logout_yes': 'نعم، سجل الخروج',
       'send': 'إرسال',
       'tell_us_thoughts': 'أخبرنا برأيك...',
-      'terms_agree': 'باستخدامك لرياضي، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا.',
+      'terms_agree':
+          'باستخدامك لرياضي، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا.',
       'name_label': 'الاسم',
       'age_yrs': '{age} سنة',
       'height_cm': '{height} سم',
@@ -1201,11 +1257,13 @@ class L10n {
       'continue_btn': 'استمرار',
       'starting_ex': 'بدء {name}...',
       'training_tip_title': 'نصيحة التدريب',
-      'training_tip_desc': '"3x8-12" تعني 3 مجموعات، كل منها بين 8 (كحد أدنى) و 12 (كحد أقصى) تكرارًا.',
+      'training_tip_desc':
+          '"3x8-12" تعني 3 مجموعات، كل منها بين 8 (كحد أدنى) و 12 (كحد أقصى) تكرارًا.',
       'water_reminder': 'مهلاً، اشرب بعض الماء',
       'complete_set_btn': 'إكمال المجموعة',
       'skip_rest_btn': 'تخطي الراحة',
-      'focus_muscle_tip': 'ركز على عضلات {muscle}. تأكد من التحكم في الحركة طوال نطاق الحركة الكامل.',
+      'focus_muscle_tip':
+          'ركز على عضلات {muscle}. تأكد من التحكم في الحركة طوال نطاق الحركة الكامل.',
       'day_label': 'اليوم {num}',
       'day_pure': 'اليوم',
       'workout_chest_back': 'صدر وظهر',
@@ -1319,7 +1377,8 @@ class L10n {
       'program_mentzer': 'مايك مينتزر',
       'btn_static_hold': 'الثبات الاستاتيكي',
       'title_static_hold': 'ما هو الثبات الاستاتيكي؟',
-      'desc_static_hold': 'الثبات الاستاتيكي هو أسلوب تدريبي يتضمن تثبيت الوزن في وضعية الانقباض الكامل للعضلة لأطول فترة ممكنة. في منهجية مايك مينتزر، يُستخدم هذا الأسلوب بعد الوصول للفشل العضلي لاستنزاف ألياف العضلة تماماً وتحفيز أقصى نمو ممكن.',
+      'desc_static_hold':
+          'الثبات الاستاتيكي هو أسلوب تدريبي يتضمن تثبيت الوزن في وضعية الانقباض الكامل للعضلة لأطول فترة ممكنة. في منهجية مايك مينتزر، يُستخدم هذا الأسلوب بعد الوصول للفشل العضلي لاستنزاف ألياف العضلة تماماً وتحفيز أقصى نمو ممكن.',
       'program_jaycutler': 'جاي كاتلر',
       'program_platz': 'توم بلاتز',
       'program_flex': 'فليكس ويلر',
@@ -1336,6 +1395,8 @@ class L10n {
       'program_hadichoopan': 'هادي شوبان',
       'program_bigramy': 'بيج رامي',
       'program_davidlaid': 'ديفيد ليد',
+      'program_ronaldo': 'رونالدو',
+      'badge_ronaldo': 'انفجاري · وظيفي',
       'program_athletic_lean': 'رشاقة وعضلات',
       'program_bikini_competition': 'بيكيني ومسابقات',
       'program_powerlifter_female': 'رافع أثقال',
@@ -1344,17 +1405,21 @@ class L10n {
       'exercise_Seated Row Machine': 'جهاز تمارين التجديف بالجلوس',
       'exercise_seated row': 'جهاز تمارين التجديف بالجلوس',
       'badge_arnold': 'حجم تدريبي مرتفع · مجموعات شاملة',
-      'quote_arnold': 'مشهور بتدريبات الحجم العالي للمجموعات الشاملة للمحفز والمناقض.',
+      'quote_arnold':
+          'مشهور بتدريبات الحجم العالي للمجموعات الشاملة للمحفز والمناقض.',
       'badge_ronnie': 'أوزان ثقيلة · ضخامة',
       'tag_Hardcore Power': 'منهجية روني كولمان',
       'badge_Hardcore Power': 'منهجية روني كولمان',
-      'quote_ronnie': 'وزن خفيف يا صغير! التركيز على الكثافة الخالصة والأوزان الهائلة.',
+      'quote_ronnie':
+          'وزن خفيف يا صغير! التركيز على الكثافة الخالصة والأوزان الهائلة.',
       'badge_cbum': 'بنية جسدية كلاسيكية',
       'quote_cbum': 'التدريب من أجل الظل الكلاسيكي الأسطوري والتناسق.',
       'title_cbum_special': 'ما هي البنية الجسدية الكلاسيكية؟',
-      'desc_cbum_special': 'يركز تدريب كريس بومستيد على جماليات "البنية الجسدية الكلاسيكية"، مع إعطاء الأولوية للتناسق، ونضج العضلات، والعرض المثالي. يضمن نظامه التدريبي المكون من 8 أيام حصول كل مجموعة عضلية على أقصى قدر من الاستشفاء، بينما تساهم جلساته المخصصة للأكتاف والصدر في بناء عرض الجزء العلوي وظل الـ V-taper الأسطوري.',
+      'desc_cbum_special':
+          'يركز تدريب كريس بومستيد على جماليات "البنية الجسدية الكلاسيكية"، مع إعطاء الأولوية للتناسق، ونضج العضلات، والعرض المثالي. يضمن نظامه التدريبي المكون من 8 أيام حصول كل مجموعة عضلية على أقصى قدر من الاستشفاء، بينما تساهم جلساته المخصصة للأكتاف والصدر في بناء عرض الجزء العلوي وظل الـ V-taper الأسطوري.',
       'badge_philheath': 'تركيز على التفاصيل · اللقب السابع',
-      'quote_philheath': 'الهدوء هو قوتي. التفاصيل تجعل الفرق بين البطل والآخرين.',
+      'quote_philheath':
+          'الهدوء هو قوتي. التفاصيل تجعل الفرق بين البطل والآخرين.',
       'badge_franco': 'عصر ذهبي / ضخامة',
       'quote_franco': 'أقوى رجل في العالم. تدريب عالي التردد لكثافة أسطورية.',
       'badge_dexter': 'طول العمر · نقاء وتحديد',
@@ -1362,7 +1427,8 @@ class L10n {
       'badge_jaycutler': 'حجم تدريبي مرتفع · عضلات الرباعية الضخمة',
       'quote_jaycutler': 'الكفاح من أجل الحجم. كل يوم هو فرصة لتصبح أكبر.',
       'badge_mentzer': 'كثافة عالية · راحة قصيرة',
-      'desc_High Intensity': 'منهجية "هيفي ديوتي" لمايك مينتزر: التدريب بأقصى جهد في مجموعة واحدة حتى الفشل العضلي التام، متبوعاً بفترات استشفاء طويلة لتحفيز النمو الانفجاري.',
+      'desc_High Intensity':
+          'منهجية "هيفي ديوتي" لمايك مينتزر: التدريب بأقصى جهد في مجموعة واحدة حتى الفشل العضلي التام، متبوعاً بفترات استشفاء طويلة لتحفيز النمو الانفجاري.',
       'quote_mentzer': 'السر في الاستشفاء وليس في التدريب لساعات طويلة.',
       'badge_platz': 'أسطورة الأرجل · كثافة قصوى',
       'quote_platz': 'لا تتوقف حتى يغمى عليك. الأرجل هي المحرك.',
@@ -1377,7 +1443,8 @@ class L10n {
       'badge_mikethurston': 'جمالي / PPL',
       'quote_mikethurston': 'التركيز على خلق بنية جمالية متوازنة تماماً.',
       'badge_terrenceruffin': 'كلاسيك فيزيك · حجم مرتفع',
-      'quote_terrenceruffin': 'الفن في الحركة. التركيز على التقلص الكامل والخطوط الانسيابية.',
+      'quote_terrenceruffin':
+          'الفن في الحركة. التركيز على التقلص الكامل والخطوط الانسيابية.',
       'badge_alexeubank': 'الجمالية الطبيعية',
       'quote_alexeubank': 'الاستمرارية تهزم الكثافة في كل مرة. ابق طبيعيًا.',
       'badge_ulissesjr': 'أيقونة التقطيع',
@@ -1387,7 +1454,8 @@ class L10n {
       'badge_stevecook': 'بناء أجسام كلاسيكي',
       'quote_stevecook': 'وازن بين تدريبك وحياتك. الجودة فوق الكمية.',
       'badge_simeonpanda': 'جمالية طبيعية · تقسيم الجسم',
-      'quote_simeonpanda': 'لا توجد طرق مختصرة. الاستمرارية والكثافة هي كل شيء.',
+      'quote_simeonpanda':
+          'لا توجد طرق مختصرة. الاستمرارية والكثافة هي كل شيء.',
       'badge_hadichoopan': 'مستر أولمبيا · كثافة قصوى',
       'quote_hadichoopan': 'العمل الشاق في صمت. دع نجاحك يكون ضجيجك.',
       'badge_bigramy': 'Mass Monster · حجم مرتفع',
@@ -1402,23 +1470,40 @@ class L10n {
       'quote_powerlifter_female': 'القوة هي الأساس. رفعة تلو الأخرى.',
       'badge_sculpt_and_cardio': 'نحت وكارديو',
       'quote_sculpt_and_cardio': 'تنسيق الجسم وزيادة اللياقة القلبية.',
-      'desc_FST-7': 'تدريب شد اللفافة العضلية 7: أسلوب يركز على التضخيم يتضمن 7 مجموعات عالية الحجم مع حد أدنى من الراحة (30-45 ثانية) في نهاية التمرين لتمديد اللفافة العضلية وتعزيز النمو.',
-      'desc_High Intensity': 'فلسفة مايك منتزر Heavy Duty. التدريب بأقصى جهد في مجموعة واحدة حتى الفشل التام، يليه فترات استشفاء ممتدة لتحفيز النمو الانفجاري.',
-      'desc_Longevity & Detail': 'نهج ديكستر جاكسون: استخدام حركات الآلة الدقيقة وعزل عالي التوتر للحفاظ على صحة المفاصل مع نحت فصل عضلي عميق.',
-      'desc_Flow & Symmetry': 'أولوية فليكس ويلر الجمالية: موازنة جميع المجموعات العضلية بشكل متناسب لإنشاء صورة ظلية متدفقة وفنية بدلاً من مجرد ملاحقة الضخامة الصرفة.',
-      'desc_Golden Era / Mass': 'أسلوب أرنولد في السبعينيات: جلسات عالية التردد والحجم باستخدام حركات مركبة ثقيلة أساسية لبناء سمك وكثافة كلاسيكية.',
-      'desc_Modern Classic': 'معيار رامون دينو المعاصر: التركيز على منطقة البطن المفرغة (Vacuum)، والفصل العميق، والعضلات المكتملة والمستديرة المطلوبة للفيزيك الكلاسيكي الحديث.',
-      'desc_Hardcore Power': 'منهجية روني كولمان: خلط تمارين القوة مع كمال الأجسام عالي الحجم. أقصى وزن لأقصى نتائج.',
-      'desc_High Volume': 'استراتيجية جاي كاتلر لضغط العمل: استخدام أعداد مجموعات عالية وحجم مكثف لإجبار العضلات على التمدد من خلال الإجهاد الأيضي والتحمل.',
-      'desc_Squat King': 'تدريب الأرجل الأسطوري لتوم بلاتز: نطاقات تكرار قصوى وكثافة لا ميل لها في السكوات لصياغة حجم الجزء السفلي من الجسم والمرونة الذهنية.',
-      'desc_Dual Split · Power-Physique': 'تقسيم فرانكو كولومبو المزدوج: التدريب مرتين يوميًا لفصل جلسات القوة الثقيلة عن تحسين الجمالية عالي الحجم.',
-      'desc_V-Taper': 'المثالية الجمالية: تركيز شديد على عرض الكتفين وسمك الظهر مع خصر مشدود لإنشاء الهيكل النهائي على شكل V.',
-      'desc_DUP Mastery': 'الدورات المتموجة اليومية: تغيير نطاقات التكرار والكثافة طوال الأسبوع لتدريب القوة والطاقة والتضخيم في دورة واحدة.',
-      'desc_Classic Bodybuilding / PPL': 'هجين ستيف كوك: استخدام تنظيم دفع-سحب-أرجل (PPL) مدمج مع المبادئ الجمالية الكلاسيكية لبنية متوازنة ووظيفية.',
-      'desc_Modern Aesthetic / PPL': 'المعيار المعاصر: تدريب PPL مكرر عالي التردد يركز على الجماليات الجاهزة لوسائل التواصل الاجتماعي ونضج العضلات الطبيعي.',
-      'desc_Powerbuilding': 'نهج لاري ويلز الهجين: التركيز على قوة الرفعات الثلاث الأساسية مدمجة مع عزل كمال الأجسام عالي الحجم للحصول على أقصى قدر من الحجم والأداء.',
-      'desc_Classic Physique / High Volume': 'منهجية تيرينس روفين: تدريب عالي الحجم يركز على نضج العضلات، والعرض الخالي من العيوب، والتقلصات القصوى للحفاظ على صورة ظلية كلاسيكية فنية.',
-      'desc_Men\'s Physique / High Volume': 'روتين ريان تيري العالمي: تدريب عالي الحجم مع تأكيد قوي على استقرار الجذع وجماليات V-taper من خلال التردد المكثف.',
+      'desc_FST-7':
+          'تدريب شد اللفافة العضلية 7: أسلوب يركز على التضخيم يتضمن 7 مجموعات عالية الحجم مع حد أدنى من الراحة (30-45 ثانية) في نهاية التمرين لتمديد اللفافة العضلية وتعزيز النمو.',
+      'desc_High Intensity':
+          'فلسفة مايك منتزر Heavy Duty. التدريب بأقصى جهد في مجموعة واحدة حتى الفشل التام، يليه فترات استشفاء ممتدة لتحفيز النمو الانفجاري.',
+      'desc_Longevity & Detail':
+          'نهج ديكستر جاكسون: استخدام حركات الآلة الدقيقة وعزل عالي التوتر للحفاظ على صحة المفاصل مع نحت فصل عضلي عميق.',
+      'desc_Flow & Symmetry':
+          'أولوية فليكس ويلر الجمالية: موازنة جميع المجموعات العضلية بشكل متناسب لإنشاء صورة ظلية متدفقة وفنية بدلاً من مجرد ملاحقة الضخامة الصرفة.',
+      'desc_Golden Era / Mass':
+          'أسلوب أرنولد في السبعينيات: جلسات عالية التردد والحجم باستخدام حركات مركبة ثقيلة أساسية لبناء سمك وكثافة كلاسيكية.',
+      'desc_Modern Classic':
+          'معيار رامون دينو المعاصر: التركيز على منطقة البطن المفرغة (Vacuum)، والفصل العميق، والعضلات المكتملة والمستديرة المطلوبة للفيزيك الكلاسيكي الحديث.',
+      'desc_Hardcore Power':
+          'منهجية روني كولمان: خلط تمارين القوة مع كمال الأجسام عالي الحجم. أقصى وزن لأقصى نتائج.',
+      'desc_High Volume':
+          'استراتيجية جاي كاتلر لضغط العمل: استخدام أعداد مجموعات عالية وحجم مكثف لإجبار العضلات على التمدد من خلال الإجهاد الأيضي والتحمل.',
+      'desc_Squat King':
+          'تدريب الأرجل الأسطوري لتوم بلاتز: نطاقات تكرار قصوى وكثافة لا ميل لها في السكوات لصياغة حجم الجزء السفلي من الجسم والمرونة الذهنية.',
+      'desc_Dual Split · Power-Physique':
+          'تقسيم فرانكو كولومبو المزدوج: التدريب مرتين يوميًا لفصل جلسات القوة الثقيلة عن تحسين الجمالية عالي الحجم.',
+      'desc_V-Taper':
+          'المثالية الجمالية: تركيز شديد على عرض الكتفين وسمك الظهر مع خصر مشدود لإنشاء الهيكل النهائي على شكل V.',
+      'desc_DUP Mastery':
+          'الدورات المتموجة اليومية: تغيير نطاقات التكرار والكثافة طوال الأسبوع لتدريب القوة والطاقة والتضخيم في دورة واحدة.',
+      'desc_Classic Bodybuilding / PPL':
+          'هجين ستيف كوك: استخدام تنظيم دفع-سحب-أرجل (PPL) مدمج مع المبادئ الجمالية الكلاسيكية لبنية متوازنة ووظيفية.',
+      'desc_Modern Aesthetic / PPL':
+          'المعيار المعاصر: تدريب PPL مكرر عالي التردد يركز على الجماليات الجاهزة لوسائل التواصل الاجتماعي ونضج العضلات الطبيعي.',
+      'desc_Powerbuilding':
+          'نهج لاري ويلز الهجين: التركيز على قوة الرفعات الثلاث الأساسية مدمجة مع عزل كمال الأجسام عالي الحجم للحصول على أقصى قدر من الحجم والأداء.',
+      'desc_Classic Physique / High Volume':
+          'منهجية تيرينس روفين: تدريب عالي الحجم يركز على نضج العضلات، والعرض الخالي من العيوب، والتقلصات القصوى للحفاظ على صورة ظلية كلاسيكية فنية.',
+      'desc_Men\'s Physique / High Volume':
+          'روتين ريان تيري العالمي: تدريب عالي الحجم مع تأكيد قوي على استقرار الجذع وجماليات V-taper من خلال التردد المكثف.',
       'desc_Raw Power': 'رفع الأثقال الثقيلة والحصول على القوة القصوى.',
       'desc_Precision · Core': 'عمل مركز على عزل المؤخرة واستقرار الجذع.',
       'workout_chest_triceps': 'صدر وترايسبس',
@@ -1474,7 +1559,8 @@ class L10n {
       'exercise_seated cable row': 'جهاز تمارين التجديف بالجلوس',
       'exercise_seated cable row': 'جهاز تمارين التجديف بالجلوس',
       'exercise_One Arm Cable Seated Row': 'تمرين تجديف يد واحدة جالساً',
-      'exercise_Seated Dumbbell Tricep Extension': 'تمرين ترايسبس بالدمبل جالساً',
+      'exercise_Seated Dumbbell Tricep Extension':
+          'تمرين ترايسبس بالدمبل جالساً',
       'exercise_Seated Leg Curl': 'جهاز لف الأرجل جالساً',
       'exercise_Seated Calf Raise': 'جهاز السمانة جالساً',
       'exercise_Seated Machine Press': 'جهاز ضغط الصدر جالساً',
@@ -1482,30 +1568,47 @@ class L10n {
       'exercise_T-Bar Row': 'جهاز تجديف T-bar',
       'exercise_Dumbbell Bench Press': 'ضغط صدر بالدمبل',
       'exercise_Dumbbell bench press': 'ضغط صدر بالدمبل',
-      'exercise_seated dumbbell shoulder press': 'تمرين ضغط الكتف بالدمبل من وضعية الجلوس',
-      'exercise_Seated Dumbbell Shoulder Press': 'تمرين ضغط الكتف بالدمبل من وضعية الجلوس',
-      'exercise_Seated dumbbell shoulder press': 'تمرين ضغط الكتف بالدمبل من وضعية الجلوس',
+      'exercise_seated dumbbell shoulder press':
+          'تمرين ضغط الكتف بالدمبل من وضعية الجلوس',
+      'exercise_Seated Dumbbell Shoulder Press':
+          'تمرين ضغط الكتف بالدمبل من وضعية الجلوس',
+      'exercise_Seated dumbbell shoulder press':
+          'تمرين ضغط الكتف بالدمبل من وضعية الجلوس',
       'exercise_Dumbbell Shoulder Press': 'ضغط أكتاف بالدمبل',
       'btn_superset': 'ما هي المجموعة الشاملة (Superset)؟',
       'title_superset': 'ما هي المجموعة الشاملة (Superset)؟',
-      'desc_superset': 'المجموعة الشاملة أو "السوبر ست" هي أسلوب تدريبي متقدم يتضمن أداء تمرينين متتاليين لعضلات مختلفة (أو نفس العضلة) دون أي راحة بينهما. يساعد هذا الأسلوب على زيادة كثافة التمرين، وتوفير الوقت، وضخ المزيد من الدم إلى العضلات لتحقيق أقصى استفادة.',
+      'desc_superset':
+          'المجموعة الشاملة أو "السوبر ست" هي أسلوب تدريبي متقدم يتضمن أداء تمرينين متتاليين لعضلات مختلفة (أو نفس العضلة) دون أي راحة بينهما. يساعد هذا الأسلوب على زيادة كثافة التمرين، وتوفير الوقت، وضخ المزيد من الدم إلى العضلات لتحقيق أقصى استفادة.',
+      'pay_with_paypal': 'الدفع بواسطة PayPal',
+      'secure_checkout': 'دفع آمن',
+      'select_payment': 'اختر طريقة الدفع',
+      'credit_card': 'بطاقة ائتمان',
+      'manage_subscription': 'إدارة الاشتراك',
+      'manage_subscription_desc':
+          'يمكنك إلغاء أو تغيير خطتك من خلال بوابة عملاء Lemon Squeezy.',
+      'open_portal': 'فتح بوابة العملاء',
     },
     'es': {
       'welcome_back': 'BIENVENIDO/A\nDE NUEVO',
-      'sign_in_continue': 'Inicia sesión para continuar tu viaje de entrenamiento.',
+      'sign_in_continue':
+          'Inicia sesión para continuar tu viaje de entrenamiento.',
       'sign_in_google': 'Iniciar sesión con Google',
       'sign_in_apple': 'Iniciar sesión con Apple',
       'no_account': '¿No tienes una cuenta? ',
       'sign_up_free': 'Regístrate gratis',
       'secure_access': 'ACCESO SEGURO',
-      'encryption_info': 'Utilizamos cifrado estándar de la industria para proteger tus datos.',
+      'encryption_info':
+          'Utilizamos cifrado estándar de la industria para proteger tus datos.',
       'create_account': 'CREA TU\nCUENTA',
-      'join_thousands': 'Únete a miles de atletas que entrenan con los mejores programas del mundo.',
-      'sync_info': 'Tu nombre, correo electrónico y foto de perfil se sincronizarán automáticamente desde tu cuenta de Google.',
+      'join_thousands':
+          'Únete a miles de atletas que entrenan con los mejores programas del mundo.',
+      'sync_info':
+          'Tu nombre, correo electrónico y foto de perfil se sincronizarán automáticamente desde tu cuenta de Google.',
       'have_account': '¿Ya tienes una cuenta? ',
       'sign_in': 'Iniciar sesión',
       'get_started_fast': 'COMIENZA RÁPIDO',
-      'one_tap_login': 'El inicio de sesión con un toque significa que puedes empezar tu primer entrenamiento en menos de 30 segundos.',
+      'one_tap_login':
+          'El inicio de sesión con un toque significa que puedes empezar tu primer entrenamiento en menos de 30 segundos.',
       'select_language': 'Seleccionar idioma',
       'my_profile': 'MI PERFIL',
       'edit_profile': 'Editar Perfil',
@@ -1534,7 +1637,8 @@ class L10n {
       'no_athletes': 'No se encontraron atletas',
       'hero_category': 'LEYENDAS DEL FISICOCULTURISMO',
       'hero_title': 'ELIGE TU\nPROGRAMA',
-      'hero_subtitle': 'Selecciona un atleta para explorar su sistema de entrenamiento completo.',
+      'hero_subtitle':
+          'Selecciona un atleta para explorar su sistema de entrenamiento completo.',
       'step': 'Paso',
       'of': 'de',
       'continue': 'CONTINUAR →',
@@ -1542,7 +1646,8 @@ class L10n {
       'start_training': 'INICIAR ENTRENAMIENTO →',
       'skip_setup': 'SALTAR POR AHORA',
       'goal_title': '¿CUÁL ES TU\nOBJETIVO PRINCIPAL?',
-      'goal_sub': 'Personalizaremos tus recomendaciones de programas en torno a esto.',
+      'goal_sub':
+          'Personalizaremos tus recomendaciones de programas en torno a esto.',
       'build_muscle': 'Ganar músculo',
       'build_muscle_desc': 'Ganancia de masa y fuerza',
       'lose_fat': 'Perder grasa',
@@ -1560,7 +1665,8 @@ class L10n {
       'advanced': 'Avanzado',
       'advanced_sub': 'Más de 3 años — atleta serio',
       'metrics_title': 'TUS MÉTRICAS\nCORPORALES',
-      'metrics_sub': 'Utilizado para adaptar tu plan de nutrición y seguir tu transformación.',
+      'metrics_sub':
+          'Utilizado para adaptar tu plan de nutrición y seguir tu transformación.',
       'weight': 'Peso',
       'height': 'Altura',
       'age': 'Edad',
@@ -1569,7 +1675,8 @@ class L10n {
       'male': 'Hombre',
       'female': 'Mujer',
       'days_title': '¿CUÁNTOS DÍAS\nA LA SEMANA?',
-      'days_sub': 'La consistencia vence a la intensidad. Elige lo que realmente puedas cumplir.',
+      'days_sub':
+          'La consistencia vence a la intensidad. Elige lo que realmente puedas cumplir.',
       'days_3': '3 Días',
       'days_3_desc': 'Enfoque de cuerpo completo',
       'days_4': '4 Días',
@@ -1579,12 +1686,14 @@ class L10n {
       'days_6': '6 Días',
       'days_6_desc': 'Compromiso total',
       'welcome_user': 'BIENVENIDO/A,\n',
-      'success_sub': 'Tu perfil está configurado y tus recomendaciones\npersonalizadas de programas están listas.',
+      'success_sub':
+          'Tu perfil está configurado y tus recomendaciones\npersonalizadas de programas están listas.',
       'quiz_title': 'ENCUENTRA TU MATCH',
       'quiz_continue': 'CONTINUAR →',
       'quiz_match': 'VER MI MATCH →',
       'quiz_result_label': 'TU MATCH PERFECTO',
-      'quiz_result_desc': 'Tu pasión por el rendimiento y el músculo encaja perfectamente con la metodología de {name}.',
+      'quiz_result_desc':
+          'Tu pasión por el rendimiento y el músculo encaja perfectamente con la metodología de {name}.',
       'view_program': 'VER PROGRAMA COMPLETO →',
       'retake_quiz': 'Repetir el Cuestionario',
       'sessions_completed': 'Sesiones completadas',
@@ -1644,7 +1753,8 @@ class L10n {
       'next_exercise': 'SIGUIENTE EJERCICIO',
       'finish_session': 'TERMINAR SESIÓN',
       'session_complete': 'SESIÓN COMPLETADA',
-      'session_done_msg': 'Buen trabajo. Descansa, recupérate y vuelve más fuerte.',
+      'session_done_msg':
+          'Buen trabajo. Descansa, recupérate y vuelve más fuerte.',
       'view_my_progress': 'VER MI PROGRESO',
       'back_to_home': 'Volver al inicio',
       'bench_press': 'PRESS DE BANCA',
@@ -1681,7 +1791,8 @@ class L10n {
       'rank_advanced': 'Atleta Avanzado',
       'matchmaker_title': 'MATCHMAKER',
       'quiz_gender_q': '¿Cuál es tu género?',
-      'quiz_gender_sub': 'Selecciona tu camino para obtener las mejores recomendaciones posibles.',
+      'quiz_gender_sub':
+          'Selecciona tu camino para obtener las mejores recomendaciones posibles.',
       'quiz_female_goal_q': '¿Cuál es tu principal objetivo de fitness?',
       'quiz_female_goal_sub': 'Esculpir y tonificar tu cuerpo.',
       'quiz_female_goal_lean': 'Atlética y Definida',
@@ -1695,7 +1806,8 @@ class L10n {
       'quiz_male': 'Hombre',
       'quiz_male_sub': 'Entrena como las leyendas del culturismo',
       'quiz_female': 'Mujer',
-      'quiz_female_sub': 'Programas especializados para esculpir y ganar fuerza',
+      'quiz_female_sub':
+          'Programas especializados para esculpir y ganar fuerza',
       'quiz_res_aesthetic': 'Maestro de la Estética',
       'quiz_res_golden': 'Clásico de la Era Dorada',
       'quiz_res_mass': 'Monstruo de la Masa Puro',
@@ -1706,7 +1818,8 @@ class L10n {
       'quiz_res_athletic': 'Atlético y Esculpido',
       'quiz_res_power': 'Fuerza y Potencia',
       'quiz_res_sculpt': 'Esculpido y HIIT',
-      'quiz_analysis_result': 'Nuestro análisis muestra que encajas perfectamente con el estilo de entrenamiento de {alias}. Este programa se enfoca en {style} y está equilibrado para niveles de intensidad {intensity}.',
+      'quiz_analysis_result':
+          'Nuestro análisis muestra que encajas perfectamente con el estilo de entrenamiento de {alias}. Este programa se enfoca en {style} y está equilibrado para niveles de intensidad {intensity}.',
       'quiz_goal_q': '¿Cuál es tu objetivo número uno en el entrenamiento?',
       'quiz_goal_sub': 'Define tu meta final en el gimnasio.',
       'quiz_goal_mass': 'Construir el físico más masivo posible',
@@ -1829,11 +1942,14 @@ class L10n {
       'quiz_type_power_sub': 'Fuerte, grueso, denso',
       'quiz_quote_q': 'Elige la cita que más te resuene:',
       'quiz_quote_sub': 'La mentalidad de un campeón.',
-      'quiz_quote_ronnie': 'Todo el mundo quiere ser culturista, pero nadie quiere levantar pesos pesados',
-      'quiz_quote_arnold': 'Las últimas tres o cuatro repeticiones son las que hacen que el músculo crezca',
+      'quiz_quote_ronnie':
+          'Todo el mundo quiere ser culturista, pero nadie quiere levantar pesos pesados',
+      'quiz_quote_arnold':
+          'Las últimas tres o cuatro repeticiones son las que hacen que el músculo crezca',
       'quiz_quote_alex': 'No hago esto por atención. Lo hago porque lo amo',
       'quiz_quote_phil': 'Sé tan bueno que no puedan ignorarte',
-      'quiz_quote_franco': 'La fuerza no proviene de ganar - tus luchas desarrollan tu fuerza',
+      'quiz_quote_franco':
+          'La fuerza no proviene de ganar - tus luchas desarrollan tu fuerza',
       'quiz_quote_ulisses': 'Entrena como un loco o sigue igual',
       'quiz_quote_larry': 'Una repetición más. Siempre una más',
       'quiz_quote_jeff': 'La estética por encima de todo',
@@ -1864,7 +1980,8 @@ class L10n {
       'personal_best': '¡Mejor marca personal!',
       'Kettlebell Sumo Deadlift': 'Peso muerto sumo con pesa rusa',
       'Bulgarian single squat': 'Sentadilla búlgara individual',
-      'Dumbbell Bulgarian single squat': 'Sentadilla búlgara individual con mancuerna',
+      'Dumbbell Bulgarian single squat':
+          'Sentadilla búlgara individual con mancuerna',
       'style_VOL': 'Estilo Volumen',
       'style_PWR': 'Estilo Fuerza',
       'style_CLS': 'Estilo Clásico',
@@ -1973,7 +2090,8 @@ class L10n {
       'tag_Shoulder': 'Hombros',
       'tag_Legs': 'Piernas',
       'style_dual_split': 'Estilo Doble División',
-      'style_dual_split_desc': 'División doble de potencia física, compañero de Arnold y legendario Mr. Olympia',
+      'style_dual_split_desc':
+          'División doble de potencia física, compañero de Arnold y legendario Mr. Olympia',
       'sets_to_max': 'Series al Máximo',
       'superset': 'Superset',
       'tag_Superset': 'Superset',
@@ -1991,21 +2109,27 @@ class L10n {
       'timer_90': 'Temporizador 90s',
       'rest_90s': 'Descanso 90s',
       'dual_split_title': 'Título de Doble División',
-      'dual_split_desc': 'División doble de potencia física, compañero de Arnold y legendario Mr. Olympia',
+      'dual_split_desc':
+          'División doble de potencia física, compañero de Arnold y legendario Mr. Olympia',
       'exercise_Cable Row': 'Remo con cable',
       'exercise_Smith Machine Shrug': 'Encogimientos en máquina Smith',
-      'exercise_Barbell Incline Bench Press': 'Press de banca inclinado con barra',
+      'exercise_Barbell Incline Bench Press':
+          'Press de banca inclinado con barra',
       'exercise_Paused Back Squat': 'Sentadilla trasera con pausa',
       'exercise_Barbell Hip Thrust': 'Hip thrust con barra',
-      'exercise_Dumbbell Stiff Leg Deadlift': 'Peso muerto con piernas rígidas con mancuernas',
+      'exercise_Dumbbell Stiff Leg Deadlift':
+          'Peso muerto con piernas rígidas con mancuernas',
       'exercise_Arm Curl Machine': 'Máquina de curl de brazos',
       'exercise_Dumbbell Leg Curl': 'Curl de piernas con mancuerna',
       'exercise_Shoulder Press Machine': 'Máquina de press de hombros',
-      'exercise_Reverse Pec Deck Fly Machine': 'Aperturas invertidas en máquina',
+      'exercise_Reverse Pec Deck Fly Machine':
+          'Aperturas invertidas en máquina',
       'exercise_Cable Hammer Curl': 'Curl martillo con cable',
       'exercise_Behind Neck Press': 'Press tras nuca',
-      'exercise_Bentover Dumbbell Lateral Raise': 'Elevaciones laterales inclinado con mancuernas',
-      'exercise_Seated Dumbbell Tricep Extension': 'Extensión de tríceps sentado con mancuerna',
+      'exercise_Bentover Dumbbell Lateral Raise':
+          'Elevaciones laterales inclinado con mancuernas',
+      'exercise_Seated Dumbbell Tricep Extension':
+          'Extensión de tríceps sentado con mancuerna',
       'exercise_Bench Dips': 'Fondos en banco',
       'exercise_Donkey Kick': 'Patada de burro',
       'exercise_Back Squat': 'Sentadilla trasera',
@@ -2023,7 +2147,8 @@ class L10n {
       'exercise_Dumbbell Lateral Raise': 'Elevaciones laterales con mancuernas',
       'exercise_Barbell Bench Press': 'Press de banca con barra',
       'exercise_Dumbbell Bench Press': 'Press de banca con mancuernas',
-      'exercise_Incline Dumbbell Bench Press': 'Press de banca inclinado con mancuernas',
+      'exercise_Incline Dumbbell Bench Press':
+          'Press de banca inclinado con mancuernas',
       'exercise_Dips': 'Fondos',
       'exercise_Pull Up': 'Dominada',
       'exercise_Lat Pulldown': 'Jalón al pecho',
@@ -2037,7 +2162,8 @@ class L10n {
       'exercise_Cable Curl': 'Curl con cable',
       'exercise_Barbell Preacher Curl': 'Curl predicador con barra',
       'exercise_Barbbell Preacher Curl': 'Barbbell Preacher Curl',
-      'exercise_Dumbbell Tricep Extension': 'Extensión de tríceps con mancuerna',
+      'exercise_Dumbbell Tricep Extension':
+          'Extensión de tríceps con mancuerna',
       'exercise_EZ Bar Curl': 'Curl con barra EZ',
       'exercise_Cable Push Down': 'Extensiones en polea alta',
       'exercise_Skull Crusher': 'Rompecráneos',
@@ -2064,9 +2190,12 @@ class L10n {
       'exercise_Conventional Deadlift': 'Peso muerto convencional',
       'exercise_Sumo Deadlift': 'Peso muerto sumo',
       'exercise_Dumbbell Sumo Deadlift': 'Peso muerto sumo con mancuerna',
-      'exercise_Dumbbell Bulgarian Single Squat': 'Sentadilla búlgara individual con mancuerna',
-      'exercise_Dumbbell Bulgarian single squat': 'Dumbbell Bulgarian single squat',
-      'exercise_Dumbbell Bulgarian Split Squat': 'Sentadilla búlgara con mancuerna',
+      'exercise_Dumbbell Bulgarian Single Squat':
+          'Sentadilla búlgara individual con mancuerna',
+      'exercise_Dumbbell Bulgarian single squat':
+          'Dumbbell Bulgarian single squat',
+      'exercise_Dumbbell Bulgarian Split Squat':
+          'Sentadilla búlgara con mancuerna',
       'exercise_Barbell Bulgarian Split Squat': 'Sentadilla búlgara con barra',
       'exercise_Kettlebell Sumo Deadlift': 'Peso muerto sumo con pesa rusa',
       'exercise_Good-morning': 'Buenos días',
@@ -2099,7 +2228,8 @@ class L10n {
       'exercise_Bench Press': 'Press de banca',
       'exercise_Incline Dumbbell Press': 'Press inclinado con mancuernas',
       'exercise_Flat Dumbbell Flye': 'Aperturas planas con mancuernas',
-      'exercise_Standing DB Lateral Raise': 'Elevación lateral de pie con mancuernas',
+      'exercise_Standing DB Lateral Raise':
+          'Elevación lateral de pie con mancuernas',
       'exercise_Bent-over Lateral Raise': 'Elevación lateral inclinado',
       'exercise_Behind-the-Neck Press': 'Press tras nuca',
       'exercise_Alternating Front Raise': 'Elevación frontal alternada',
@@ -2116,7 +2246,8 @@ class L10n {
       'exercise_One Arm Cable Seated Row': 'Remo sentado con cable a una mano',
       'exercise_Plate Shoulder Press': 'Press de hombros con disco',
       'exercise_Smith Machine Overhead Press': 'Press militar en máquina Smith',
-      'exercise_Incline Dumbell Bench Press': 'Press de banca inclinado con mancuernas',
+      'exercise_Incline Dumbell Bench Press':
+          'Press de banca inclinado con mancuernas',
       'exercise_Seated Rows': 'Remo sentado',
       'exercise_Farmer\'s walk': 'Paseo del granjero',
       'exercise_Farmer\'s Walk': 'Paseo del granjero',
@@ -2134,19 +2265,22 @@ class L10n {
       'exercise_Underhand Lat Pulldown': 'Jalón al pecho agarre supino',
       'exercise_T-bar Row Machine': 'Máquina de remo en barra T',
       'exercise_Seated Cable Row': 'Remo sentado con cable',
-      'exercise_Cable Straight Arm Pulldown': 'Jalón con brazos rectos con cable',
+      'exercise_Cable Straight Arm Pulldown':
+          'Jalón con brazos rectos con cable',
       'exercise_Underhand Barbell Row': 'Remo con barra agarre supino',
       'exercise_Lat Pull Down': 'Jalón al pecho',
       'exercise_Weighted Pull Up': 'Dominadas con peso',
       'exercise_Weighted Pull-up': 'Dominada con peso',
       'exercise_One Arm Dumbbell Row': 'Remo a una mano con mancuerna',
-      'exercise_Smith Machine Overhead Bench Press': 'Press de banca militar en máquina Smith',
+      'exercise_Smith Machine Overhead Bench Press':
+          'Press de banca militar en máquina Smith',
       'exercise_Zercher Squat': 'Sentadilla Zercher',
       'exercise_Smith Machine Squat': 'Sentadilla en máquina Smith',
       'exercise_V Squat': 'Sentadilla en V',
       'exercise_Trap-bar Deadlift': 'Peso muerto con barra hexagonal',
       'exercise_Glute-Ham Raise': 'Glute-ham raise',
-      'exercise_Seated Single Leg Leg Curl': 'Curl de pierna individual sentado',
+      'exercise_Seated Single Leg Leg Curl':
+          'Curl de pierna individual sentado',
       'exercise_Inner Thigh Machine': 'Máquina de abductores',
       'exercise_Glute Kickback Machine': 'Máquina de patada de glúteo',
       'exercise_Hip Abduction Machine': 'Máquina de abducción de cadera',
@@ -2162,32 +2296,39 @@ class L10n {
       'exercise_45 Degree Side Bend': 'Flexión lateral a 45 grados',
       'exercise_Side Plank': 'Plancha lateral',
       'exercise_Smith Machine Bench Press': 'Press de banca en máquina Smith',
-      'exercise_Smith Machine Incline Bench Press': 'Press de banca inclinado en máquina Smith',
+      'exercise_Smith Machine Incline Bench Press':
+          'Press de banca inclinado en máquina Smith',
       'exercise_Weighted Dips': 'Fondos con peso',
       'exercise_Weighted Push Up': 'Flexiones con peso',
       'exercise_Hindu Push Up': 'Flexión hindú',
       'exercise_Archer Push Up': 'Flexión arquero',
       'exercise_Close-grip Push Up': 'Flexiones diamante (agarre cerrado)',
-      'exercise_Incline Bench Press Machine': 'Máquina de press de banca inclinado',
+      'exercise_Incline Bench Press Machine':
+          'Máquina de press de banca inclinado',
       'exercise_Seated Dips Machine': 'Máquina de fondos sentado',
       'exercise_Low-pulley Cable Fly': 'Aperturas en polea baja',
       'exercise_Spoto Bench Press': 'Press de banca Spoto',
       'exercise_Assisted Dip Machine': 'Máquina de fondos asistidos',
-      'exercise_Barbell Floor Chest Press': 'Press de pecho en el suelo con barra',
+      'exercise_Barbell Floor Chest Press':
+          'Press de pecho en el suelo con barra',
       'exercise_Clap Push Up': 'Flexión con aplauso',
       'exercise_Decline Dumbbell Fly': 'Aperturas declinadas con mancuernas',
       'exercise_Incline Push Up': 'Flexión inclinada',
       'exercise_Knee Push Up': 'Flexión de rodillas',
       'exercise_Pike Push Up': 'Flexión en pica',
-      'exercise_Decline Chest Press Machine': 'Máquina de press de pecho declinado',
-      'exercise_Incline Dumbbell Twist Press': 'Press inclinado con giro con mancuernas',
+      'exercise_Decline Chest Press Machine':
+          'Máquina de press de pecho declinado',
+      'exercise_Incline Dumbbell Twist Press':
+          'Press inclinado con giro con mancuernas',
       'exercise_Incline Cable Fly': 'Aperturas inclinadas con cable',
       'exercise_Dumbbell Squeeze Press': 'Squeeze press con mancuernas',
       'exercise_Cable Pull Through': 'Pasada de cable entre piernas',
       'exercise_Cable Tricep Extension': 'Extensión de tríceps con cable',
       'exercise_Lying Tricep Extension': 'Extensión de tríceps acostado',
-      'exercise_Cable Overhead Tricep Extension': 'Extensión de tríceps sobre la cabeza con cable',
-      'exercise_Cable Lying Tricep Extension': 'Extensión de tríceps acostado con cable',
+      'exercise_Cable Overhead Tricep Extension':
+          'Extensión de tríceps sobre la cabeza con cable',
+      'exercise_Cable Lying Tricep Extension':
+          'Extensión de tríceps acostado con cable',
       'exercise_Tricep Extension Machine': 'Máquina de extensión de tríceps',
       'exercise_Hollow Rock': 'Hollow rock',
       'exercise_Hollow Position': 'Posición Hollow',
@@ -2201,12 +2342,16 @@ class L10n {
       'exercise_Pilates Jackknife': 'Navaja de pilates',
       'exercise_Reverse Crunch': 'Crunch inverso',
       'exercise_Incline Dumbbell Curl': 'Curl inclinado con mancuernas',
-      'exercise_Seated Dumbbell Rear Lateral Raise': 'Elevación lateral posterior sentado con mancuernas',
+      'exercise_Seated Dumbbell Rear Lateral Raise':
+          'Elevación lateral posterior sentado con mancuernas',
       'exercise_EZ Bar Preacher Curl': 'Curl predicador con barra EZ',
-      'exercise_Bodyweight Calf Raise': 'Elevación de talones con peso corporal',
-      'exercise_Barbell Standing Calf Raise': 'Elevación de talones de pie con barra',
+      'exercise_Bodyweight Calf Raise':
+          'Elevación de talones con peso corporal',
+      'exercise_Barbell Standing Calf Raise':
+          'Elevación de talones de pie con barra',
       'exercise_Standing Cable Fly': 'Aperturas de pie con cable',
-      'exercise_Dumbbell Romanian Deadlift': 'Peso muerto rumano con mancuernas',
+      'exercise_Dumbbell Romanian Deadlift':
+          'Peso muerto rumano con mancuernas',
       'exercise_Dumbbell Kickback': 'Patada de tríceps con mancuerna',
       'exercise_Dumbbell Preacher Curl': 'Curl predicador con mancuerna',
       'exercise_RKC Plank': 'Plancha RKC',
@@ -2224,7 +2369,8 @@ class L10n {
       'exercise_Cable Lateral Raise': 'Elevación lateral con cable',
       'exercise_Preacher Curl Machine': 'Máquina de curl predicador',
       'exercise_Chest Press Machine': 'Máquina de press de pecho',
-      'exercise_Incline Chest Press Machine': 'Máquina de press de pecho inclinado',
+      'exercise_Incline Chest Press Machine':
+          'Máquina de press de pecho inclinado',
       'exercise_Single Leg Leg Press': 'Prensa de piernas a una pierna',
       'exercise_Single Leg Leg Curl': 'Curl de pierna a una pierna',
       'exercise_Barbell Hack Squat': 'Sentadilla hack con barra',
@@ -2240,23 +2386,27 @@ class L10n {
       'exercise_Weighted Step Up': 'Subida al cajón con peso',
       'exercise_Dumbbell Squat': 'Sentadilla con mancuernas',
       'exercise_Horizontal Leg Press': 'Prensa de piernas horizontal',
-      'exercise_Smith Machine Split Squat': 'Sentadilla dividida en máquina Smith',
+      'exercise_Smith Machine Split Squat':
+          'Sentadilla dividida en máquina Smith',
       'exercise_Smith Machine Deadlift': 'Peso muerto en máquina Smith',
       'exercise_Barbell Front Rack Lunge': 'Estocada con barra en rack frontal',
       'exercise_Barbell Jump Squat': 'Sentadilla con salto con barra',
       'exercise_Barbell Lunge': 'Estocada con barra',
       'exercise_Barbell Split Squat': 'Sentadilla dividida con barra',
-      'exercise_Bodyweight Overhead Squat': 'Sentadilla sobre la cabeza con peso corporal',
+      'exercise_Bodyweight Overhead Squat':
+          'Sentadilla sobre la cabeza con peso corporal',
       'exercise_Dumbbell Sumo Squat': 'Sentadilla sumo con mancuerna',
       'exercise_Single Leg Leg Extension': 'Extensión de pierna a una pierna',
-      'exercise_Single Leg Horizontal Leg Press': 'Prensa de piernas horizontal a una pierna',
+      'exercise_Single Leg Horizontal Leg Press':
+          'Prensa de piernas horizontal a una pierna',
       'exercise_Pistol Squat': 'Sentadilla pistola',
       'exercise_Sumo Air Squat': 'Sentadilla sumo al aire',
       'exercise_Lunge Twist': 'Estocada con giro',
       'exercise_Kettlebell Lunge Twist': 'Estocada con giro con pesa rusa',
       'exercise_Front Rack Lunge': 'Estocada en rack frontal',
       'training_tip': 'CONSEJO DE ENTRENAMIENTO',
-      'tip_details': '"3x8-12" significa 3 series, cada una entre 8 (mín) y 12 (máx) repeticiones.',
+      'tip_details':
+          '"3x8-12" significa 3 series, cada una entre 8 (mín) y 12 (máx) repeticiones.',
       'got_it': 'ENTENDIDO',
       'keep_going': 'SIGUE\nADELANTE',
       'level_progress': 'Nivel {current} → Nivel {next}',
@@ -2272,18 +2422,21 @@ class L10n {
       'version_info': 'ATHLÈTE v{version} · © 2025',
       'ok': 'Aceptar',
       'cancel': 'CANCELAR',
-      'logout_confirm_msg': '¿Estás seguro de que quieres cerrar sesión en tu cuenta?',
+      'logout_confirm_msg':
+          '¿Estás seguro de que quieres cerrar sesión en tu cuenta?',
       'logout_yes': 'SÍ, CERRAR SESIÓN',
       'send': 'ENVIAR',
       'tell_us_thoughts': 'Cuéntanos lo que piensas...',
-      'terms_agree': 'Al usar ATHLÈTE, aceptas nuestros Términos de Servicio y Política de Privacidad.',
+      'terms_agree':
+          'Al usar ATHLÈTE, aceptas nuestros Términos de Servicio y Política de Privacidad.',
       'name_label': 'Nombre',
       'age_yrs': '{age} años',
       'height_cm': '{height} cm',
       'weight_kg': '{weight} kg',
       'profile_subtitle_hint': 'Nombre, edad, peso, altura',
       'goals_subtitle_hint': 'Ganar músculo · Perder grasa · Resistencia',
-      'progress_auto_save': 'Tu progreso se guardará automáticamente en tu cuenta.',
+      'progress_auto_save':
+          'Tu progreso se guardará automáticamente en tu cuenta.',
       'signin_failed': 'Error al iniciar sesión: {error}',
       'apple_signin_failed': 'Error al iniciar sesión con Apple: {error}',
       'athlete_pro_active': 'ATHLÈTE Pro · Activo',
@@ -2298,94 +2451,141 @@ class L10n {
       'retake_quiz_btn': 'REPETIR EL CUESTIONARIO DE DESCUBMIRIENTO',
       'starting_ex': 'Iniciando {name}...',
       'training_tip_title': 'CONSEJO DE ENTRENAMIENTO',
-      'training_tip_desc': '"3x8-12" significa 3 series, cada una entre 8 (mín) y 12 (máx) repeticiones.',
+      'training_tip_desc':
+          '"3x8-12" significa 3 series, cada una entre 8 (mín) y 12 (máx) repeticiones.',
       'water_reminder': 'Oye, bebe un poco de agua',
       'complete_set_btn': 'COMPLETAR SERIE',
       'skip_rest_btn': 'SALTAR DESCANSO',
-      'focus_muscle_tip': 'Concéntrate en tus músculos {muscle}. Asegura un movimiento controlado en todo el rango de movimiento.',
+      'focus_muscle_tip':
+          'Concéntrate en tus músculos {muscle}. Asegura un movimiento controlado en todo el rango de movimiento.',
       'day_label': 'Día {num}',
       'day_pure': 'Día',
       'badge_arnold': 'Alto volumen · Super series',
-      'quote_arnold': 'Famoso por sus entrenamientos de alto volumen con super series de agonista y antagonista.',
+      'quote_arnold':
+          'Famoso por sus entrenamientos de alto volumen con super series de agonista y antagonista.',
       'badge_ronnie': 'Pesos pesados · Masa',
       'tag_Hardcore Power': 'Metodología Ronnie Coleman',
       'badge_Hardcore Power': 'Metodología Ronnie Coleman',
-      'quote_ronnie': '¡Peso ligero, bebé! Enfoque en intensidad pura y pesos masivos.',
+      'quote_ronnie':
+          '¡Peso ligero, bebé! Enfoque en intensidad pura y pesos masivos.',
       'badge_cbum': 'Físico Clásico',
-      'quote_cbum': 'Entrenando para la silueta clásica legendaria y la simetría.',
+      'quote_cbum':
+          'Entrenando para la silueta clásica legendaria y la simetría.',
       'title_cbum_special': '¿Qué es el Físico Clásico?',
-      'desc_cbum_special': 'El entrenamiento de Chris Bumstead se enfoca en la estética del "Físico Clásico", priorizando la simetría, la madurez muscular y la amplitud perfecta. Su sistema de 8 días asegura que cada grupo muscular reciba el máximo descanso.',
+      'desc_cbum_special':
+          'El entrenamiento de Chris Bumstead se enfoca en la estética del "Físico Clásico", priorizando la simetría, la madurez muscular y la amplitud perfecta. Su sistema de 8 días asegura que cada grupo muscular reciba el máximo descanso.',
       'badge_philheath': 'Enfoque en Detalle · 7 Veces Campeón',
-      'quote_philheath': 'La calma es mi fuerza. Los detalles marcan la diferencia entre un campeón y los demás.',
+      'quote_philheath':
+          'La calma es mi fuerza. Los detalles marcan la diferencia entre un campeón y los demás.',
       'badge_franco': 'Era Dorada / Masa',
-      'quote_franco': 'El hombre más fuerte del mundo. Entrenamiento de alta frecuencia para una densidad legendaria.',
+      'quote_franco':
+          'El hombre más fuerte del mundo. Entrenamiento de alta frecuencia para una densidad legendaria.',
       'badge_dexter': 'Longevidad · Nitidez y Definición',
-      'quote_dexter': 'La edad es solo un número si entrenas con inteligencia y cuidas tus articulaciones.',
+      'quote_dexter':
+          'La edad es solo un número si entrenas con inteligencia y cuidas tus articulaciones.',
       'badge_jaycutler': 'Alto Volumen · Cuádriceps Masivos',
-      'quote_jaycutler': 'Luchar por el tamaño. Cada día es una oportunidad para ser más grande.',
+      'quote_jaycutler':
+          'Luchar por el tamaño. Cada día es una oportunidad para ser más grande.',
       'badge_mentzer': 'Alta Intensidad · Descanso Corto',
-      'desc_High Intensity': 'Metodología "Heavy Duty" de Mike Mentzer: Entrenar al máximo esfuerzo en una sola serie hasta el fallo muscular total, seguido de largos periodos de recuperación.',
-      'quote_mentzer': 'El secreto está en la recuperación, no en entrenar durante horas.',
+      'desc_High Intensity':
+          'Metodología "Heavy Duty" de Mike Mentzer: Entrenar al máximo esfuerzo en una sola serie hasta el fallo muscular total, seguido de largos periodos de recuperación.',
+      'quote_mentzer':
+          'El secreto está en la recuperación, no en entrenar durante horas.',
       'badge_platz': 'Leyenda de Piernas · Intensidad Máxima',
-      'quote_platz': 'No te detengas hasta que te desmayes. Las piernas son el motor.',
+      'quote_platz':
+          'No te detengas hasta que te desmayes. Las piernas son el motor.',
       'badge_flex': 'Simetría y Estética',
-      'quote_flex': 'La simetría es la clave. El tamaño no importa sin una forma perfecta.',
+      'quote_flex':
+          'La simetría es la clave. El tamaño no importa sin una forma perfecta.',
       'badge_ramon': 'Clásico Moderno',
       'quote_ramon': 'Enfoque en el vacío abdominal y detalles precisos.',
       'badge_jeffseid': 'Estética Moderna',
       'quote_jeffseid': 'Entrena para la forma estética perfecta.',
       'badge_larrywheels': 'Powerbuilding',
-      'quote_larrywheels': 'Fuerza de los tres grandes con detalle de culturismo.',
+      'quote_larrywheels':
+          'Fuerza de los tres grandes con detalle de culturismo.',
       'badge_mikethurston': 'Estético / PPL',
-      'quote_mikethurston': 'Enfoque en crear una estructura estética perfectamente equilibrada.',
+      'quote_mikethurston':
+          'Enfoque en crear una estructura estética perfectamente equilibrada.',
       'badge_terrenceruffin': 'Físico Clásico · Alto Volumen',
-      'quote_terrenceruffin': 'Arte en movimiento. Enfoque en contracción total y líneas fluidas.',
+      'quote_terrenceruffin':
+          'Arte en movimiento. Enfoque en contracción total y líneas fluidas.',
       'badge_alexeubank': 'Estética Natural',
-      'quote_alexeubank': 'La consistencia vence a la intensidad siempre. Mantente natural.',
+      'quote_alexeubank':
+          'La consistencia vence a la intensidad siempre. Mantente natural.',
       'badge_ulissesjr': 'Icono de la Definición',
-      'quote_ulissesjr': 'Los abdominales se hacen en la cocina pero se construyen en el gimnasio.',
+      'quote_ulissesjr':
+          'Los abdominales se hacen en la cocina pero se construyen en el gimnasio.',
       'badge_ryanterry': 'Maestro del V-Taper',
       'quote_ryanterry': 'Simetría, condición y trabajo duro.',
       'badge_stevecook': 'Culturismo Clásico',
-      'quote_stevecook': 'Equilibra tu entrenamiento y tu vida. Calidad sobre cantidad.',
+      'quote_stevecook':
+          'Equilibra tu entrenamiento y tu vida. Calidad sobre cantidad.',
       'badge_simeonpanda': 'Estética Natural · División Corporal',
-      'quote_simeonpanda': 'No hay atajos. Consistencia e intensidad lo son todo.',
+      'quote_simeonpanda':
+          'No hay atajos. Consistencia e intensidad lo son todo.',
       'badge_hadichoopan': 'Mr. Olympia · Intensidad Máxima',
-      'quote_hadichoopan': 'Trabajo duro en silencio. Deja que tu éxito sea tu ruido.',
+      'quote_hadichoopan':
+          'Trabajo duro en silencio. Deja que tu éxito sea tu ruido.',
       'badge_bigramy': 'Monstruo de la Masa · Alto Volumen',
-      'quote_bigramy': 'Se acerca el invierno. Volumen masivo para un crecimiento masivo.',
+      'quote_bigramy':
+          'Se acerca el invierno. Volumen masivo para un crecimiento masivo.',
       'badge_davidlaid': 'V-Taper / DUP',
-      'quote_davidlaid': 'Condición, estructura moderna y rendimiento destacado.',
+      'quote_davidlaid':
+          'Condición, estructura moderna y rendimiento destacado.',
       'badge_athletic_lean': 'Simetría y Fluidez',
-      'quote_athletic_lean': 'Construye un físico atlético, funcional y esbelto.',
+      'quote_athletic_lean':
+          'Construye un físico atlético, funcional y esbelto.',
       'badge_bikini_competition': 'Estética Moderna / PPL',
-      'quote_bikini_competition': 'Esculpir músculos con precisión para el escenario.',
+      'quote_bikini_competition':
+          'Esculpir músculos con precisión para el escenario.',
       'badge_powerlifter_female': 'Fuerza Máxima',
-      'quote_powerlifter_female': 'La fuerza es la base. Un levantamiento a la vez.',
+      'quote_powerlifter_female':
+          'La fuerza es la base. Un levantamiento a la vez.',
       'badge_sculpt_and_cardio': 'Esculpido y Cardio',
-      'quote_sculpt_and_cardio': 'Tonificación corporal y aumento de fitness cardiovascular.',
-      'desc_FST-7': 'FST-7: Método centrado en el estiramiento de la fascia con 7 series de alto volumen y poco descanso para potenciar el crecimiento.',
-      'desc_Longevity & Detail': 'Enfoque de Dexter Jackson: Uso de máquinas precisas y aislamiento de alta tensión para proteger articulaciones y esculpir detalle profundo.',
-      'desc_Flow & Symmetry': 'Prioridad de Flex Wheeler: Equilibrar grupos musculares proporcionalmente para una silueta artística.',
-      'desc_Golden Era / Mass': 'Estilo Arnold años 70: Sesiones de alta frecuencia y volumen con movimientos compuestos pesados.',
-      'desc_Modern Classic': 'Estándar Ramon Dino: Enfoque en vacío abdominal, separación profunda y redondez muscular.',
-      'desc_Hardcore Power': 'Metodología Ronnie Coleman: Mezcla de fuerza pesada con alto volumen. Máximo peso para máximos resultados.',
-      'desc_High Volume': 'Estrategia Jay Cutler: Uso de alto número de series y volumen intenso para forzar la expansión muscular.',
-      'desc_Squat King': 'Entrenamiento de piernas de Tom Platz: Rangos de repeticiones extremos e intensidad implacable en sentadillas.',
-      'desc_Dual Split · Power-Physique': 'División doble de Franco Columbu: Entrenar dos veces al día para separar fuerza pesada de refinamiento estético.',
-      'desc_V-Taper': 'Ideal estético: Enfoque extremo en amplitud de hombros y grosor de espalda con cintura estrecha.',
-      'desc_DUP Mastery': 'Periodización ondulante diaria: Variar rangos de repeticiones e intensidad a lo largo de la semana.',
-      'desc_Classic Bodybuilding / PPL': 'Híbrido Steve Cook: Uso de PPL combinado con principios estéticos clásicos para un físico equilibrado.',
-      'desc_Modern Aesthetic / PPL': 'Estándar contemporáneo: PPL refinado de alta frecuencia enfocado en estética para redes sociales.',
-      'desc_Powerbuilding': 'Enfoque Larry Wheels: Fuerza de los tres grandes combinada con aislamiento de culturismo.',
-      'desc_Classic Physique / High Volume': 'Metodología Terrence Ruffin: Madurez muscular, amplitud perfecta y contracciones máximas.',
-      'desc_Men\'s Physique / High Volume': 'Rutina Ryan Terry: Alto volumen con énfasis en estabilidad de core y estética V-taper.',
+      'quote_sculpt_and_cardio':
+          'Tonificación corporal y aumento de fitness cardiovascular.',
+      'desc_FST-7':
+          'FST-7: Método centrado en el estiramiento de la fascia con 7 series de alto volumen y poco descanso para potenciar el crecimiento.',
+      'desc_Longevity & Detail':
+          'Enfoque de Dexter Jackson: Uso de máquinas precisas y aislamiento de alta tensión para proteger articulaciones y esculpir detalle profundo.',
+      'desc_Flow & Symmetry':
+          'Prioridad de Flex Wheeler: Equilibrar grupos musculares proporcionalmente para una silueta artística.',
+      'desc_Golden Era / Mass':
+          'Estilo Arnold años 70: Sesiones de alta frecuencia y volumen con movimientos compuestos pesados.',
+      'desc_Modern Classic':
+          'Estándar Ramon Dino: Enfoque en vacío abdominal, separación profunda y redondez muscular.',
+      'desc_Hardcore Power':
+          'Metodología Ronnie Coleman: Mezcla de fuerza pesada con alto volumen. Máximo peso para máximos resultados.',
+      'desc_High Volume':
+          'Estrategia Jay Cutler: Uso de alto número de series y volumen intenso para forzar la expansión muscular.',
+      'desc_Squat King':
+          'Entrenamiento de piernas de Tom Platz: Rangos de repeticiones extremos e intensidad implacable en sentadillas.',
+      'desc_Dual Split · Power-Physique':
+          'División doble de Franco Columbu: Entrenar dos veces al día para separar fuerza pesada de refinamiento estético.',
+      'desc_V-Taper':
+          'Ideal estético: Enfoque extremo en amplitud de hombros y grosor de espalda con cintura estrecha.',
+      'desc_DUP Mastery':
+          'Periodización ondulante diaria: Variar rangos de repeticiones e intensidad a lo largo de la semana.',
+      'desc_Classic Bodybuilding / PPL':
+          'Híbrido Steve Cook: Uso de PPL combinado con principios estéticos clásicos para un físico equilibrado.',
+      'desc_Modern Aesthetic / PPL':
+          'Estándar contemporáneo: PPL refinado de alta frecuencia enfocado en estética para redes sociales.',
+      'desc_Powerbuilding':
+          'Enfoque Larry Wheels: Fuerza de los tres grandes combinada con aislamiento de culturismo.',
+      'desc_Classic Physique / High Volume':
+          'Metodología Terrence Ruffin: Madurez muscular, amplitud perfecta y contracciones máximas.',
+      'desc_Men\'s Physique / High Volume':
+          'Rutina Ryan Terry: Alto volumen con énfasis en estabilidad de core y estética V-taper.',
       'desc_Raw Power': 'Levantamiento pesado y fuerza máxima.',
-      'desc_Precision · Core': 'Trabajo centrado en glúteos y estabilidad de core.',
+      'desc_Precision · Core':
+          'Trabajo centrado en glúteos y estabilidad de core.',
       'title_static_hold': '¿Qué es el Mantenimiento Estático?',
-      'desc_static_hold': 'Un mantenimiento estático es una técnica de entrenamiento que consiste en sostener el peso en la posición de máxima contracción durante el mayor tiempo posible. En la metodología de Mike Mentzer, esto se utiliza después de alcanzar el fallo para agotar completamente las fibras musculares y activar el máximo crecimiento.',
+      'desc_static_hold':
+          'Un mantenimiento estático es una técnica de entrenamiento que consiste en sostener el peso en la posición de máxima contracción durante el mayor tiempo posible. En la metodología de Mike Mentzer, esto se utiliza después de alcanzar el fallo para agotar completamente las fibras musculares y activar el máximo crecimiento.',
       'title_superset': '¿Qué es una Super serie (Superset)?',
-      'desc_superset': 'Una super serie es una técnica de entrenamiento avanzada en la que realizas dos ejercicios seguidos sin descanso entre ellos. Esto aumenta la intensidad del entrenamiento, ahorra tiempo y maximiza el bombeo muscular y el estrés metabólico para un mejor crecimiento.',
+      'desc_superset':
+          'Una super serie es una técnica de entrenamiento avanzada en la que realizas dos ejercicios seguidos sin descanso entre ellos. Esto aumenta la intensidad del entrenamiento, ahorra tiempo y maximiza el bombeo muscular y el estrés metabólico para un mejor crecimiento.',
       'program_arnold': 'Arnold Schwarzenegger',
       'program_ronnie': 'Ronnie Coleman',
       'program_cbum': 'Chris Bumstead (CBum)',
@@ -2409,12 +2609,15 @@ class L10n {
       'program_hadichoopan': 'Hadi Choopan',
       'program_bigramy': 'Big Ramy',
       'program_davidlaid': 'David Laid',
+      'program_ronaldo': 'Ronaldo',
+      'badge_ronaldo': 'Explosivo · Funcional',
       'program_athletic_lean': 'Atlético y Definido',
       'program_bikini_competition': 'Bikini/Competición',
       'program_powerlifter_female': 'Powerlifter',
       'program_sculpt_and_cardio': 'Esculpido y Cardio',
       'unlock_program_title': 'Desbloquear este programa',
-      'unlock_program_subtext': 'Suscríbete para acceder a todos los días de entrenamiento, ejercicios y programas de atletas',
+      'unlock_program_subtext':
+          'Suscríbete para acceder a todos los días de entrenamiento, ejercicios y programas de atletas',
       'subscribe_now': 'Suscribirse ahora',
       'already_subscribed': '¿Ya estás suscrito?',
       'month_price': '\$9.99 / Mes',
@@ -2422,7 +2625,8 @@ class L10n {
       'restore_purchase': 'Restaurar compra',
       'pro_badge': 'PRO',
       'pro_title': 'ATHLÈTE PRO',
-      'pro_subtitle': 'Desbloquea la mejor experiencia de entrenamiento y transforma tu físico con los mejores del mundo.',
+      'pro_subtitle':
+          'Desbloquea la mejor experiencia de entrenamiento y transforma tu físico con los mejores del mundo.',
       'pro_feature_1': 'Acceso a los más de 20 programas de atletas',
       'pro_feature_2': 'Registros e historial de entrenamiento completos',
       'pro_feature_3': 'Instrucciones detalladas de ejercicios y GIFs',
@@ -2444,7 +2648,8 @@ class L10n {
       'quiz_continue': 'जारी रखें →',
       'quiz_match': 'मेरा मैच देखें →',
       'quiz_result_label': 'आपका परफेक्ट मैच',
-      'quiz_result_desc': 'प्रदर्शन और मांसपेशियों के लिए आपका जुनून {name} की पद्धति से पूरी तरह मेल खाता है।',
+      'quiz_result_desc':
+          'प्रदर्शन और मांसपेशियों के लिए आपका जुनून {name} की पद्धति से पूरी तरह मेल खाता है।',
       'view_program': 'पूरा कार्यक्रम देखें →',
       'retake_quiz': 'क्विज़ दोबारा लें',
       'sessions_completed': 'सत्र पूरे हुए',
@@ -2482,7 +2687,8 @@ class L10n {
       'fitness_profile': 'फिटनेस प्रोफाइल',
       'subscription': 'सदस्यता',
       'privacy_settings': 'गोपनीयता सेटिंग्स',
-      'privacy_desc': 'आपकी प्रोफाइल वर्तमान में निजी है। केवल आप ही अपनी प्रगति देख सकते हैं।',
+      'privacy_desc':
+          'आपकी प्रोफाइल वर्तमान में निजी है। केवल आप ही अपनी प्रगति देख सकते हैं।',
       'close': 'बंद करें',
       'back': 'पीछे',
       'exercises': 'व्यायाम',
@@ -2517,7 +2723,8 @@ class L10n {
       'nav_progress': 'प्रगति',
       'nav_profile': 'प्रोफ़ाइल',
       'paused': 'रुका हुआ',
-      'progress_auto_save': 'आपकी प्रगति स्वचालित रूप से आपके खाते में सहेज ली जाएगी।',
+      'progress_auto_save':
+          'आपकी प्रगति स्वचालित रूप से आपके खाते में सहेज ली जाएगी।',
       'signin_failed': 'साइन-इन विफल: {error}',
       'apple_signin_failed': 'Apple साइन-इन विफल: {error}',
       'athlete_pro_active': 'ATHLÈTE Pro · सक्रिय',
@@ -2536,11 +2743,13 @@ class L10n {
       'continue_btn': 'जारी रखें',
       'starting_ex': '{name} शुरू हो रहा है...',
       'training_tip_title': 'ट्रेनिंग टिप',
-      'training_tip_desc': '"3x8-12" का अर्थ है 3 सेट, प्रत्येक 8 (न्यूनतम) और 12 (अधिकतम) दोहराव के बीच।',
+      'training_tip_desc':
+          '"3x8-12" का अर्थ है 3 सेट, प्रत्येक 8 (न्यूनतम) और 12 (अधिकतम) दोहराव के बीच।',
       'water_reminder': 'अरे, थोड़ा पानी पी लो',
       'complete_set_btn': 'सेट पूरा करें',
       'skip_rest_btn': 'आराम छोड़ें',
-      'focus_muscle_tip': 'अपनी {muscle} मांसपेशियों पर ध्यान दें। गति की पूरी सीमा के दौरान नियंत्रित गति सुनिश्चित करें।',
+      'focus_muscle_tip':
+          'अपनी {muscle} मांसपेशियों पर ध्यान दें। गति की पूरी सीमा के दौरान नियंत्रित गति सुनिश्चित करें।',
       'personal_best': 'व्यक्तिगत सर्वश्रेष्ठ!',
       'first_sweat_title': 'पहला पसीना',
       'first_sweat_desc': 'अपना पहला सत्र पूरा किया',
@@ -2574,6 +2783,8 @@ class L10n {
       'program_hadichoopan': 'Hadi Choopan',
       'program_bigramy': 'Big Ramy',
       'program_davidlaid': 'David Laid',
+      'program_ronaldo': 'Ronaldo',
+      'badge_ronaldo': 'Explosive · Functional',
       'program_athletic_lean': 'Athletic & Lean',
       'program_bikini_competition': 'Bikini/Competition',
       'program_powerlifter_female': 'Powerlifter',
@@ -2588,7 +2799,8 @@ class L10n {
       'quiz_continue': 'जारी रखें →',
       'quiz_match': 'मेरा मैच देखें →',
       'quiz_result_label': 'आपका परफेक्ट मैच',
-      'quiz_result_desc': 'प्रदर्शन और मांसपेशियों के लिए आपका जुनून {name} की पद्धति से पूरी तरह मेल खाता है।',
+      'quiz_result_desc':
+          'प्रदर्शन और मांसपेशियों के लिए आपका जुनून {name} की पद्धति से पूरी तरह मेल खाता है।',
       'view_program': 'पूरा कार्यक्रम देखें →',
       'retake_quiz': 'क्विज़ दोबारा लें',
       'sessions_completed': 'सत्र पूरे हुए',
@@ -2626,7 +2838,8 @@ class L10n {
       'fitness_profile': 'फिटनेस प्रोफाइल',
       'subscription': 'सदस्यता',
       'privacy_settings': 'गोपनीयता सेटिंग्स',
-      'privacy_desc': 'आपकी प्रोफाइल वर्तमान में निजी है। केवल आप ही अपनी प्रगति देख सकते हैं।',
+      'privacy_desc':
+          'आपकी प्रोफाइल वर्तमान में निजी है। केवल आप ही अपनी प्रगति देख सकते हैं।',
       'close': 'बंद करें',
       'back': 'पीछे',
       'exercises': 'व्यायाम',
@@ -2661,7 +2874,8 @@ class L10n {
       'nav_progress': 'प्रगति',
       'nav_profile': 'प्रोफ़ाइल',
       'paused': 'रुका हुआ',
-      'progress_auto_save': 'आपकी प्रगति स्वचालित रूप से आपके खाते में सहेज ली जाएगी।',
+      'progress_auto_save':
+          'आपकी प्रगति स्वचालित रूप से आपके खाते में सहेज ली जाएगी।',
       'signin_failed': 'साइन-इन विफल: {error}',
       'apple_signin_failed': 'Apple साइन-इन विफल: {error}',
       'athlete_pro_active': 'ATHLÈTE Pro · सक्रिय',
@@ -2680,11 +2894,13 @@ class L10n {
       'continue_btn': 'जारी रखें',
       'starting_ex': '{name} शुरू हो रहा है...',
       'training_tip_title': 'ट्रेनिंग टिप',
-      'training_tip_desc': '"3x8-12" का अर्थ है 3 सेट, प्रत्येक 8 (न्यूनतम) और 12 (अधिकतम) दोहराव के बीच।',
+      'training_tip_desc':
+          '"3x8-12" का अर्थ है 3 सेट, प्रत्येक 8 (न्यूनतम) और 12 (अधिकतम) दोहराव के बीच।',
       'water_reminder': 'अरे, थोड़ा पानी पी लो',
       'complete_set_btn': 'सेट पूरा करें',
       'skip_rest_btn': 'आराम छोड़ें',
-      'focus_muscle_tip': 'अपनी {muscle} मांसपेशियों पर ध्यान दें। गति की पूरी सीमा के दौरान नियंत्रित गति सुनिश्चित करें।',
+      'focus_muscle_tip':
+          'अपनी {muscle} मांसपेशियों पर ध्यान दें। गति की पूरी सीमा के दौरान नियंत्रित गति सुनिश्चित करें।',
       'personal_best': 'व्यक्तिगत सर्वश्रेष्ठ!',
       'first_sweat_title': 'पहला पसीना',
       'first_sweat_desc': 'अपना पहला सत्र पूरा किया',
@@ -2718,6 +2934,8 @@ class L10n {
       'program_hadichoopan': 'हदी चूपन',
       'program_bigramy': 'Big Ramy',
       'program_davidlaid': 'David Laid',
+      'program_ronaldo': 'Ronaldo',
+      'badge_ronaldo': 'Explosive · Functional',
       'program_athletic_lean': 'Athletic & Lean',
       'program_bikini_competition': 'Bikini/Competition',
       'program_powerlifter_female': 'Powerlifter',
@@ -2862,6 +3080,8 @@ class L10n {
       'program_hadichoopan': 'Hadi Choopan',
       'program_bigramy': 'Big Ramy',
       'program_davidlaid': 'David Laid',
+      'program_ronaldo': 'Ronaldo',
+      'badge_ronaldo': 'Explosive · Functional',
       'program_athletic_lean': 'Athletic & Lean',
       'program_bikini_competition': 'Bikini/Competition',
       'program_powerlifter_female': 'Powerlifter',
@@ -2869,20 +3089,25 @@ class L10n {
     },
     'fr': {
       'welcome_back': 'BIENVENUE\nDE RETOUR',
-      'sign_in_continue': 'Connectez-vous pour continuer votre parcours d\'entraînement.',
+      'sign_in_continue':
+          'Connectez-vous pour continuer votre parcours d\'entraînement.',
       'sign_in_google': 'Se connecter avec Google',
       'sign_in_apple': 'Se connecter avec Apple',
       'no_account': 'Vous n\'avez pas de compte ? ',
       'sign_up_free': 'Inscrivez-vous gratuitement',
       'secure_access': 'ACCÈS SÉCURISÉ',
-      'encryption_info': 'Nous utilisons un cryptage standard pour protéger vos données.',
+      'encryption_info':
+          'Nous utilisons un cryptage standard pour protéger vos données.',
       'create_account': 'CRÉEZ VOTRE\nCOMPTE',
-      'join_thousands': 'Rejoignez des milliers d\'athlètes s\'entraînant avec les meilleurs programmes.',
-      'sync_info': 'Votre nom, email et photo seront synchronisés depuis votre compte Google.',
+      'join_thousands':
+          'Rejoignez des milliers d\'athlètes s\'entraînant avec les meilleurs programmes.',
+      'sync_info':
+          'Votre nom, email et photo seront synchronisés depuis votre compte Google.',
       'have_account': 'Vous avez déjà un compte ? ',
       'sign_in': 'Se connecter',
       'get_started_fast': 'DÉMARRAGE RAPIDE',
-      'one_tap_login': 'La connexion en un clic vous permet de commencer en moins de 30 secondes.',
+      'one_tap_login':
+          'La connexion en un clic vous permet de commencer en moins de 30 secondes.',
       'select_language': 'Choisir la langue',
       'my_profile': 'MON PROFIL',
       'edit_profile': 'Modifier le profil',
@@ -2911,7 +3136,8 @@ class L10n {
       'no_athletes': 'Aucun athlète trouvé',
       'hero_category': 'LÉGENDES DU BODYBUILDING',
       'hero_title': 'CHOISISSEZ VOTRE\nPROGRAMME',
-      'hero_subtitle': 'Sélectionnez un athlète pour explorer son système d\'entraînement.',
+      'hero_subtitle':
+          'Sélectionnez un athlète pour explorer son système d\'entraînement.',
       'step': 'Étape',
       'of': 'sur',
       'continue': 'CONTINUER →',
@@ -2937,7 +3163,8 @@ class L10n {
       'advanced': 'Avancé',
       'advanced_sub': '3+ ans — athlète sérieux',
       'metrics_title': 'VOS DONNÉES\nCORPORELLES',
-      'metrics_sub': 'Utilisé pour adapter votre nutrition et suivre votre évolution.',
+      'metrics_sub':
+          'Utilisé pour adapter votre nutrition et suivre votre évolution.',
       'weight': 'Poids',
       'height': 'Taille',
       'age': 'Âge',
@@ -2946,7 +3173,8 @@ class L10n {
       'male': 'Homme',
       'female': 'Femme',
       'days_title': 'COMBIEN DE JOURS\nPAR SEMAINE ?',
-      'days_sub': 'La régularité bat l\'intensité. Choisissez ce que vous pouvez tenir.',
+      'days_sub':
+          'La régularité bat l\'intensité. Choisissez ce que vous pouvez tenir.',
       'days_3': '3 Jours',
       'days_3_desc': 'Focus corps complet',
       'days_4': '4 Jours',
@@ -2956,12 +3184,14 @@ class L10n {
       'days_6': '6 Jours',
       'days_6_desc': 'Engagement total',
       'welcome_user': 'BIENVENUE,\n',
-      'success_sub': 'Votre profil est prêt et vos recommandations personnalisées sont prêtes.',
+      'success_sub':
+          'Votre profil est prêt et vos recommandations personnalisées sont prêtes.',
       'quiz_title': 'TROUVER VOTRE MATCH',
       'quiz_continue': 'CONTINUER →',
       'quiz_match': 'VOIR MON MATCH →',
       'quiz_result_label': 'VOTRE MATCH PARFAIT',
-      'quiz_result_desc': 'Votre motivation pour la performance et le muscle correspond parfaitement à {name}.',
+      'quiz_result_desc':
+          'Votre motivation pour la performance et le muscle correspond parfaitement à {name}.',
       'view_program': 'VOIR LE PROGRAMME →',
       'retake_quiz': 'Refaire le Quiz',
       'sessions_completed': 'Sessions terminées',
@@ -3058,7 +3288,8 @@ class L10n {
       'rank_advanced': 'Athlète Avancé',
       'matchmaker_title': 'MATCHMAKER',
       'quiz_gender_q': 'Je suis...',
-      'quiz_gender_sub': 'Choisissez votre voie pour les meilleures recommandations.',
+      'quiz_gender_sub':
+          'Choisissez votre voie pour les meilleures recommandations.',
       'quiz_female_goal_q': 'Quel est votre but principal ?',
       'quiz_female_goal_sub': 'Sculpter et tonifier votre corps.',
       'quiz_female_goal_lean': 'Athlétique & Fine',
@@ -3083,7 +3314,8 @@ class L10n {
       'quiz_res_athletic': 'Athlétique & Tonique',
       'quiz_res_power': 'Puissance & Performance',
       'quiz_res_sculpt': 'Sculpt & HIIT',
-      'quiz_analysis_result': 'Notre analyse montre que vous correspondez au style de {alias}. Ce programme se concentre sur {style} et est équilibré pour une intensité {intensity}.',
+      'quiz_analysis_result':
+          'Notre analyse montre que vous correspondez au style de {alias}. Ce programme se concentre sur {style} et est équilibré pour une intensité {intensity}.',
       'quiz_goal_q': 'Votre objectif n°1 ?',
       'quiz_goal_sub': 'Définissez votre but ultime.',
       'quiz_goal_mass': 'Masse maximale',
@@ -3217,15 +3449,23 @@ class L10n {
       'intensity_HIGH': 'Haute',
       'intensity_MAX': 'Maximale',
       'intensity_MEDIUM': 'Moyenne',
-      'quote_arnold': 'Le mental est la limite. Tant que le mental peut envisager le fait que vous pouvez faire quelque chose, vous pouvez le faire.',
-      'quote_ronnie': 'Tout le monde veut être un bodybuilder, mais personne ne veut soulever des poids lourds.',
-      'quote_cbum': 'Il faut être prêt à faire ce que les autres ne feront pas pour obtenir ce que les autres n\'auront pas.',
-      'quote_jaycutler': 'Je ne m\'entraîne pas pour être moyen. Je m\'entraîne pour être le meilleur.',
+      'quote_arnold':
+          'Le mental est la limite. Tant que le mental peut envisager le fait que vous pouvez faire quelque chose, vous pouvez le faire.',
+      'quote_ronnie':
+          'Tout le monde veut être un bodybuilder, mais personne ne veut soulever des poids lourds.',
+      'quote_cbum':
+          'Il faut être prêt à faire ce que les autres ne feront pas pour obtenir ce que les autres n\'auront pas.',
+      'quote_jaycutler':
+          'Je ne m\'entraîne pas pour être moyen. Je m\'entraîne pour être le meilleur.',
       'quote_philheath': 'Je ne suis pas ici pour être le deuxième meilleur.',
-      'quote_athletic_lean': 'La régularité est le pont entre les objectifs et l\'accomplissement.',
-      'quote_bikini_competition': 'Entraîne-toi comme une athlète, mange comme une nutritionniste, dors comme un bébé, gagne comme une championne.',
-      'quote_powerlifter_female': 'La force ne vient pas de ce que vous pouvez faire. Elle vient de la victoire sur les choses que vous pensiez ne pas pouvoir faire.',
-      'quote_sculpt_and_cardio': 'Le fitness n\'est pas d\'être meilleur que quelqu\'un d\'autre. C\'est d\'être meilleur que vous l\'étiez hier.',
+      'quote_athletic_lean':
+          'La régularité est le pont entre les objectifs et l\'accomplissement.',
+      'quote_bikini_competition':
+          'Entraîne-toi comme une athlète, mange comme une nutritionniste, dors comme un bébé, gagne comme une championne.',
+      'quote_powerlifter_female':
+          'La force ne vient pas de ce que vous pouvez faire. Elle vient de la victoire sur les choses que vous pensiez ne pas pouvoir faire.',
+      'quote_sculpt_and_cardio':
+          'Le fitness n\'est pas d\'être meilleur que quelqu\'un d\'autre. C\'est d\'être meilleur que vous l\'étiez hier.',
       'alias_The Austrian Oak': 'Le Chêne Autrichien',
       'alias_The King': 'Le Roi',
       'alias_CBum': 'CBum',
@@ -3344,7 +3584,8 @@ class L10n {
       'exercise_Barbell Incline Bench Press': 'Développé incliné barre',
       'exercise_Paused Back Squat': 'Squat arrière avec pause',
       'exercise_Barbell Hip Thrust': 'Hip Thrust barre',
-      'exercise_Dumbbell Stiff Leg Deadlift': 'Soulevé de terre jambes tendues haltères',
+      'exercise_Dumbbell Stiff Leg Deadlift':
+          'Soulevé de terre jambes tendues haltères',
       'exercise_Arm Curl Machine': 'Machine à biceps',
       'exercise_Dumbbell Leg Curl': 'Leg Curl haltère',
       'exercise_Shoulder Press Machine': 'Machine à épaules',
@@ -3352,7 +3593,8 @@ class L10n {
       'exercise_Cable Hammer Curl': 'Curl marteau poulie',
       'exercise_Behind Neck Press': 'Développé nuque',
       'exercise_Bentover Dumbbell Lateral Raise': 'Oiseau haltères',
-      'exercise_Seated Dumbbell Tricep Extension': 'Extension triceps assise haltère',
+      'exercise_Seated Dumbbell Tricep Extension':
+          'Extension triceps assise haltère',
       'exercise_Bench Dips': 'Dips sur banc',
       'exercise_Donkey Kick': 'Donkey Kick',
       'exercise_Back Squat': 'Squat arrière',
@@ -3432,7 +3674,8 @@ class L10n {
       'exercise_Concentration Curl': 'Curl concentration',
       'exercise_Reverse Curl': 'Curl inversé',
       'exercise_Tricep Extension': 'Extension triceps',
-      'exercise_Cable Overhead Ext': 'Extension triceps poulie au-dessus de la tête',
+      'exercise_Cable Overhead Ext':
+          'Extension triceps poulie au-dessus de la tête',
       'exercise_V-up': 'V-up',
       'exercise_Leg Raise': 'Relevé de jambes',
       'exercise_Heel Touch': 'Toucher de talons',
@@ -3446,7 +3689,8 @@ class L10n {
       'exercise_Bench Press': 'Développé couché',
       'exercise_Incline Dumbbell Press': 'Développé incliné haltères',
       'exercise_Flat Dumbbell Flye': 'Écartés haltères à plat',
-      'exercise_Standing DB Lateral Raise': 'Élévations latérales debout haltères',
+      'exercise_Standing DB Lateral Raise':
+          'Élévations latérales debout haltères',
       'exercise_Bent-over Lateral Raise': 'Oiseau haltères buste penché',
       'exercise_Behind-the-Neck Press': 'Développé nuque',
       'exercise_Alternating Front Raise': 'Élévations frontales alternées',
@@ -3462,7 +3706,8 @@ class L10n {
       'exercise_Roman Chair Sit-ups': 'Sit-up sur chaise romaine',
       'exercise_One Arm Cable Seated Row': 'Tirage assis unilatéral poulie',
       'exercise_Plate Shoulder Press': 'Développé épaules avec disque',
-      'exercise_Smith Machine Overhead Press': 'Développé militaire Smith Machine',
+      'exercise_Smith Machine Overhead Press':
+          'Développé militaire Smith Machine',
       'exercise_Incline Dumbell Bench Press': 'Développé incliné haltères',
       'exercise_Seated Rows': 'Tirage assis',
       's walk': 'fermier marche',
@@ -3481,13 +3726,15 @@ class L10n {
       'exercise_Underhand Lat Pulldown': 'Tirage vertical prise supination',
       'exercise_T-bar Row Machine': 'Tirage T-bar machine',
       'exercise_Seated Cable Row': 'Tirage assis poulie',
-      'exercise_Cable Straight Arm Pulldown': 'Pull-over poulie haute bras tendus',
+      'exercise_Cable Straight Arm Pulldown':
+          'Pull-over poulie haute bras tendus',
       'exercise_Underhand Barbell Row': 'Tirage barre prise supination',
       'exercise_Lat Pull Down': 'Tirage vertical',
       'exercise_Weighted Pull Up': 'Tractions lestées',
       'exercise_Weighted Pull-up': 'Tractions lestées',
       'exercise_One Arm Dumbbell Row': 'Tirage bûcheron haltère',
-      'exercise_Smith Machine Overhead Bench Press': 'Développé incliné Smith Machine',
+      'exercise_Smith Machine Overhead Bench Press':
+          'Développé incliné Smith Machine',
       'exercise_Zercher Squat': 'Zercher Squat',
       'exercise_Smith Machine Squat': 'Squat Smith Machine',
       'exercise_V Squat': 'V-Squat',
@@ -3509,7 +3756,8 @@ class L10n {
       'exercise_45 Degree Side Bend': 'Flexion latérale 45 degrés',
       'exercise_Side Plank': 'Planche latérale',
       'exercise_Smith Machine Bench Press': 'Développé couché Smith Machine',
-      'exercise_Smith Machine Incline Bench Press': 'Développé incliné Smith Machine',
+      'exercise_Smith Machine Incline Bench Press':
+          'Développé incliné Smith Machine',
       'exercise_Weighted Dips': 'Dips lestés',
       'exercise_Weighted Push Up': 'Pompes lestées',
       'exercise_Hindu Push Up': 'Pompes hindoues',
@@ -3527,14 +3775,17 @@ class L10n {
       'exercise_Knee Push Up': 'Pompes sur les genoux',
       'exercise_Pike Push Up': 'Pompes piqué',
       'exercise_Decline Chest Press Machine': 'Machine à développé décliné',
-      'exercise_Incline Dumbbell Twist Press': 'Développé incliné avec rotation',
+      'exercise_Incline Dumbbell Twist Press':
+          'Développé incliné avec rotation',
       'exercise_Incline Cable Fly': 'Écartés inclinés poulie',
       'exercise_Dumbbell Squeeze Press': 'Squeeze Press haltères',
       'exercise_Cable Pull Through': 'Cable Pull Through',
       'exercise_Cable Tricep Extension': 'Extension triceps poulie',
       'exercise_Lying Tricep Extension': 'Extension triceps allongé',
-      'exercise_Cable Overhead Tricep Extension': 'Extension triceps poulie haute',
-      'exercise_Cable Lying Tricep Extension': 'Extension triceps allongé poulie',
+      'exercise_Cable Overhead Tricep Extension':
+          'Extension triceps poulie haute',
+      'exercise_Cable Lying Tricep Extension':
+          'Extension triceps allongé poulie',
       'exercise_Tricep Extension Machine': 'Machine à triceps',
       'exercise_Hollow Rock': 'Hollow Rock',
       'exercise_Hollow Position': 'Position Hollow',
@@ -3553,7 +3804,8 @@ class L10n {
       'exercise_Bodyweight Calf Raise': 'Extensions mollets poids du corps',
       'exercise_Barbell Standing Calf Raise': 'Extensions mollets debout barre',
       'exercise_Standing Cable Fly': 'Écartés debout poulie',
-      'exercise_Dumbbell Romanian Deadlift': 'Soulevé de terre roumain haltères',
+      'exercise_Dumbbell Romanian Deadlift':
+          'Soulevé de terre roumain haltères',
       'exercise_Dumbbell Kickback': 'Kickback triceps haltère',
       'exercise_Dumbbell Preacher Curl': 'Curl Larry Scott haltère',
       'exercise_RKC Plank': 'Planche RKC',
@@ -3596,14 +3848,16 @@ class L10n {
       'exercise_Bodyweight Overhead Squat': 'Overhead squat poids du corps',
       'exercise_Dumbbell Sumo Squat': 'Squat sumo haltère',
       'exercise_Single Leg Leg Extension': 'Leg extension unilatéral',
-      'exercise_Single Leg Horizontal Leg Press': 'Presse horizontale unilatérale',
+      'exercise_Single Leg Horizontal Leg Press':
+          'Presse horizontale unilatérale',
       'exercise_Pistol Squat': 'Pistol Squat',
       'exercise_Sumo Air Squat': 'Squat sumo poids du corps',
       'exercise_Lunge Twist': 'Fente avec rotation',
       'exercise_Kettlebell Lunge Twist': 'Fente avec rotation kettlebell',
       'exercise_Front Rack Lunge': 'Fente rack avant',
       'training_tip': 'CONSEIL D\'ENTRAÎNEMENT',
-      'tip_details': '"3x8-12" signifie 3 séries, chacune entre 8 (min) et 12 (max) répétitions.',
+      'tip_details':
+          '"3x8-12" signifie 3 séries, chacune entre 8 (min) et 12 (max) répétitions.',
       'got_it': 'ENTENDU',
       'keep_going': 'CONTINUEZ\nCOMME ÇA',
       'level_progress': 'Niveau {current} → Niveau {next}',
@@ -3623,19 +3877,22 @@ class L10n {
       'logout_yes': 'OUI, DÉCONNEXION',
       'send': 'ENVOYER',
       'tell_us_thoughts': 'Votre avis nous intéresse...',
-      'terms_agree': 'En utilisant ATHLÈTE, vous acceptez nos Conditions et Politique de Confidentialité.',
+      'terms_agree':
+          'En utilisant ATHLÈTE, vous acceptez nos Conditions et Politique de Confidentialité.',
       'name_label': 'Nom',
       'age_yrs': '{age} ans',
       'height_cm': '{height} cm',
       'weight_kg': '{weight} kg',
       'profile_subtitle_hint': 'Nom, âge, poids, taille',
       'goals_subtitle_hint': 'Muscle · Perte de gras · Endurance',
-      'progress_auto_save': 'Vos progrès sont sauvegardés automatiquement sur votre compte.',
+      'progress_auto_save':
+          'Vos progrès sont sauvegardés automatiquement sur votre compte.',
       'signin_failed': 'Échec connexion : {error}',
       'apple_signin_failed': 'Échec connexion Apple : {error}',
       'athlete_pro_active': 'ATHLÈTE Pro · Actif',
       'unlock_program_title': 'Débloquer ce programme',
-      'unlock_program_subtext': 'Abonnez-vous pour accéder à tous les jours d\'entraînement, exercices et programmes d\'athlètes',
+      'unlock_program_subtext':
+          'Abonnez-vous pour accéder à tous les jours d\'entraînement, exercices et programmes d\'athlètes',
       'subscribe_now': 'S\'abonner maintenant',
       'already_subscribed': 'Déjà abonné ?',
       'month_price': '\$9.99 / Mois',
@@ -3643,7 +3900,8 @@ class L10n {
       'restore_purchase': 'Restaurer l\'achat',
       'pro_badge': 'PRO',
       'pro_title': 'ATHLÈTE PRO',
-      'pro_subtitle': 'Débloquez l\'expérience d\'entraînement ultime et transformez votre physique avec les meilleurs au monde.',
+      'pro_subtitle':
+          'Débloquez l\'expérience d\'entraînement ultime et transformez votre physique avec les meilleurs au monde.',
       'pro_feature_1': 'Accès aux 20+ programmes d\'athlètes',
       'pro_feature_2': 'Journaux et historique d\'entraînement complets',
       'pro_feature_3': 'Instructions d\'exercices détaillées et GIFs',
@@ -3664,14 +3922,18 @@ class L10n {
       'no_account': 'Não tem uma conta? ',
       'sign_up_free': 'Cadastre-se grátis',
       'secure_access': 'ACESSO SEGURO',
-      'encryption_info': 'Usamos criptografia padrão da indústria para proteger seus dados.',
+      'encryption_info':
+          'Usamos criptografia padrão da indústria para proteger seus dados.',
       'create_account': 'CRIE SUA\nCONTA',
-      'join_thousands': 'Junte-se a milhares de atletas treinando com os melhores programas do mundo.',
-      'sync_info': 'Seu nome, e-mail e foto de perfil serão sincronizados automaticamente da sua conta Google.',
+      'join_thousands':
+          'Junte-se a milhares de atletas treinando com os melhores programas do mundo.',
+      'sync_info':
+          'Seu nome, e-mail e foto de perfil serão sincronizados automaticamente da sua conta Google.',
       'have_account': 'Já tem uma conta? ',
       'sign_in': 'Entrar',
       'get_started_fast': 'COMECE RÁPIDO',
-      'one_tap_login': 'O login com um toque permite que você comece seu primeiro treino em menos de 30 segundos.',
+      'one_tap_login':
+          'O login com um toque permite que você comece seu primeiro treino em menos de 30 segundos.',
       'select_language': 'Selecionar Idioma',
       'my_profile': 'MEU PERFIL',
       'edit_profile': 'Editar Perfil',
@@ -3700,7 +3962,8 @@ class L10n {
       'no_athletes': 'Nenhum atleta encontrado',
       'hero_category': 'LENDAS DO FISICOCULTURISMO',
       'hero_title': 'ESCOLHA SEU\nPROGRAMA',
-      'hero_subtitle': 'Selecione um atleta para explorar seu sistema de treino completo.',
+      'hero_subtitle':
+          'Selecione um atleta para explorar seu sistema de treino completo.',
       'step': 'Passo',
       'of': 'de',
       'continue': 'CONTINUAR →',
@@ -3708,7 +3971,8 @@ class L10n {
       'start_training': 'COMEÇAR TREINO →',
       'skip_setup': 'PULAR POR ENQUANTO',
       'goal_title': 'QUAL SEU\nOBJETIVO PRINCIPAL?',
-      'goal_sub': 'Personalizaremos suas recomendações de programa com base nisso.',
+      'goal_sub':
+          'Personalizaremos suas recomendações de programa com base nisso.',
       'build_muscle': 'Ganhar Músculo',
       'build_muscle_desc': 'Ganho de massa e força',
       'lose_fat': 'Perder Gordura',
@@ -3726,7 +3990,8 @@ class L10n {
       'advanced': 'Avançado',
       'advanced_sub': '3+ anos — atleta sério',
       'metrics_title': 'SUAS MÉTRICAS\nCORPORAIS',
-      'metrics_sub': 'Usado para adaptar seu plano de nutrição e acompanhar sua evolução.',
+      'metrics_sub':
+          'Usado para adaptar seu plano de nutrição e acompanhar sua evolução.',
       'weight': 'Peso',
       'height': 'Altura',
       'age': 'Idade',
@@ -3735,7 +4000,8 @@ class L10n {
       'male': 'Masculino',
       'female': 'Feminino',
       'days_title': 'QUANTOS DIAS\nPOR SEMANA?',
-      'days_sub': 'Consistência vence intensidade. Escolha o que você pode cumprir.',
+      'days_sub':
+          'Consistência vence intensidade. Escolha o que você pode cumprir.',
       'days_3': '3 Dias',
       'days_3_desc': 'Foco em corpo inteiro',
       'days_4': '4 Dias',
@@ -3745,12 +4011,14 @@ class L10n {
       'days_6': '6 Dias',
       'days_6_desc': 'Compromisso total',
       'welcome_user': 'BEM-VINDO,\n',
-      'success_sub': 'Seu perfil está pronto e suas recomendações personalizadas estão prontas.',
+      'success_sub':
+          'Seu perfil está pronto e suas recomendações personalizadas estão prontas.',
       'quiz_title': 'ENCONTRE SEU PAR',
       'quiz_continue': 'CONTINUAR →',
       'quiz_match': 'VER MEU PAR →',
       'quiz_result_label': 'SEU PAR PERFEITO',
-      'quiz_result_desc': 'Seu foco em desempenho e músculo combina perfeitamente com a metodologia de {name}.',
+      'quiz_result_desc':
+          'Seu foco em desempenho e músculo combina perfeitamente com a metodologia de {name}.',
       'view_program': 'VER PROGRAMA COMPLETO →',
       'retake_quiz': 'Refazer o Quiz',
       'sessions_completed': 'Sessões Concluídas',
@@ -3788,7 +4056,8 @@ class L10n {
       'fitness_profile': 'Perfil Fitness',
       'subscription': 'Assinatura',
       'privacy_settings': 'CONFIGURAÇÕES DE PRIVACIDADE',
-      'privacy_desc': 'Seu perfil é privado. Apenas você pode ver seu progresso.',
+      'privacy_desc':
+          'Seu perfil é privado. Apenas você pode ver seu progresso.',
       'close': 'FECHAR',
       'back': 'Voltar',
       'exercises': 'Exercícios',
@@ -3847,7 +4116,8 @@ class L10n {
       'rank_advanced': 'Atleta Avançado',
       'matchmaker_title': 'MATCHMAKER',
       'quiz_gender_q': 'Eu sou...',
-      'quiz_gender_sub': 'Selecione seu caminho para as melhores recomendações.',
+      'quiz_gender_sub':
+          'Selecione seu caminho para as melhores recomendações.',
       'quiz_female_goal_q': 'Qual seu principal objetivo fitness?',
       'quiz_female_goal_sub': 'Esculpir e tonificar seu corpo.',
       'quiz_female_goal_lean': 'Atlética e Magra',
@@ -3872,7 +4142,8 @@ class L10n {
       'quiz_res_athletic': 'Atlético e Tonificado',
       'quiz_res_power': 'Potência e Desempenho',
       'quiz_res_sculpt': 'Sculpt & HIIT',
-      'quiz_analysis_result': 'Nossa análise mostra que você se alinha perfeitamente com o estilo de {alias}. Este programa foca em {style} e é equilibrado para intensidade {intensity}.',
+      'quiz_analysis_result':
+          'Nossa análise mostra que você se alinha perfeitamente com o estilo de {alias}. Este programa foca em {style} e é equilibrado para intensidade {intensity}.',
       'quiz_goal_q': 'Qual seu objetivo nº 1?',
       'quiz_goal_sub': 'Defina seu objetivo final na academia.',
       'quiz_goal_mass': 'Construir massa máxima',
@@ -4006,15 +4277,23 @@ class L10n {
       'intensity_HIGH': 'Alta',
       'intensity_MAX': 'Máxima',
       'intensity_MEDIUM': 'Média',
-      'quote_arnold': 'A mente é o limite. Contanto que a mente consiga visualizar o fato de que você pode fazer algo, você pode fazê-lo.',
-      'quote_ronnie': 'Todo mundo quer ser um fisiculturista, mas ninguém quer levantar pesos pesados.',
-      'quote_cbum': 'Você tem que estar disposto a fazer o que os outros não farão para conseguir o que os outros não terão.',
-      'quote_jaycutler': 'Eu não treino para ser mediano. Eu treino para ser o melhor.',
+      'quote_arnold':
+          'A mente é o limite. Contanto que a mente consiga visualizar o fato de que você pode fazer algo, você pode fazê-lo.',
+      'quote_ronnie':
+          'Todo mundo quer ser um fisiculturista, mas ninguém quer levantar pesos pesados.',
+      'quote_cbum':
+          'Você tem que estar disposto a fazer o que os outros não farão para conseguir o que os outros não terão.',
+      'quote_jaycutler':
+          'Eu não treino para ser mediano. Eu treino para ser o melhor.',
       'quote_philheath': 'Não estou aqui para ser o segundo melhor.',
-      'quote_athletic_lean': 'Consistência é a ponte entre objetivos e realizações.',
-      'quote_bikini_competition': 'Treine como uma atleta, coma como uma nutricionista, durma como um bebê, vença como uma campeã.',
-      'quote_powerlifter_female': 'A força não vem do que você pode fazer. Ela vem de superar as coisas que você pensou que não conseguiria.',
-      'quote_sculpt_and_cardio': 'Fitness não é sobre ser melhor que outra pessoa. É sobre ser melhor do que você era ontem.',
+      'quote_athletic_lean':
+          'Consistência é a ponte entre objetivos e realizações.',
+      'quote_bikini_competition':
+          'Treine como uma atleta, coma como uma nutricionista, durma como um bebê, vença como uma campeã.',
+      'quote_powerlifter_female':
+          'A força não vem do que você pode fazer. Ela vem de superar as coisas que você pensou que não conseguiria.',
+      'quote_sculpt_and_cardio':
+          'Fitness não é sobre ser melhor que outra pessoa. É sobre ser melhor do que você era ontem.',
       'alias_The Austrian Oak': 'O Carvalho Austríaco',
       'alias_The King': 'O Rei',
       'alias_CBum': 'CBum',
@@ -4140,8 +4419,10 @@ class L10n {
       'exercise_Reverse Pec Deck Fly Machine': 'Crucifixo Inverso na Máquina',
       'exercise_Cable Hammer Curl': 'Rosca Martelo no Cabo',
       'exercise_Behind Neck Press': 'Desenvolvimento por Trás',
-      'exercise_Bentover Dumbbell Lateral Raise': 'Crucifixo Inverso com Halteres',
-      'exercise_Seated Dumbbell Tricep Extension': 'Extensão de Tríceps Sentado com Halter',
+      'exercise_Bentover Dumbbell Lateral Raise':
+          'Crucifixo Inverso com Halteres',
+      'exercise_Seated Dumbbell Tricep Extension':
+          'Extensão de Tríceps Sentado com Halter',
       'exercise_Bench Dips': 'Mergulho no Banco',
       'exercise_Donkey Kick': 'Coice (Glúteo)',
       'exercise_Back Squat': 'Agachamento Livre',
@@ -4200,9 +4481,12 @@ class L10n {
       'exercise_Conventional Deadlift': 'Terra Convencional',
       'exercise_Sumo Deadlift': 'Terra Sumô',
       'exercise_Dumbbell Sumo Deadlift': 'Terra Sumô com Halteres',
-      'exercise_Dumbbell Bulgarian Single Squat': 'Agachamento Búlgaro com Halteres',
-      'exercise_Dumbbell Bulgarian single squat': 'Agachamento Búlgaro com Halteres',
-      'exercise_Dumbbell Bulgarian Split Squat': 'Agachamento Búlgaro com Halteres',
+      'exercise_Dumbbell Bulgarian Single Squat':
+          'Agachamento Búlgaro com Halteres',
+      'exercise_Dumbbell Bulgarian single squat':
+          'Agachamento Búlgaro com Halteres',
+      'exercise_Dumbbell Bulgarian Split Squat':
+          'Agachamento Búlgaro com Halteres',
       'exercise_Barbell Bulgarian Split Squat': 'Agachamento Búlgaro com Barra',
       'exercise_Kettlebell Sumo Deadlift': 'Terra Sumô com Kettlebell',
       'exercise_Good-morning': 'Bom Dia',
@@ -4221,7 +4505,8 @@ class L10n {
       'exercise_Concentration Curl': 'Rosca Concentrada',
       'exercise_Reverse Curl': 'Rosca Inversa',
       'exercise_Tricep Extension': 'Extensão de Tríceps',
-      'exercise_Cable Overhead Ext': 'Extensão de Tríceps sobre a Cabeça no Cabo',
+      'exercise_Cable Overhead Ext':
+          'Extensão de Tríceps sobre a Cabeça no Cabo',
       'exercise_V-up': 'Abdominal V-up',
       'exercise_Leg Raise': 'Elevação de Pernas',
       'exercise_Heel Touch': 'Toque no Calcanhar',
@@ -4235,7 +4520,8 @@ class L10n {
       'exercise_Bench Press': 'Supino',
       'exercise_Incline Dumbbell Press': 'Supino Inclinado com Halteres',
       'exercise_Flat Dumbbell Flye': 'Crucifixo Reto com Halteres',
-      'exercise_Standing DB Lateral Raise': 'Elevação Lateral em Pé com Halteres',
+      'exercise_Standing DB Lateral Raise':
+          'Elevação Lateral em Pé com Halteres',
       'exercise_Bent-over Lateral Raise': 'Crucifixo Inverso Curvado',
       'exercise_Behind-the-Neck Press': 'Desenvolvimento por Trás',
       'exercise_Alternating Front Raise': 'Elevação Frontal Alternada',
@@ -4251,7 +4537,8 @@ class L10n {
       'exercise_Roman Chair Sit-ups': 'Abdominal na Cadeira Romana',
       'exercise_One Arm Cable Seated Row': 'Remada Sentada Unilateral no Cabo',
       'exercise_Plate Shoulder Press': 'Desenvolvimento com Anilhas',
-      'exercise_Smith Machine Overhead Press': 'Desenvolvimento na Smith Machine',
+      'exercise_Smith Machine Overhead Press':
+          'Desenvolvimento na Smith Machine',
       'exercise_Incline Dumbell Bench Press': 'Supino Inclinado com Halteres',
       'exercise_Seated Rows': 'Remadas Sentadas',
       's walk': 'caminhada do fazendeiro',
@@ -4270,19 +4557,22 @@ class L10n {
       'exercise_Underhand Lat Pulldown': 'Puxada com Pegada Supinada',
       'exercise_T-bar Row Machine': 'Remada T na Máquina',
       'exercise_Seated Cable Row': 'Remada Sentada no Cabo',
-      'exercise_Cable Straight Arm Pulldown': 'Pulldown com Braços Estendidos no Cabo',
+      'exercise_Cable Straight Arm Pulldown':
+          'Pulldown com Braços Estendidos no Cabo',
       'exercise_Underhand Barbell Row': 'Remada Curvada Supinada',
       'exercise_Lat Pull Down': 'Puxada Alta',
       'exercise_Weighted Pull Up': 'Barra Fixa com Peso',
       'exercise_Weighted Pull-up': 'Barra Fixa com Peso',
       'exercise_One Arm Dumbbell Row': 'Remada Unilateral com Halter',
-      'exercise_Smith Machine Overhead Bench Press': 'Supino Inclinado na Smith Machine',
+      'exercise_Smith Machine Overhead Bench Press':
+          'Supino Inclinado na Smith Machine',
       'exercise_Zercher Squat': 'Agachamento Zercher',
       'exercise_Smith Machine Squat': 'Agachamento na Smith Machine',
       'exercise_V Squat': 'V-Squat',
       'exercise_Trap-bar Deadlift': 'Levantamento Terra com Barra Hexagonal',
       'exercise_Glute-Ham Raise': 'Glute-Ham Raise',
-      'exercise_Seated Single Leg Leg Curl': 'Flexão de Perna Unilateral Sentado',
+      'exercise_Seated Single Leg Leg Curl':
+          'Flexão de Perna Unilateral Sentado',
       'exercise_Inner Thigh Machine': 'Cadeira Adutora',
       'exercise_Glute Kickback Machine': 'Máquina de Glúteo',
       'exercise_Hip Abduction Machine': 'Cadeira Abdutora',
@@ -4298,7 +4588,8 @@ class L10n {
       'exercise_45 Degree Side Bend': 'Flexão Lateral 45 Graus',
       'exercise_Side Plank': 'Prancha Lateral',
       'exercise_Smith Machine Bench Press': 'Supino na Smith Machine',
-      'exercise_Smith Machine Incline Bench Press': 'Supino Inclinado na Smith Machine',
+      'exercise_Smith Machine Incline Bench Press':
+          'Supino Inclinado na Smith Machine',
       'exercise_Weighted Dips': 'Paralelas com Peso',
       'exercise_Weighted Push Up': 'Flexão com Peso',
       'exercise_Hindu Push Up': 'Flexão Hindu',
@@ -4322,8 +4613,10 @@ class L10n {
       'exercise_Cable Pull Through': 'Cable Pull Through',
       'exercise_Cable Tricep Extension': 'Extensão de Tríceps no Cabo',
       'exercise_Lying Tricep Extension': 'Extensão de Tríceps Deitado',
-      'exercise_Cable Overhead Tricep Extension': 'Extensão de Tríceps no Cabo sobre a Cabeça',
-      'exercise_Cable Lying Tricep Extension': 'Extensão de Tríceps Deitado no Cabo',
+      'exercise_Cable Overhead Tricep Extension':
+          'Extensão de Tríceps no Cabo sobre a Cabeça',
+      'exercise_Cable Lying Tricep Extension':
+          'Extensão de Tríceps Deitado no Cabo',
       'exercise_Tricep Extension Machine': 'Máquina de Extensão de Tríceps',
       'exercise_Hollow Rock': 'Hollow Rock',
       'exercise_Hollow Position': 'Posição Hollow',
@@ -4337,12 +4630,14 @@ class L10n {
       'exercise_Pilates Jackknife': 'Jackknife Pilates',
       'exercise_Reverse Crunch': 'Abdominal Reverso',
       'exercise_Incline Dumbbell Curl': 'Rosca Inclinada com Halteres',
-      'exercise_Seated Dumbbell Rear Lateral Raise': 'Crucifixo Inverso Sentado com Halteres',
+      'exercise_Seated Dumbbell Rear Lateral Raise':
+          'Crucifixo Inverso Sentado com Halteres',
       'exercise_EZ Bar Preacher Curl': 'Rosca Scott com Barra EZ',
       'exercise_Bodyweight Calf Raise': 'Panturrilha com Peso do Corpo',
       'exercise_Barbell Standing Calf Raise': 'Panturrilha em Pé com Barra',
       'exercise_Standing Cable Fly': 'Crucifixo no Cabo em Pé',
-      'exercise_Dumbbell Romanian Deadlift': 'Levantamento Terra Romeno com Halteres',
+      'exercise_Dumbbell Romanian Deadlift':
+          'Levantamento Terra Romeno com Halteres',
       'exercise_Dumbbell Kickback': 'Tríceps Coice com Halter',
       'exercise_Dumbbell Preacher Curl': 'Rosca Scott com Halter',
       'exercise_RKC Plank': 'Prancha RKC',
@@ -4382,17 +4677,20 @@ class L10n {
       'exercise_Barbell Jump Squat': 'Agachamento com Salto com Barra',
       'exercise_Barbell Lunge': 'Avanço com Barra',
       'exercise_Barbell Split Squat': 'Agachamento Búlgaro com Barra',
-      'exercise_Bodyweight Overhead Squat': 'Agachamento Overhead com Peso do Corpo',
+      'exercise_Bodyweight Overhead Squat':
+          'Agachamento Overhead com Peso do Corpo',
       'exercise_Dumbbell Sumo Squat': 'Agachamento Sumô com Halter',
       'exercise_Single Leg Leg Extension': 'Extensão de Perna Unilateral',
-      'exercise_Single Leg Horizontal Leg Press': 'Leg Press Horizontal Unilateral',
+      'exercise_Single Leg Horizontal Leg Press':
+          'Leg Press Horizontal Unilateral',
       'exercise_Pistol Squat': 'Pistol Squat',
       'exercise_Sumo Air Squat': 'Agachamento Sumô Livre',
       'exercise_Lunge Twist': 'Avanço com Rotação',
       'exercise_Kettlebell Lunge Twist': 'Avanço com Rotação e Kettlebell',
       'exercise_Front Rack Lunge': 'Avanço no Rack Frontal',
       'training_tip': 'DICA DE TREINO',
-      'tip_details': '"3x8-12" significa 3 séries, cada uma entre 8 (mín) e 12 (máx) repetições.',
+      'tip_details':
+          '"3x8-12" significa 3 séries, cada uma entre 8 (mín) e 12 (máx) repetições.',
       'got_it': 'ENTENDI',
       'keep_going': 'CONTINUE\nASSIM',
       'level_progress': 'Nível {current} → Nível {next}',
@@ -4412,19 +4710,23 @@ class L10n {
       'logout_yes': 'SIM, SAIR',
       'send': 'ENVIAR',
       'tell_us_thoughts': 'Conte-nos o que você acha...',
-      'terms_agree': 'Ao usar o ATHLÈTE, você concorda com nossos Termos de Serviço e Política de Privacidade.',
+      'terms_agree':
+          'Ao usar o ATHLÈTE, você concorda com nossos Termos de Serviço e Política de Privacidade.',
       'name_label': 'Nome',
       'age_yrs': '{age} anos',
       'height_cm': '{height} cm',
       'weight_kg': '{weight} kg',
       'profile_subtitle_hint': 'Nome, idade, peso, altura',
-      'goals_subtitle_hint': 'Ganho de músculo · Perda de gordura · Resistência',
-      'progress_auto_save': 'Seu progresso será salvo automaticamente na sua conta.',
+      'goals_subtitle_hint':
+          'Ganho de músculo · Perda de gordura · Resistência',
+      'progress_auto_save':
+          'Seu progresso será salvo automaticamente na sua conta.',
       'signin_failed': 'Falha ao entrar: {error}',
       'apple_signin_failed': 'Falha ao entrar com Apple: {error}',
       'athlete_pro_active': 'ATHLÈTE Pro · Ativo',
       'unlock_program_title': 'Desbloquear este programa',
-      'unlock_program_subtext': 'Assine para acessar todos os dias de treino, exercícios e programas de atletas',
+      'unlock_program_subtext':
+          'Assine para acessar todos os dias de treino, exercícios e programas de atletas',
       'subscribe_now': 'Assinar agora',
       'already_subscribed': 'Já é assinante?',
       'month_price': '\$9.99 / Mês',
@@ -4432,7 +4734,8 @@ class L10n {
       'restore_purchase': 'Restaurar compra',
       'pro_badge': 'PRO',
       'pro_title': 'ATHLÈTE PRO',
-      'pro_subtitle': 'Desbloqueie a experiência definitiva de treino e transforme seu físico com os melhores do mundo.',
+      'pro_subtitle':
+          'Desbloqueie a experiência definitiva de treino e transforme seu físico com os melhores do mundo.',
       'pro_feature_1': 'Acesso a todos os 20+ programas de atletas',
       'pro_feature_2': 'Logs e histórico de treino completos',
       'pro_feature_3': 'Instruções detalhadas e GIFs de exercícios',
@@ -4453,14 +4756,18 @@ class L10n {
       'no_account': 'Hast du noch kein Konto? ',
       'sign_up_free': 'Kostenlos registrieren',
       'secure_access': 'SICHERER ZUGRIFF',
-      'encryption_info': 'Wir verwenden Industriestandard-Verschlüsselung zum Schutz deiner Daten.',
+      'encryption_info':
+          'Wir verwenden Industriestandard-Verschlüsselung zum Schutz deiner Daten.',
       'create_account': 'ERSTELLE DEIN\nKONTO',
-      'join_thousands': 'Schließe dich Tausenden von Athleten an, die mit den besten Programmen der Welt trainieren.',
-      'sync_info': 'Dein Name, deine E-Mail-Adresse und dein Profilfoto werden automatisch von deinem Google-Konto synchronisiert.',
+      'join_thousands':
+          'Schließe dich Tausenden von Athleten an, die mit den besten Programmen der Welt trainieren.',
+      'sync_info':
+          'Dein Name, deine E-Mail-Adresse und dein Profilfoto werden automatisch von deinem Google-Konto synchronisiert.',
       'have_account': 'Hast du bereits ein Konto? ',
       'sign_in': 'Anmelden',
       'get_started_fast': 'SCHNELLER START',
-      'one_tap_login': 'Mit dem One-Tap-Login kannst du dein erstes Training in weniger als 30 Sekunden starten.',
+      'one_tap_login':
+          'Mit dem One-Tap-Login kannst du dein erstes Training in weniger als 30 Sekunden starten.',
       'select_language': 'Sprache wählen',
       'my_profile': 'MEIN PROFIL',
       'edit_profile': 'Profil bearbeiten',
@@ -4489,7 +4796,8 @@ class L10n {
       'no_athletes': 'Keine Athleten gefunden',
       'hero_category': 'BODYBUILDING-LEGENDEN',
       'hero_title': 'WÄHLE DEIN\nPROGRAMM',
-      'hero_subtitle': 'Wähle einen Athleten, um sein gesamtes Trainingssystem zu erkunden.',
+      'hero_subtitle':
+          'Wähle einen Athleten, um sein gesamtes Trainingssystem zu erkunden.',
       'step': 'Schritt',
       'of': 'von',
       'continue': 'WEITER →',
@@ -4497,7 +4805,8 @@ class L10n {
       'start_training': 'TRAINING STARTEN →',
       'skip_setup': 'JETZT ÜBERSPRINGEN',
       'goal_title': 'WAS IST DEIN\nHAPTZIEL?',
-      'goal_sub': 'Wir personalisieren deine Programmempfehlungen darauf basierend.',
+      'goal_sub':
+          'Wir personalisieren deine Programmempfehlungen darauf basierend.',
       'build_muscle': 'Muskelaufbau',
       'build_muscle_desc': 'Masse- & Kraftgewinn',
       'lose_fat': 'Fettabbau',
@@ -4507,7 +4816,8 @@ class L10n {
       'performance': 'Leistung',
       'performance_desc': 'Schnelligkeit & Athletik',
       'level_title': 'DEINE TRAININGS-\nERFAHRUNG',
-      'level_sub': 'Dies legt die Intensität und Komplexität deines Programms fest.',
+      'level_sub':
+          'Dies legt die Intensität und Komplexität deines Programms fest.',
       'beginner': 'Anfänger',
       'beginner_sub': 'Unter 1 Jahr Training',
       'intermediate': 'Fortgeschritten',
@@ -4515,7 +4825,8 @@ class L10n {
       'advanced': 'Profi',
       'advanced_sub': '3+ Jahre — ernsthafter Athlet',
       'metrics_title': 'DEINE KÖRPER-\nWERTE',
-      'metrics_sub': 'Wird verwendet, um deinen Ernährungsplan anzupassen und deine Transformation zu verfolgen.',
+      'metrics_sub':
+          'Wird verwendet, um deinen Ernährungsplan anzupassen und deine Transformation zu verfolgen.',
       'weight': 'Gewicht',
       'height': 'Größe',
       'age': 'Alter',
@@ -4524,7 +4835,8 @@ class L10n {
       'male': 'Männlich',
       'female': 'Weiblich',
       'days_title': 'WIE VIELE TAGE\nPRO WOCHE?',
-      'days_sub': 'Konsistenz schlägt Intensität. Wähle, was du realistisch einhalten kannst.',
+      'days_sub':
+          'Konsistenz schlägt Intensität. Wähle, was du realistisch einhalten kannst.',
       'days_3': '3 Tage',
       'days_3_desc': 'Fokus auf Ganzkörper',
       'days_4': '4 Tage',
@@ -4534,12 +4846,14 @@ class L10n {
       'days_6': '6 Tage',
       'days_6_desc': 'Voller Einsatz',
       'welcome_user': 'WILLKOMMEN,\n',
-      'success_sub': 'Dein Profil ist eingerichtet und deine personalisierten Programmempfehlungen sind bereit.',
+      'success_sub':
+          'Dein Profil ist eingerichtet und deine personalisierten Programmempfehlungen sind bereit.',
       'quiz_title': 'FINDE DEINEN MATCH',
       'quiz_continue': 'WEITER →',
       'quiz_match': 'MEINEN MATCH SEHEN →',
       'quiz_result_label': 'DEIN PERFEKTER MATCH',
-      'quiz_result_desc': 'Dein Fokus auf Leistung und Muskeln passt perfekt zur Methodik von {name}.',
+      'quiz_result_desc':
+          'Dein Fokus auf Leistung und Muskeln passt perfekt zur Methodik von {name}.',
       'view_program': 'VOLLSTÄNDIGES PROGRAMM →',
       'retake_quiz': 'Quiz wiederholen',
       'sessions_completed': 'Abgeschlossene Sitzungen',
@@ -4577,7 +4891,8 @@ class L10n {
       'fitness_profile': 'Fitness-Profil',
       'subscription': 'Abonnement',
       'privacy_settings': 'DATENSCHUTZ',
-      'privacy_desc': 'Dein Profil ist privat. Nur du kannst deinen Fortschritt sehen.',
+      'privacy_desc':
+          'Dein Profil ist privat. Nur du kannst deinen Fortschritt sehen.',
       'close': 'SCHLIESSEN',
       'back': 'Zurück',
       'exercises': 'Übungen',
@@ -4661,7 +4976,8 @@ class L10n {
       'quiz_res_athletic': 'Athletisch & Gestrafft',
       'quiz_res_power': 'Power & Leistung',
       'quiz_res_sculpt': 'Sculpt & HIIT',
-      'quiz_analysis_result': 'Unsere Analyse zeigt, dass du perfekt zum Trainingsstil von {alias} passt. Dieses Programm konzentriert sich auf {style} und ist auf {intensity} Intensitätsstufen ausgeglichen.',
+      'quiz_analysis_result':
+          'Unsere Analyse zeigt, dass du perfekt zum Trainingsstil von {alias} passt. Dieses Programm konzentriert sich auf {style} und ist auf {intensity} Intensitätsstufen ausgeglichen.',
       'quiz_goal_q': 'Was ist dein wichtigstes Trainingsziel?',
       'quiz_goal_sub': 'Definiere dein ultimatives Ziel im Gym.',
       'quiz_goal_mass': 'Maximale Körpermasse aufbauen',
@@ -4787,7 +5103,8 @@ class L10n {
       'quiz_quote_jeff': 'Ästhetik ist ein Lebensstil.',
       'Kettlebell Sumo Deadlift': 'Kettlebell Sumo Kreuzheben',
       'Bulgarian single squat': 'Bulgarische einbeinige Kniebeuge',
-      'Dumbbell Bulgarian single squat': 'Bulgarische Kniebeuge mit Kurzhanteln',
+      'Dumbbell Bulgarian single squat':
+          'Bulgarische Kniebeuge mit Kurzhanteln',
       'style_VOL': 'Volumen',
       'style_PWR': 'Power',
       'style_CLS': 'Klassisch',
@@ -4795,15 +5112,23 @@ class L10n {
       'intensity_HIGH': 'Hoch',
       'intensity_MAX': 'Maximum',
       'intensity_MEDIUM': 'Mittel',
-      'quote_arnold': 'Der Geist setzt die Grenzen. Solange der Geist sich vorstellen kann, dass man etwas tun kann, kann man es auch tun.',
-      'quote_ronnie': 'Jeder will ein Bodybuilder sein, aber niemand will schwere Gewichte heben.',
-      'quote_cbum': 'Du musst bereit sein zu tun, was andere nicht tun, um zu bekommen, was andere nicht haben.',
-      'quote_jaycutler': 'Ich trainiere nicht, um durchschnittlich zu sein. Ich trainiere, um der Beste zu sein.',
+      'quote_arnold':
+          'Der Geist setzt die Grenzen. Solange der Geist sich vorstellen kann, dass man etwas tun kann, kann man es auch tun.',
+      'quote_ronnie':
+          'Jeder will ein Bodybuilder sein, aber niemand will schwere Gewichte heben.',
+      'quote_cbum':
+          'Du musst bereit sein zu tun, was andere nicht tun, um zu bekommen, was andere nicht haben.',
+      'quote_jaycutler':
+          'Ich trainiere nicht, um durchschnittlich zu sein. Ich trainiere, um der Beste zu sein.',
       'quote_philheath': 'Ich bin nicht hier, um der Zweitbeste zu sein.',
-      'quote_athletic_lean': 'Konsistenz ist die Brücke zwischen Zielen und Erfolg.',
-      'quote_bikini_competition': 'Trainiere wie eine Athletin, iss wie eine Ernährungsberaterin, schlaf wie ein Baby, gewinne wie ein Champion.',
-      'quote_powerlifter_female': 'Kraft kommt nicht von dem, was du tun kannst. Sie kommt davon, die Dinge zu überwinden, von denen du dachtest, du könntest sie nicht.',
-      'quote_sculpt_and_cardio': 'Fitness bedeutet nicht, besser zu sein als jemand anderes. Es bedeutet, besser zu sein als man gestern war.',
+      'quote_athletic_lean':
+          'Konsistenz ist die Brücke zwischen Zielen und Erfolg.',
+      'quote_bikini_competition':
+          'Trainiere wie eine Athletin, iss wie eine Ernährungsberaterin, schlaf wie ein Baby, gewinne wie ein Champion.',
+      'quote_powerlifter_female':
+          'Kraft kommt nicht von dem, was du tun kannst. Sie kommt davon, die Dinge zu überwinden, von denen du dachtest, du könntest sie nicht.',
+      'quote_sculpt_and_cardio':
+          'Fitness bedeutet nicht, besser zu sein als jemand anderes. Es bedeutet, besser zu sein als man gestern war.',
       'alias_The Austrian Oak': 'Die österreichische Eiche',
       'alias_The King': 'Der König',
       'alias_CBum': 'CBum',
@@ -4919,18 +5244,22 @@ class L10n {
       'privacy_settings_title': 'DATENSCHUTZ-EINSTELLUNGEN',
       'exercise_Cable Row': 'Kabelrudern',
       'exercise_Smith Machine Shrug': 'Nackenziehen an der Smith-Maschine',
-      'exercise_Barbell Incline Bench Press': 'Schrägbankdrücken mit Langhantel',
+      'exercise_Barbell Incline Bench Press':
+          'Schrägbankdrücken mit Langhantel',
       'exercise_Paused Back Squat': 'Kniebeugen mit Pause',
       'exercise_Barbell Hip Thrust': 'Hip Thrust mit Langhantel',
-      'exercise_Dumbbell Stiff Leg Deadlift': 'Gestrecktes Kreuzheben mit Kurzhanteln',
+      'exercise_Dumbbell Stiff Leg Deadlift':
+          'Gestrecktes Kreuzheben mit Kurzhanteln',
       'exercise_Arm Curl Machine': 'Bizeps-Maschine',
       'exercise_Dumbbell Leg Curl': 'Beinbeuger mit Kurzhantel',
       'exercise_Shoulder Press Machine': 'Schulterdrück-Maschine',
       'exercise_Reverse Pec Deck Fly Machine': 'Butterfly Reverse Maschine',
       'exercise_Cable Hammer Curl': 'Hammer-Curls am Kabel',
       'exercise_Behind Neck Press': 'Nackendrücken',
-      'exercise_Bentover Dumbbell Lateral Raise': 'Vorgebeugtes Seitheben mit Kurzhanteln',
-      'exercise_Seated Dumbbell Tricep Extension': 'Trizeps-Drücken sitzend mit Kurzhantel',
+      'exercise_Bentover Dumbbell Lateral Raise':
+          'Vorgebeugtes Seitheben mit Kurzhanteln',
+      'exercise_Seated Dumbbell Tricep Extension':
+          'Trizeps-Drücken sitzend mit Kurzhantel',
       'exercise_Bench Dips': 'Bank-Dips',
       'exercise_Donkey Kick': 'Donkey Kicks',
       'exercise_Back Squat': 'Kniebeuge hinten',
@@ -4948,7 +5277,8 @@ class L10n {
       'exercise_Dumbbell Lateral Raise': 'Seitheben mit Kurzhanteln',
       'exercise_Barbell Bench Press': 'Bankdrücken mit Langhantel',
       'exercise_Dumbbell Bench Press': 'Bankdrücken mit Kurzhanteln',
-      'exercise_Incline Dumbbell Bench Press': 'Schrägbankdrücken mit Kurzhanteln',
+      'exercise_Incline Dumbbell Bench Press':
+          'Schrägbankdrücken mit Kurzhanteln',
       'exercise_Dips': 'Dips',
       'exercise_Pull Up': 'Klimmzüge',
       'exercise_Lat Pulldown': 'Latzug',
@@ -4989,10 +5319,14 @@ class L10n {
       'exercise_Conventional Deadlift': 'Konventionelles Kreuzheben',
       'exercise_Sumo Deadlift': 'Sumo-Kreuzheben',
       'exercise_Dumbbell Sumo Deadlift': 'Sumo-Kreuzheben mit Kurzhanteln',
-      'exercise_Dumbbell Bulgarian Single Squat': 'Bulgarische Kniebeuge mit Kurzhanteln',
-      'exercise_Dumbbell Bulgarian single squat': 'Bulgarische Kniebeuge mit Kurzhanteln',
-      'exercise_Dumbbell Bulgarian Split Squat': 'Bulgarische Kniebeuge mit Kurzhanteln',
-      'exercise_Barbell Bulgarian Split Squat': 'Bulgarische Kniebeuge mit Langhantel',
+      'exercise_Dumbbell Bulgarian Single Squat':
+          'Bulgarische Kniebeuge mit Kurzhanteln',
+      'exercise_Dumbbell Bulgarian single squat':
+          'Bulgarische Kniebeuge mit Kurzhanteln',
+      'exercise_Dumbbell Bulgarian Split Squat':
+          'Bulgarische Kniebeuge mit Kurzhanteln',
+      'exercise_Barbell Bulgarian Split Squat':
+          'Bulgarische Kniebeuge mit Langhantel',
       'exercise_Kettlebell Sumo Deadlift': 'Sumo-Kreuzheben mit Kettlebell',
       'exercise_Good-morning': 'Good Mornings',
       'exercise_Bulgarian Split Squat': 'Bulgarische Kniebeuge',
@@ -5006,7 +5340,8 @@ class L10n {
       'exercise_Barbell Front Raise': 'Frontheben mit Langhantel',
       'exercise_Dumbbell Front Raise': 'Frontheben mit Kurzhanteln',
       'exercise_Reverse Pec Deck': 'Butterfly Reverse',
-      'exercise_Straight Arm Pulldown': 'Überzüge am Kabel mit gestreckten Armen',
+      'exercise_Straight Arm Pulldown':
+          'Überzüge am Kabel mit gestreckten Armen',
       'exercise_Concentration Curl': 'Konzentrations-Curls',
       'exercise_Reverse Curl': 'Umgekehrte Curls',
       'exercise_Tricep Extension': 'Trizeps-Drücken',
@@ -5040,8 +5375,10 @@ class L10n {
       'exercise_Roman Chair Sit-ups': 'Sit-ups auf der Römischen Liege',
       'exercise_One Arm Cable Seated Row': 'Einarmiges Kabelrudern sitzend',
       'exercise_Plate Shoulder Press': 'Schulterdrücken mit Hantelscheibe',
-      'exercise_Smith Machine Overhead Press': 'Schulterdrücken an der Smith-Maschine',
-      'exercise_Incline Dumbell Bench Press': 'Schrägbankdrücken mit Kurzhanteln',
+      'exercise_Smith Machine Overhead Press':
+          'Schulterdrücken an der Smith-Maschine',
+      'exercise_Incline Dumbell Bench Press':
+          'Schrägbankdrücken mit Kurzhanteln',
       'exercise_Seated Rows': 'Rudern sitzend',
       's walk': 'farmer\'s walk',
       's Walk': 'Farmer\'s Walk',
@@ -5059,13 +5396,15 @@ class L10n {
       'exercise_Underhand Lat Pulldown': 'Latzug im Untergriff',
       'exercise_T-bar Row Machine': 'T-Bar-Rudermaschine',
       'exercise_Seated Cable Row': 'Kabelrudern sitzend',
-      'exercise_Cable Straight Arm Pulldown': 'Überzüge am Kabel mit gestreckten Armen',
+      'exercise_Cable Straight Arm Pulldown':
+          'Überzüge am Kabel mit gestreckten Armen',
       'exercise_Underhand Barbell Row': 'Langhantelrudern im Untergriff',
       'exercise_Lat Pull Down': 'Latzug',
       'exercise_Weighted Pull Up': 'Klimmzüge mit Zusatzgewicht',
       'exercise_Weighted Pull-up': 'Klimmzüge mit Zusatzgewicht',
       'exercise_One Arm Dumbbell Row': 'Einarmiges Kurzhantelrudern',
-      'exercise_Smith Machine Overhead Bench Press': 'Schrägbankdrücken an der Smith-Maschine',
+      'exercise_Smith Machine Overhead Bench Press':
+          'Schrägbankdrücken an der Smith-Maschine',
       'exercise_Zercher Squat': 'Zercher-Kniebeuge',
       'exercise_Smith Machine Squat': 'Kniebeugen an der Smith-Maschine',
       'exercise_V Squat': 'V-Squat',
@@ -5087,7 +5426,8 @@ class L10n {
       'exercise_45 Degree Side Bend': 'Seitbeugen 45 Grad',
       'exercise_Side Plank': 'Seitenstütz',
       'exercise_Smith Machine Bench Press': 'Bankdrücken an der Smith-Maschine',
-      'exercise_Smith Machine Incline Bench Press': 'Schrägbankdrücken an der Smith-Maschine',
+      'exercise_Smith Machine Incline Bench Press':
+          'Schrägbankdrücken an der Smith-Maschine',
       'exercise_Weighted Dips': 'Dips mit Zusatzgewicht',
       'exercise_Weighted Push Up': 'Liegestütze mit Zusatzgewicht',
       'exercise_Hindu Push Up': 'Hindu-Liegestütze',
@@ -5111,8 +5451,10 @@ class L10n {
       'exercise_Cable Pull Through': 'Cable Pull-Through',
       'exercise_Cable Tricep Extension': 'Trizeps-Drücken am Kabel',
       'exercise_Lying Tricep Extension': 'Trizeps-Drücken liegend',
-      'exercise_Cable Overhead Tricep Extension': 'Trizeps-Drücken am Kabel über Kopf',
-      'exercise_Cable Lying Tricep Extension': 'Trizeps-Drücken liegend am Kabel',
+      'exercise_Cable Overhead Tricep Extension':
+          'Trizeps-Drücken am Kabel über Kopf',
+      'exercise_Cable Lying Tricep Extension':
+          'Trizeps-Drücken liegend am Kabel',
       'exercise_Tricep Extension Machine': 'Trizeps-Maschine',
       'exercise_Hollow Rock': 'Hollow Rock',
       'exercise_Hollow Position': 'Hollow-Position',
@@ -5126,12 +5468,15 @@ class L10n {
       'exercise_Pilates Jackknife': 'Pilates Jackknife',
       'exercise_Reverse Crunch': 'Rückwärts-Crunch',
       'exercise_Incline Dumbbell Curl': 'Schrägbank-Curls mit Kurzhanteln',
-      'exercise_Seated Dumbbell Rear Lateral Raise': 'Seitheben vorgebeugt sitzend',
+      'exercise_Seated Dumbbell Rear Lateral Raise':
+          'Seitheben vorgebeugt sitzend',
       'exercise_EZ Bar Preacher Curl': 'Preacher-Curls mit SZ-Stange',
       'exercise_Bodyweight Calf Raise': 'Wadenheben mit Eigengewicht',
-      'exercise_Barbell Standing Calf Raise': 'Wadenheben stehend mit Langhantel',
+      'exercise_Barbell Standing Calf Raise':
+          'Wadenheben stehend mit Langhantel',
       'exercise_Standing Cable Fly': 'Butterfly am Kabel stehend',
-      'exercise_Dumbbell Romanian Deadlift': 'Rumänisches Kreuzheben mit Kurzhanteln',
+      'exercise_Dumbbell Romanian Deadlift':
+          'Rumänisches Kreuzheben mit Kurzhanteln',
       'exercise_Dumbbell Kickback': 'Trizeps-Kickback mit Kurzhantel',
       'exercise_Dumbbell Preacher Curl': 'Preacher-Curls mit Kurzhantel',
       'exercise_RKC Plank': 'RKC-Planke',
@@ -5165,23 +5510,28 @@ class L10n {
       'exercise_Weighted Step Up': 'Step-up mit Gewicht',
       'exercise_Dumbbell Squat': 'Kniebeuge mit Kurzhanteln',
       'exercise_Horizontal Leg Press': 'Horizontale Beinpresse',
-      'exercise_Smith Machine Split Squat': 'Bulgarische Kniebeuge an der Smith-Maschine',
+      'exercise_Smith Machine Split Squat':
+          'Bulgarische Kniebeuge an der Smith-Maschine',
       'exercise_Smith Machine Deadlift': 'Kreuzheben an der Smith-Maschine',
-      'exercise_Barbell Front Rack Lunge': 'Ausfallschritt mit Front-Rack-Langhantel',
+      'exercise_Barbell Front Rack Lunge':
+          'Ausfallschritt mit Front-Rack-Langhantel',
       'exercise_Barbell Jump Squat': 'Sprungkniebeuge mit Langhantel',
       'exercise_Barbell Lunge': 'Ausfallschritt mit Langhantel',
       'exercise_Barbell Split Squat': 'Bulgarische Kniebeuge mit Langhantel',
       'exercise_Bodyweight Overhead Squat': 'Overhead Squat mit Eigengewicht',
       'exercise_Dumbbell Sumo Squat': 'Sumo-Kniebeuge mit Kurzhantel',
       'exercise_Single Leg Leg Extension': 'Einbeiniger Beinstrecker',
-      'exercise_Single Leg Horizontal Leg Press': 'Einbeinige horizontale Beinpresse',
+      'exercise_Single Leg Horizontal Leg Press':
+          'Einbeinige horizontale Beinpresse',
       'exercise_Pistol Squat': 'Pistol Squat',
       'exercise_Sumo Air Squat': 'Sumo-Kniebeuge mit Eigengewicht',
       'exercise_Lunge Twist': 'Ausfallschritt mit Drehung',
-      'exercise_Kettlebell Lunge Twist': 'Ausfallschritt mit Drehung und Kettlebell',
+      'exercise_Kettlebell Lunge Twist':
+          'Ausfallschritt mit Drehung und Kettlebell',
       'exercise_Front Rack Lunge': 'Ausfallschritt im Front-Rack',
       'training_tip': 'TRAININGSTIPP',
-      'tip_details': '"3x8-12" bedeutet 3 Sätze mit jeweils 8 (Min.) bis 12 (Max.) Wiederholungen.',
+      'tip_details':
+          '"3x8-12" bedeutet 3 Sätze mit jeweils 8 (Min.) bis 12 (Max.) Wiederholungen.',
       'got_it': 'VERSTANDEN',
       'keep_going': 'WEITER\nSO',
       'level_progress': 'Level {current} → Level {next}',
@@ -5201,19 +5551,22 @@ class L10n {
       'logout_yes': 'JA, ABMELDEN',
       'send': 'SENDEN',
       'tell_us_thoughts': 'Teile uns deine Meinung mit...',
-      'terms_agree': 'Durch die Nutzung von ATHLÈTE stimmst du unseren Nutzungsbedingungen und Datenschutzbestimmungen zu.',
+      'terms_agree':
+          'Durch die Nutzung von ATHLÈTE stimmst du unseren Nutzungsbedingungen und Datenschutzbestimmungen zu.',
       'name_label': 'Name',
       'age_yrs': '{age} J.',
       'height_cm': '{height} cm',
       'weight_kg': '{weight} kg',
       'profile_subtitle_hint': 'Name, Alter, Gewicht, Größe',
       'goals_subtitle_hint': 'Muskelaufbau · Fettabbau · Ausdauer',
-      'progress_auto_save': 'Dein Fortschritt wird automatisch in deinem Konto gespeichert.',
+      'progress_auto_save':
+          'Dein Fortschritt wird automatisch in deinem Konto gespeichert.',
       'signin_failed': 'Anmeldung fehlgeschlagen: {error}',
       'apple_signin_failed': 'Apple-Anmeldung fehlgeschlagen: {error}',
       'athlete_pro_active': 'ATHLÈTE Pro · Aktiv',
       'unlock_program_title': 'Dieses Programm freischalten',
-      'unlock_program_subtext': 'Abonnieren Sie, um Zugang zu allen Trainingstagen, Übungen und Athletenprogrammen zu erhalten',
+      'unlock_program_subtext':
+          'Abonnieren Sie, um Zugang zu allen Trainingstagen, Übungen und Athletenprogrammen zu erhalten',
       'subscribe_now': 'Jetzt abonnieren',
       'already_subscribed': 'Bereits abonniert?',
       'month_price': '\$9.99 / Monat',
@@ -5221,7 +5574,8 @@ class L10n {
       'restore_purchase': 'Kauf wiederherstellen',
       'pro_badge': 'PRO',
       'pro_title': 'ATHLÈTE PRO',
-      'pro_subtitle': 'Schalte das ultimative Trainingserlebnis frei und transformiere deinen Körper mit den Besten der Welt.',
+      'pro_subtitle':
+          'Schalte das ultimative Trainingserlebnis frei und transformiere deinen Körper mit den Besten der Welt.',
       'pro_feature_1': 'Zugang zu allen 20+ Athletenprogrammen',
       'pro_feature_2': 'Vollständige Trainingsprotokolle & Verlauf',
       'pro_feature_3': 'Detaillierte Übungsanleitungen & GIFs',
@@ -5238,45 +5592,59 @@ class L10n {
 
   static String s(BuildContext context, String key) {
     String langCode = Localizations.localeOf(context).languageCode;
-    String? value = _localizedValues[langCode]?[key] ?? _localizedValues['en']?[key];
-    
+    String? value =
+        _localizedValues[langCode]?[key] ?? _localizedValues['en']?[key];
+
     if (value != null) return value;
-    
+
     // Fallback logic for missing keys (e.g. workout_shoulders -> Shoulders)
-    if (key.startsWith('workout_') || key.startsWith('exercise_') || key.startsWith('muscle_') || key.startsWith('tag_')) {
+    if (key.startsWith('workout_') ||
+        key.startsWith('exercise_') ||
+        key.startsWith('muscle_') ||
+        key.startsWith('tag_')) {
       String clean = key
           .replaceFirst('workout_', '')
           .replaceFirst('exercise_', '')
           .replaceFirst('muscle_', '')
           .replaceFirst('tag_', '')
           .replaceAll('_', ' ');
-      
+
       // Capitalize each word for a clean UI look
-      return clean.split(' ').map((word) {
-        if (word.isEmpty) return '';
-        return word[0].toUpperCase() + word.substring(1);
-      }).join(' ');
+      return clean
+          .split(' ')
+          .map((word) {
+            if (word.isEmpty) return '';
+            return word[0].toUpperCase() + word.substring(1);
+          })
+          .join(' ');
     }
-    
+
     String cleanText = key;
     if (cleanText.startsWith('quiz_')) {
       cleanText = cleanText.replaceFirst('quiz_', '');
     }
     cleanText = cleanText.replaceAll('_', ' ');
-    
-    return cleanText.split(' ').map((word) {
-      if (word.isEmpty) return '';
-      return word[0].toUpperCase() + word.substring(1);
-    }).join(' ');
+
+    return cleanText
+        .split(' ')
+        .map((word) {
+          if (word.isEmpty) return '';
+          return word[0].toUpperCase() + word.substring(1);
+        })
+        .join(' ');
   }
 
   static String getLocalizedDayName(BuildContext context, String dayName) {
     final nameLow = dayName.toLowerCase();
-    
-    if (nameLow.contains('chest') && nameLow.contains('tricep')) return s(context, 'workout_chest_triceps');
-    if (nameLow.contains('back') && nameLow.contains('bicep')) return s(context, 'workout_back_biceps');
-    if (nameLow.contains('chest') && nameLow.contains('back')) return s(context, 'workout_chest_back');
-    if (nameLow.contains('shoulder') && nameLow.contains('chest')) return s(context, 'workout_shoulders_and_chest');
+
+    if (nameLow.contains('chest') && nameLow.contains('tricep'))
+      return s(context, 'workout_chest_triceps');
+    if (nameLow.contains('back') && nameLow.contains('bicep'))
+      return s(context, 'workout_back_biceps');
+    if (nameLow.contains('chest') && nameLow.contains('back'))
+      return s(context, 'workout_chest_back');
+    if (nameLow.contains('shoulder') && nameLow.contains('chest'))
+      return s(context, 'workout_shoulders_and_chest');
     if (nameLow.contains('leg')) return s(context, 'workout_legs');
     if (nameLow.contains('shoulder')) return s(context, 'workout_shoulders');
     if (nameLow.contains('push')) return s(context, 'workout_push');
@@ -5287,11 +5655,13 @@ class L10n {
     if (nameLow.contains('glute')) return s(context, 'workout_glute_shaping');
     if (nameLow.contains('squat')) return s(context, 'workout_squat_day');
     if (nameLow.contains('deadlift')) return s(context, 'workout_deadlift_day');
-    if (nameLow.contains('strength accessory')) return s(context, 'workout_strength_accessory');
+    if (nameLow.contains('strength accessory'))
+      return s(context, 'workout_strength_accessory');
     if (nameLow.contains('arm')) return s(context, 'workout_arm_day');
     if (nameLow.contains('rest')) return s(context, 'workout_rest_day');
 
-    final key = 'workout_${dayName.toLowerCase().replaceAll(' ', '_').replaceAll('&', 'and')}';
+    final key =
+        'workout_${dayName.toLowerCase().replaceAll(' ', '_').replaceAll('&', 'and')}';
     final localized = s(context, key);
     return localized != key ? localized : dayName;
   }
@@ -5299,7 +5669,7 @@ class L10n {
   static String getLocalizedMuscleName(BuildContext context, String muscle) {
     final mLow = muscle.toLowerCase();
     String key = 'muscle_$mLow';
-    
+
     // Handle plural or common variations
     if (mLow == 'shoulders') key = 'muscle_shoulder';
     if (mLow == 'biceps') key = 'muscle_biceps';
@@ -5309,7 +5679,7 @@ class L10n {
     if (mLow == 'quads') key = 'muscle_quads';
     if (mLow == 'hamstrings') key = 'muscle_hamstrings';
     if (mLow == 'calves') key = 'muscle_calves';
-    
+
     final localized = s(context, key);
     return localized != key ? localized : muscle;
   }

@@ -224,7 +224,7 @@ class ProgressScreenState extends State<ProgressScreen> {
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        childAspectRatio: 1.25, // Increased for more text breathing room
+        childAspectRatio: 1.1, // Increased vertical space for text wrapping
         children: [
           _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+${workoutProvider.getWeekCompletionCount(activeProgram?.id ?? "")} ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
           _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), Localizations.localeOf(context).languageCode == 'ar' ? '↑ 12% عن الأسبوع الماضي' : '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
@@ -237,7 +237,7 @@ class ProgressScreenState extends State<ProgressScreen> {
 
   Widget _buildStatCard(String icon, String val, String label, String delta, Color valColor, Color deltaBg, Color deltaText) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(14),
@@ -273,17 +273,17 @@ class ProgressScreenState extends State<ProgressScreen> {
           const SizedBox(height: 6),
           Flexible(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
                 color: deltaBg,
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(6),
               ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  delta,
-                  style: TextStyle(color: deltaText, fontSize: 10, fontWeight: FontWeight.w500),
-                ),
+              child: Text(
+                delta,
+                style: TextStyle(color: deltaText, fontSize: 12, fontWeight: FontWeight.w600, height: 1.1),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
