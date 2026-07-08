@@ -495,7 +495,8 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
               opacity: progress >= 1.0 ? 1.0 : 0.0,
               curve: Curves.easeIn,
               child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
+                behavior: HitTestBehavior.opaque,
+                onTap: () {}, // Swallow taps to prevent them from passing through to underlying buttons
                 onVerticalDragStart: (details) {
                   if (_scrollController.hasClients) {
                     _hold = _scrollController.position.hold(() {});

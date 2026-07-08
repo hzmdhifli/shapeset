@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +19,21 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameCtrl = TextEditingController();
+  final _emailCtrl = TextEditingController();
+  final _passwordCtrl = TextEditingController();
+  bool _obscurePassword = true;
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _emailCtrl.dispose();
+    _passwordCtrl.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +78,201 @@ class _SignupScreenState extends State<SignupScreen> {
                 L10n.s(context, 'join_thousands'),
                 style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.65),
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 32),
+              
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Full Name Field
+                    Text(
+                      L10n.s(context, 'full_name_label'),
+                      style: const TextStyle(fontSize: 11, color: AppColors.muted, letterSpacing: 0.8),
+                    ),
+                    const SizedBox(height: 6),
+                    TextFormField(
+                      controller: _nameCtrl,
+                      keyboardType: TextInputType.name,
+                      style: const TextStyle(color: AppColors.text, fontSize: 14),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.person_outline, color: AppColors.dim, size: 18),
+                        filled: true,
+                        fillColor: AppColors.surface,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.border2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.gold),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.redAccent),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.redAccent),
+                        ),
+                      ),
+                      validator: (val) {
+                        if (val == null || val.trim().isEmpty) {
+                          return L10n.s(context, 'name_required');
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Email Field
+                    Text(
+                      L10n.s(context, 'email'),
+                      style: const TextStyle(fontSize: 11, color: AppColors.muted, letterSpacing: 0.8),
+                    ),
+                    const SizedBox(height: 6),
+                    TextFormField(
+                      controller: _emailCtrl,
+                      keyboardType: TextInputType.emailAddress,
+                      style: const TextStyle(color: AppColors.text, fontSize: 14),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.email_outlined, color: AppColors.dim, size: 18),
+                        filled: true,
+                        fillColor: AppColors.surface,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.border2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.gold),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.redAccent),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.redAccent),
+                        ),
+                      ),
+                      validator: (val) {
+                        if (val == null || val.trim().isEmpty) {
+                          return L10n.s(context, 'email_required');
+                        }
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(val.trim())) {
+                          return L10n.s(context, 'email_invalid');
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Password Field
+                    Text(
+                      L10n.s(context, 'password'),
+                      style: const TextStyle(fontSize: 11, color: AppColors.muted, letterSpacing: 0.8),
+                    ),
+                    const SizedBox(height: 6),
+                    TextFormField(
+                      controller: _passwordCtrl,
+                      obscureText: _obscurePassword,
+                      style: const TextStyle(color: AppColors.text, fontSize: 14),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.lock_outlined, color: AppColors.dim, size: 18),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                            color: AppColors.dim,
+                            size: 18,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                        ),
+                        filled: true,
+                        fillColor: AppColors.surface,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.border2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.gold),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.redAccent),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.redAccent),
+                        ),
+                      ),
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return L10n.s(context, 'password_required');
+                        }
+                        if (val.length < 6) {
+                          return L10n.s(context, 'password_length');
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Sign Up Button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: _isLoading ? null : _handleEmailSignup,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.gold,
+                          foregroundColor: Colors.black,
+                          disabledBackgroundColor: AppColors.gold.withOpacity(0.5),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                          elevation: 0,
+                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                L10n.s(context, 'sign_up_btn'),
+                                style: const TextStyle(fontFamily: 'Bebas Neue', fontSize: 18, letterSpacing: 2),
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  const Expanded(child: Divider(color: AppColors.border2)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      L10n.s(context, 'or_continue_with').toUpperCase(),
+                      style: const TextStyle(color: AppColors.dim, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1),
+                    ),
+                  ),
+                  const Expanded(child: Divider(color: AppColors.border2)),
+                ],
+              ),
+              const SizedBox(height: 24),
               
               // Social Signup
               SocialButton(
@@ -295,6 +503,53 @@ class _SignupScreenState extends State<SignupScreen> {
             duration: const Duration(seconds: 5),
           ),
         );
+      }
+    }
+  }
+
+  Future<void> _handleEmailSignup() async {
+    if (!_formKey.currentState!.validate()) return;
+    
+    setState(() => _isLoading = true);
+    
+    try {
+      final name = _nameCtrl.text.trim();
+      final email = _emailCtrl.text.trim();
+      final password = _passwordCtrl.text;
+      
+      final user = await AuthService.signUpWithEmailAndPassword(email, password, name);
+      
+      if (user != null && mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+        );
+      }
+    } catch (error) {
+      debugPrint('Email signup error: $error');
+      if (mounted) {
+        String errMsg = error.toString();
+        if (errMsg.contains('email-already-in-use')) {
+          errMsg = 'The email address is already in use by another account.';
+        } else if (errMsg.contains('invalid-email')) {
+          errMsg = 'The email address is badly formatted.';
+        } else if (errMsg.contains('weak-password')) {
+          errMsg = 'The password must be at least 6 characters.';
+        } else if (errMsg.contains('channel-error')) {
+          errMsg = 'Please fill in all the required fields.';
+        }
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errMsg),
+            backgroundColor: Colors.redAccent,
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
       }
     }
   }

@@ -449,9 +449,112 @@ class ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         backgroundColor: AppColors.surface,
-                        title: Text(L10n.s(context, 'help_center').toUpperCase(), style: const TextStyle(fontFamily: 'Bebas Neue', color: AppColors.text)),
-                        content: const Text('Support: support@athlete.app\nFAQs available at athlete.app/help', style: TextStyle(color: AppColors.muted)),
-                        actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(L10n.s(context, 'ok'), style: const TextStyle(color: AppColors.gold)))],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(color: AppColors.gold.withOpacity(0.2)),
+                        ),
+                        title: Text(
+                          L10n.s(context, 'help_center').toUpperCase(),
+                          style: GoogleFonts.bebasNeue(
+                            color: AppColors.text,
+                            letterSpacing: 2,
+                            fontSize: 24,
+                          ),
+                        ),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Have a problem or question? Contact us directly or view our FAQs.',
+                              style: GoogleFonts.dmSans(
+                                color: AppColors.muted,
+                                fontSize: 13,
+                                height: 1.5,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: AppColors.background3,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: AppColors.border),
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.email_outlined, color: AppColors.gold, size: 18),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Text(
+                                          'shapesetsupport@gmail.com',
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.text,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.help_center_outlined, color: AppColors.blueText, size: 18),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Text(
+                                          'shapeset.app/help',
+                                          style: GoogleFonts.dmSans(
+                                            color: AppColors.text,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              L10n.s(context, 'cancel').toUpperCase(),
+                              style: GoogleFonts.bebasNeue(
+                                color: AppColors.muted,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final Uri emailUri = Uri.parse(
+                                'mailto:shapesetsupport@gmail.com?subject=ShapeSet%20Support%20Request',
+                              );
+                              if (await canLaunchUrl(emailUri)) {
+                                await launchUrl(emailUri, mode: LaunchMode.externalApplication);
+                              }
+                              if (context.mounted) Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.gold,
+                              foregroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: Text(
+                              'EMAIL SUPPORT',
+                              style: GoogleFonts.bebasNeue(letterSpacing: 1),
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   },
@@ -827,7 +930,14 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildStatsGrid() {
     final workoutProvider = Provider.of<WorkoutProvider>(context);
-    final historyCount = workoutProvider.history.length;
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
+    
+    final historyCount = isPro ? workoutProvider.history.length : 0;
+    final streakVal = isPro ? '12' : '0';
+    final trainingTimeVal = isPro ? '34h' : '0h';
+    final trainingTimeDelta = isPro ? '↑ 14% ${L10n.s(context, 'month')}' : '0%';
+    final volumeVal = isPro ? '4.2T' : '0T';
+    final volumeDelta = isPro ? '↑ 8% ${L10n.s(context, 'week')}' : '0%';
     
     return SliverPadding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 22),
@@ -837,10 +947,10 @@ class ProfileScreenState extends State<ProfileScreen> {
         crossAxisSpacing: 10,
         childAspectRatio: 1.1,
         children: [
-          _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+3 ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
-          _buildStatCard('⚡', '12', L10n.s(context, 'streak'), L10n.s(context, 'personal_best'), AppColors.gold, AppColors.gold3, AppColors.gold2),
-          _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), '↑ 14% ${L10n.s(context, 'month')}', AppColors.text, AppColors.blueBg, AppColors.blueText),
-          _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% ${L10n.s(context, 'week')}', AppColors.text, AppColors.greenBg, AppColors.greenText),
+          _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), isPro ? '+3 ${L10n.s(context, 'week')}' : '+0 ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
+          _buildStatCard('⚡', streakVal, L10n.s(context, 'streak'), isPro ? L10n.s(context, 'personal_best') : L10n.s(context, 'streak'), AppColors.gold, AppColors.gold3, AppColors.gold2),
+          _buildStatCard('⏱️', trainingTimeVal, L10n.s(context, 'training_time'), trainingTimeDelta, AppColors.text, AppColors.blueBg, AppColors.blueText),
+          _buildStatCard('🏋️', volumeVal, L10n.s(context, 'total_volume'), volumeDelta, AppColors.text, AppColors.greenBg, AppColors.greenText),
         ],
       ),
     );
@@ -905,7 +1015,8 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildActiveProgramRing() {
     final workoutProvider = Provider.of<WorkoutProvider>(context);
-    if (_activeProgram == null) {
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
+    if (!isPro || _activeProgram == null) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Container(
@@ -1055,7 +1166,8 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildWeeklyActivityChart() {
-    final data = [4, 5, 2, 6, 4, 7, 5];
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
+    final data = isPro ? [4, 5, 2, 6, 4, 7, 5] : [0, 0, 0, 0, 0, 0, 0];
     final labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'];
     const maxVal = 7;
 
@@ -1158,10 +1270,13 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildStreakSection() {
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
     final days = Localizations.localeOf(context).languageCode == 'ar' 
         ? ['ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح']
         : ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
-    final status = ['done', 'done', 'done', 'done', 'done', 'skip', 'today'];
+    final status = isPro 
+        ? ['done', 'done', 'done', 'done', 'done', 'skip', 'today']
+        : ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -1181,7 +1296,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '18 🔥',
+                      isPro ? '18 🔥' : '0 🔥',
                       style: GoogleFonts.bebasNeue(
                         fontSize: 32,
                         color: AppColors.gold,
@@ -1211,7 +1326,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           TextSpan(text: Localizations.localeOf(context).languageCode == 'ar' ? 'على الإطلاق: ' : 'ever: '),
                           TextSpan(
-                            text: '18 ${L10n.s(context, 'day')}',
+                            text: isPro ? '18 ${L10n.s(context, 'day')}' : '0 ${L10n.s(context, 'day')}',
                             style: const TextStyle(color: AppColors.gold2, fontWeight: FontWeight.w500),
                           ),
                         ],
@@ -1267,14 +1382,15 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildAchievementsList() {
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Column(
         children: [
-          _buildAchievementItem('🏆', L10n.s(context, 'first_sweat_title'), L10n.s(context, 'first_sweat_desc'), 'Jan 12', true),
-          _buildAchievementItem('🔥', L10n.s(context, 'on_fire_title'), L10n.s(context, 'on_fire_desc'), 'Feb 3', true),
-          _buildAchievementItem('💪', L10n.s(context, 'ironclad_title'), L10n.s(context, 'ironclad_desc'), 'Feb 18', true),
-          _buildAchievementItem('⚡', L10n.s(context, 'halfway_title'), L10n.s(context, 'halfway_desc'), 'Mar 5', true),
+          _buildAchievementItem('🏆', L10n.s(context, 'first_sweat_title'), L10n.s(context, 'first_sweat_desc'), 'Jan 12', isPro),
+          _buildAchievementItem('🔥', L10n.s(context, 'on_fire_title'), L10n.s(context, 'on_fire_desc'), 'Feb 3', isPro),
+          _buildAchievementItem('💪', L10n.s(context, 'ironclad_title'), L10n.s(context, 'ironclad_desc'), 'Feb 18', isPro),
+          _buildAchievementItem('⚡', L10n.s(context, 'halfway_title'), L10n.s(context, 'halfway_desc'), 'Mar 5', isPro),
           _buildAchievementItem('🥇', L10n.s(context, 'champion_title'), L10n.s(context, 'champion_desc'), '', false),
           _buildAchievementItem('🌟', L10n.s(context, 'beast_mode_title'), L10n.s(context, 'beast_mode_desc'), '', false),
         ],

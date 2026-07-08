@@ -9,6 +9,7 @@ import '../../models/program.dart';
 import '../detail/program_detail_screen.dart';
 import '../../services/localization_service.dart';
 import '../../services/workout_provider.dart';
+import '../../services/subscription_provider.dart';
 import '../../main.dart';
 
 class ProgressScreen extends StatefulWidget {
@@ -128,26 +129,27 @@ class ProgressScreenState extends State<ProgressScreen> {
 
   Widget _buildGreeting(BuildContext context) {
     final workoutProvider = Provider.of<WorkoutProvider>(context);
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
     Program? activeProgram;
     final gender = _prefs?.getString('userGender')?.toLowerCase();
     
-    if (workoutProvider.activeProgramId != null) {
+    if (isPro && workoutProvider.activeProgramId != null) {
       activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
         (p) => p.id == workoutProvider.activeProgramId,
         orElse: () => (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0]
       );
-    } else {
-      activeProgram = (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0];
     }
 
-    final programName = activeProgram?.name ?? 'Training';
+    final programName = activeProgram?.name ?? L10n.s(context, 'no_program_selected');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${L10n.s(context, 'week')} 3 ${L10n.s(context, 'of')} 12 · $programName',
+            activeProgram != null
+                ? '${L10n.s(context, 'week')} 3 ${L10n.s(context, 'of')} 12 · $programName'
+                : L10n.s(context, 'no_program_selected'),
             style: const TextStyle(
               color: AppColors.muted,
               fontSize: 11,
@@ -205,18 +207,28 @@ class ProgressScreenState extends State<ProgressScreen> {
 
   Widget _buildStatsGrid(BuildContext context) {
     final workoutProvider = Provider.of<WorkoutProvider>(context);
-    final historyCount = workoutProvider.history.length;
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
+    
+    final historyCount = isPro ? workoutProvider.history.length : 0;
+    final trainingTimeVal = isPro ? '34h' : '0h';
+    final trainingTimeDelta = isPro 
+        ? (Localizations.localeOf(context).languageCode == 'ar' ? '↑ 12% عن الأسبوع الماضي' : '↑ 12% vs last wk')
+        : '0%';
+    final streakVal = isPro ? '12' : '0';
+    final streakDelta = isPro ? L10n.s(context, 'personal_best') : L10n.s(context, 'streak');
+    final volumeVal = isPro ? '4.2T' : '0T';
+    final volumeDelta = isPro ? '↑ 8% ${L10n.s(context, 'week')}' : '0%';
     
     Program? activeProgram;
     final gender = _prefs?.getString('userGender')?.toLowerCase();
-    if (workoutProvider.activeProgramId != null) {
+    if (isPro && workoutProvider.activeProgramId != null) {
       activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
         (p) => p.id == workoutProvider.activeProgramId,
         orElse: () => (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0]
       );
-    } else {
-      activeProgram = (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0];
     }
+    
+    final completionCount = activeProgram != null ? workoutProvider.getWeekCompletionCount(activeProgram.id) : 0;
     
     return SliverPadding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 22),
@@ -226,10 +238,10 @@ class ProgressScreenState extends State<ProgressScreen> {
         crossAxisSpacing: 10,
         childAspectRatio: 1.1, // Increased vertical space for text wrapping
         children: [
-          _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+${workoutProvider.getWeekCompletionCount(activeProgram?.id ?? "")} ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
-          _buildStatCard('⏱️', '34h', L10n.s(context, 'training_time'), Localizations.localeOf(context).languageCode == 'ar' ? '↑ 12% عن الأسبوع الماضي' : '↑ 12% vs last wk', AppColors.text, AppColors.blueBg, AppColors.blueText),
-          _buildStatCard('⚡', '12', L10n.s(context, 'streak'), L10n.s(context, 'personal_best'), AppColors.gold, AppColors.gold3, AppColors.gold2),
-          _buildStatCard('🏋️', '4.2T', L10n.s(context, 'total_volume'), '↑ 8% ${L10n.s(context, 'week')}', AppColors.text, AppColors.greenBg, AppColors.greenText),
+          _buildStatCard('🔥', historyCount.toString(), L10n.s(context, 'sessions_completed'), '+$completionCount ${L10n.s(context, 'week')}', AppColors.redText, AppColors.redBg, AppColors.redText),
+          _buildStatCard('⏱️', trainingTimeVal, L10n.s(context, 'training_time'), trainingTimeDelta, AppColors.text, AppColors.blueBg, AppColors.blueText),
+          _buildStatCard('⚡', streakVal, L10n.s(context, 'streak'), streakDelta, AppColors.gold, AppColors.gold3, AppColors.gold2),
+          _buildStatCard('🏋️', volumeVal, L10n.s(context, 'total_volume'), volumeDelta, AppColors.text, AppColors.greenBg, AppColors.greenText),
         ],
       ),
     );
@@ -294,7 +306,8 @@ class ProgressScreenState extends State<ProgressScreen> {
 
   Widget _buildActiveProgramCard(BuildContext context) {
     final workoutProvider = Provider.of<WorkoutProvider>(context);
-    if (workoutProvider.activeProgramId == null) {
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
+    if (!isPro || workoutProvider.activeProgramId == null) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Container(
@@ -405,6 +418,9 @@ class ProgressScreenState extends State<ProgressScreen> {
   }
 
   Widget _buildLastSessionSection(BuildContext context) {
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
+    if (!isPro) return const SliverToBoxAdapter(child: SizedBox.shrink());
+    
     final workoutProvider = Provider.of<WorkoutProvider>(context);
     final lastSession = workoutProvider.getLastCompletedSession();
     
@@ -504,7 +520,8 @@ class ProgressScreenState extends State<ProgressScreen> {
   }
 
   Widget _buildWeeklyActivityChart(BuildContext context) {
-    final data = [4, 5, 2, 6, 4, 7, 5]; // Mock but feel realistic
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
+    final data = isPro ? [4, 5, 2, 6, 4, 7, 5] : [0, 0, 0, 0, 0, 0, 0];
     final labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'];
     const maxVal = 7;
 
@@ -601,10 +618,13 @@ class ProgressScreenState extends State<ProgressScreen> {
   }
 
   Widget _buildStreakSection(BuildContext context) {
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
     final days = Localizations.localeOf(context).languageCode == 'ar' 
         ? ['ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح']
         : ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    final status = List.generate(28, (i) => i % 7 == 4 ? 'skip' : (i == 27 ? 'today' : 'done'));
+    final status = isPro 
+        ? List.generate(28, (i) => i % 7 == 4 ? 'skip' : (i == 27 ? 'today' : 'done'))
+        : List.generate(28, (i) => 'empty');
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -657,13 +677,14 @@ class ProgressScreenState extends State<ProgressScreen> {
   }
 
   Widget _buildAchievementsList(BuildContext context) {
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Column(
         children: [
-          _buildAchievementItem('🏆', L10n.s(context, 'first_sweat_title'), L10n.s(context, 'first_sweat_desc'), true),
-          _buildAchievementItem('🔥', L10n.s(context, 'on_fire_title'), L10n.s(context, 'on_fire_desc'), true),
-          _buildAchievementItem('💪', L10n.s(context, 'ironclad_title'), L10n.s(context, 'ironclad_desc'), true),
+          _buildAchievementItem('🏆', L10n.s(context, 'first_sweat_title'), L10n.s(context, 'first_sweat_desc'), isPro),
+          _buildAchievementItem('🔥', L10n.s(context, 'on_fire_title'), L10n.s(context, 'on_fire_desc'), isPro),
+          _buildAchievementItem('💪', L10n.s(context, 'ironclad_title'), L10n.s(context, 'ironclad_desc'), isPro),
           _buildAchievementItem('🥇', L10n.s(context, 'champion_title'), L10n.s(context, 'champion_desc'), false),
         ],
       ),
@@ -714,6 +735,9 @@ class ProgressScreenState extends State<ProgressScreen> {
   }
 
   Widget _buildProgramCompletionsSection(BuildContext context) {
+    final isPro = Provider.of<SubscriptionProvider>(context).isPro;
+    if (!isPro) return const SliverToBoxAdapter(child: SizedBox.shrink());
+    
     final workoutProvider = Provider.of<WorkoutProvider>(context);
     final reps = workoutProvider.programRepetitions;
     

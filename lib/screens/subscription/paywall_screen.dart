@@ -20,8 +20,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
   String _paymentMethod = 'card'; // 'card' or 'paypal'
 
   // Real Lemon Squeezy Checkout URLs
-  final String _monthlyUrl = 'https://hazemdhifli.lemonsqueezy.com/checkout/buy/c4299c2e-e643-45c4-b12d-17c8ecf5168d?enabled=1599733';
-  final String _yearlyUrl = 'https://hazemdhifli.lemonsqueezy.com/checkout/buy/2e2c35ae-7211-4677-b159-845aee137337?enabled=1599808';
+  final String _monthlyUrl = 'https://hazemdhifli.lemonsqueezy.com/checkout/buy/c4299c2e-e643-45c4-b12d-17c8ecf5168d';
+  final String _yearlyUrl = 'https://hazemdhifli.lemonsqueezy.com/checkout/buy/2e2c35ae-7211-4677-b159-845aee137337';
 
   SubscriptionProvider? _subscriptionProvider;
 

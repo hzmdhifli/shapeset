@@ -88,13 +88,6 @@ class SettingsProvider with ChangeNotifier {
     _notificationsEnabled = enabled;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('notifications', enabled);
-    
-    if (enabled) {
-      bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
-      if (!isAllowed) {
-        await AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    }
     notifyListeners();
   }
 

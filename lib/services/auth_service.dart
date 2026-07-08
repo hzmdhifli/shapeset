@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -12,6 +13,38 @@ class AuthService {
 
   /// Returns the currently signed-in Firebase user, or null.
   static User? get currentUser => _auth.currentUser;
+
+  /// Sign in with Email and Password
+  static Future<User?> signInWithEmailAndPassword(String email, String password) async {
+    final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      email: email.trim(),
+      password: password,
+    );
+    final User? user = userCredential.user;
+    if (user != null) {
+      await _saveUserToPrefs(user);
+    }
+    return user;
+  }
+
+  /// Sign up with Email and Password
+  static Future<User?> signUpWithEmailAndPassword(String email, String password, String name) async {
+    final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      email: email.trim(),
+      password: password,
+    );
+    final User? user = userCredential.user;
+    if (user != null) {
+      await user.updateDisplayName(name);
+      await user.reload();
+      final User? updatedUser = _auth.currentUser;
+      if (updatedUser != null) {
+        await _saveUserToPrefs(updatedUser);
+        return updatedUser;
+      }
+    }
+    return user;
+  }
 
   /// Sign in with Google — opens native account picker, exchanges credential
   /// with Firebase, and saves profile data locally.
@@ -34,6 +67,34 @@ class AuthService {
     );
 
     // Sign into Firebase with the Google credential
+    final UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
+
+    final User? user = userCredential.user;
+    if (user != null) {
+      await _saveUserToPrefs(user);
+    }
+    return user;
+  }
+
+  /// Sign in with Facebook — opens Facebook login dialog, exchanges credential
+  /// with Firebase, and saves profile data locally.
+  static Future<User?> signInWithFacebook() async {
+    // Trigger the Facebook login dialog
+    final LoginResult result = await FacebookAuth.instance.login(
+      permissions: ['email', 'public_profile'],
+    );
+
+    if (result.status != LoginStatus.success) {
+      // User cancelled or login failed
+      return null;
+    }
+
+    // Create a Facebook credential using the access token
+    final OAuthCredential credential =
+        FacebookAuthProvider.credential(result.accessToken!.tokenString);
+
+    // Sign into Firebase with the Facebook credential
     final UserCredential userCredential =
         await _auth.signInWithCredential(credential);
 
