@@ -277,9 +277,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text(
-                                'Sign in',
-                                style: TextStyle(
+                            : Text(
+                                L10n.s(context, 'sign_in'),
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 0.5,
@@ -631,7 +631,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(color: AppColors.text, fontSize: 14),
                 decoration: InputDecoration(
-                  hintText: 'Email address',
+                  hintText: L10n.s(context, 'email'),
                   hintStyle: const TextStyle(color: AppColors.muted),
                   filled: true,
                   fillColor: AppColors.surface2,
@@ -651,9 +651,9 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
-                'Cancel',
-                style: TextStyle(color: AppColors.muted),
+              child: Text(
+                L10n.s(context, 'cancel'),
+                style: const TextStyle(color: AppColors.muted),
               ),
             ),
             ElevatedButton(
@@ -661,7 +661,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 final resetEmail = controller.text.trim();
                 if (resetEmail.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(resetEmail)) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please enter a valid email address.')),
+                    SnackBar(content: Text(L10n.s(context, 'email_invalid'))),
                   );
                   return;
                 }
@@ -672,7 +672,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 backgroundColor: const Color(0xFF1E6C44),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
-              child: const Text('Send Reset Link', style: TextStyle(color: Colors.white)),
+              child: Text(L10n.s(context, 'send_reset_link'), style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -784,10 +784,11 @@ class _LoginScreenState extends State<LoginScreen> {
       debugPrint('Email login error: $error');
       if (mounted) {
         String errMsg = error.toString();
-        if (errMsg.contains('user-not-found') || errMsg.contains('INVALID_LOGIN_CREDENTIALS')) {
-          errMsg = 'Invalid email or password.';
-        } else if (errMsg.contains('wrong-password')) {
-          errMsg = 'Incorrect password.';
+        if (errMsg.contains('user-not-found') ||
+            errMsg.contains('wrong-password') ||
+            errMsg.contains('INVALID_LOGIN_CREDENTIALS') ||
+            errMsg.contains('invalid-credential')) {
+          errMsg = 'Incorrect email or password. Please try again.';
         } else if (errMsg.contains('invalid-email')) {
           errMsg = 'The email address is badly formatted.';
         } else if (errMsg.contains('user-disabled')) {

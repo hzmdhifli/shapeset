@@ -1,5 +1,6 @@
 import 'program.dart';
 import 'meal.dart';
+import '../services/asset_resolver.dart';
 import 'dart:math';
 import 'dart:ui';
 
@@ -14,7 +15,7 @@ final Map<String, List<String>> exercisePools = {
   'Chest': ["Barbell Bench Press","Smith Machine Bench Press","Smith Machine Incline Bench Press","Dumbbell Bench Press","Incline Dumbbell Bench Press","Dumbbell Fly","Standing Cable Fly","Barbell Incline Bench Press","Dips","Weighted Dips","Incline Dumbbell Fly","Push Up","Weighted Push Up","Hindu Push Up","Archer Push Up","Close-grip Push Up","Chest Press Machine","Pec Deck Fly Machine","Incline Bench Press Machine","Dumbbell Pullover","Seated Dips Machine","Low-pulley Cable Fly","Hammer Bench Press","Spoto Bench Press","Assisted Dip Machine","Barbell Floor Chest Press","Clap Push Up","Decline Dumbbell Fly","Incline Push Up","Knee Push Up","Pike Push Up","Decline Chest Press Machine","Incline Dumbbell Twist Press","Incline Cable Fly","Incline Chest Press Machine","Dumbbell Squeeze Press"],
   'Biceps': ["Dumbbell Bicep Curl","Cable Curl","EZ Bar Curl","Dumbbell Hammer Curl","Dumbbell Preacher Curl","Barbbell Preacher Curl","EZ Bar Preacher Curl","Preacher Curl Machine","Arm Curl Machine","Cable Hammer Curl","Incline Dumbbell Curl","Reverse Barbell Curl","Barbell Wrist Curl","EZ Bar Wrist Curl","Dumbbell Wrist Curl","Reverse Barbell Wrist Curl","Reverse Dumbbell Wrist Curl","Wrist Roller"],
   'Triceps': ["Dumbbell Tricep Extension","Dumbbell Kickback","Cable Push Down","Close-grip Bench Press","Seated Dumbbell Tricep Extension","Cable Tricep Extension","Skull Crusher","Lying Tricep Extension","Cable Overhead Tricep Extension","Cable Lying Tricep Extension","Bench Dips","Tricep Extension Machine","Seated Dips Machine"],
-  'Abs': ["Sit Up","Crunch","V-up","Heel Touch","Leg Raise","Hanging Leg Raise","Hollow Rock","Hollow Position","Plank","Dumbbell Side Bend","Abs Roll Out","Air Bicycle Abs","Hanging Knee Raise","Abdominal Crunch Machine","Hang Clean","Hang Snatch","Pilates Jackknife","Reverse Crunch","Side Plank","45 Degree Side Bend","RKC Plank","Cable Side Bend","Weighted Decline Crunch","Decline Reverse Crunch","Decline Sit Up","Weighted Decline Sit Up","Side Crunch","Cable Twist","Abdominal Hip Thrust","Weighted Abdominal Hip Thrust","Burpee","Decline Crunch"],
+  'Abs': ["Sit Up","Crunch","V-up","Heel Touch","Leg Raise","Hanging Leg Raise","Hollow Rock","Hollow Position","Plank","Dumbbell Side Bend","Abs Roll Out","Air Bicycle Abs","Hanging Knee Raise","Abdominal Crunch Machine","Hang Clean","Hang Snatch","Pilates Jackknife","Reverse Crunch","Side Plank","45 Degree Side Bend","RKC Plank","Cable Side Bend","Weighted Decline Crunch","Decline Reverse Crunch","Decline Sit Up","Weighted Decline Sit Up","Side Crunch","Cable Twist","Abdominal Hip Thrust","Burpee","Decline Crunch"],
   'Back': ["Conventional Deadlift","Trap-bar Deadlift","Romanian Deadlift","Deficit Deadlift","Paused Deadlift","Cable Pull Through","Glute-Ham Raise", "Lat Pulldown", "Barbell Row", "Seated Row", "Pull-Ups", "One-Arm DB Row", "Face Pulls", "Barbell Bent-over Row", "Weighted Pull-up", "Cable Row", "Dumbbell Pullover", "Pull Up", "Lat Pull Down", "T-bar Row Machine", "Seated Cable Row"],
   'Cardio': ["Climbing Stairs", "Running", "Cycling", "Elliptical","Treadmill(HIIT)"],
   'Full Body': ["Clean (Lifting)", "Medicine Ball Throw", "Burpee"]
@@ -32,9 +33,9 @@ final Map<String, String> exerciseFormGifs = {
   'Weighted Pull-up': 'https://burnfit.io/wp-content/uploads/WEI_PULL_UP.gif',
   'Cable Row': 'https://burnfit.io/wp-content/uploads/SEATED_CABLE_ROW.gif',
   'Overhead Press': 'https://burnfit.io/wp-content/uploads/BB_PRESS.gif',
-  'Dumbbell Lateral Raise': 'https://burnfit.io/wp-content/uploads/DB_LAT_RAISE-1.gif',
+  'Dumbbell Lateral Raise': 'https://burnfit.io/wp-content/uploads/DB_LAT_RAISE.gif',
   'Bentover Dumbbell Lateral Raise': 'https://burnfit.io/wp-content/uploads/DB_BO_LAT_RAISE.gif',
-  'Barbell Front Raise': 'https://burnfit.io/wp-content/uploads/BB_FRONT_RAISE.gif',
+  'Barbell Front Raise': 'https://burnfit.io/wp-content/uploads/BB_PRESS.gif',
   'Barbell Preacher Curl': 'https://burnfit.io/wp-content/uploads/BB_PREA_CURL.gif',
   'Dumbbell Bicep Curl': 'https://burnfit.io/wp-content/uploads/DB_BC_CURL.gif',
   'EZ Bar Curl': 'https://burnfit.io/wp-content/uploads/EZB_CURL.gif',
@@ -50,8 +51,11 @@ final Map<String, String> exerciseFormGifs = {
   'Romanian Deadlift': 'https://burnfit.io/wp-content/uploads/RM_BB_DL.gif',
   'Leg Curl': 'https://burnfit.io/wp-content/uploads/LEG_CURL.gif',
   'Stiff Leg Deadlift': 'https://burnfit.io/wp-content/uploads/STIFF_DL.gif',
-  'Dumbbell Romanian Deadlift': 'https://burnfit.io/wp-content/uploads/DB_RM_DL.gif',
-  'Standing Calf Raise': 'https://burnfit.io/wp-content/uploads/STD_CALF_RAISE-1.gif',
+  'Dumbbell Romanian Deadlift': 'https://burnfit.io/wp-content/uploads/RM_BB_DL.gif',
+  'Goblet Squat': 'https://burnfit.io/wp-content/uploads/GOBLET_SQT.gif',
+  'Kettlebell Goblet Squat': 'https://burnfit.io/wp-content/uploads/GOBLET_SQT.gif',
+  'Barbell Jump Squat': 'https://burnfit.io/wp-content/uploads/JUMP_SQT.gif',
+  'Standing Calf Raise': 'https://burnfit.io/wp-content/uploads/STD_CALF_RAISE.gif',
   'Seated Calf Raise': 'https://burnfit.io/wp-content/uploads/SEAT_CALF_RAISE.gif',
   'Barbell Standing Calf Raise': 'https://burnfit.io/wp-content/uploads/BB_STD_CALF_RAISE.gif',
   'Bodyweight Calf Raise': 'https://burnfit.io/wp-content/uploads/BW_CALF_RAISE.gif',
@@ -62,8 +66,8 @@ final Map<String, String> exerciseFormGifs = {
   'Seated Dumbbell Rear Lateral Raise': 'https://burnfit.io/wp-content/uploads/DB_REAR_LAT_RAISE.gif',
   'Face Pull': 'https://burnfit.io/wp-content/uploads/FACE_PULL-1.gif',
   'Dumbbell Hammer Curl': 'https://burnfit.io/wp-content/uploads/DB_HAM_CURL-1.gif',
-  'Dumbbell Preacher Curl': 'https://burnfit.io/wp-content/uploads/DB_PREA_CURL-1.gif',
-  'Cable Curl': 'https://burnfit.io/wp-content/uploads/CABLE_CURL.gif',
+  'Dumbbell Preacher Curl': 'https://burnfit.io/wp-content/uploads/DB_PREA_CURL.gif',
+  'Cable Curl': 'https://burnfit.io/wp-content/uploads/CABLE_CURL.png',
   'Cable Overhead Tricep Extension': 'https://burnfit.io/wp-content/uploads/CABLE_OHT_EXT.gif',
   'Seated Dumbbell Tricep Extension': 'https://burnfit.io/wp-content/uploads/SEAT_DB_TRI_EXT.gif',
   'Bench Dips': 'https://burnfit.io/wp-content/uploads/BENCH_DIPS.gif',
@@ -104,7 +108,7 @@ final Map<String, String> exerciseFormGifs = {
   'Barbell Lunge': 'https://burnfit.io/wp-content/uploads/BB_LUNGE.gif',
   'Preacher Curl Machine': 'https://burnfit.io/wp-content/uploads/PREA_CURL_MAC.gif',
   'Chest Press Machine': 'https://burnfit.io/wp-content/uploads/CHEST_PRESS_MC.gif',
-  'Incline Chest Press Machine': 'https://burnfit.io/wp-content/uploads/INC_CHEST_PRESS_MC.gif',
+  'Incline Chest Press Machine': 'https://burnfit.io/wp-content/uploads/SM_INC_PRESS.gif',
   'Decline Chest Press Machine': 'https://burnfit.io/wp-content/uploads/DEC_CHEST_MAC.gif',
   'Abdominal Crunch Machine': 'https://burnfit.io/wp-content/uploads/ABS_CRUNCH_MC-1.gif',
   'Hanging Leg Raise': 'https://burnfit.io/wp-content/uploads/HANG_LEG_RAIGE-1.gif',
@@ -112,7 +116,7 @@ final Map<String, String> exerciseFormGifs = {
   'Crunch': 'https://burnfit.io/wp-content/uploads/CRUNCH.gif',
   'Single Leg Leg Press': 'https://burnfit.io/wp-content/uploads/SL_LEG_PRESS.gif',
   'Single Leg Leg Curl': 'https://burnfit.io/wp-content/uploads/SL_LEG_CURL.gif',
-  'Abdominal Hip Thrust': 'https://burnfit.io/wp-content/uploads/ABS_HIP_THRU.gif',
+  'Abdominal Hip Thrust': 'https://burnfit.io/wp-content/uploads/HIP_THRUST.gif',
   'Reverse Crunch': 'https://burnfit.io/wp-content/uploads/REV_CRUNCH.gif',
   'Plank': 'https://burnfit.io/wp-content/uploads/PLANK-2.gif',
   'Shoulder Press Machine': 'https://burnfit.io/wp-content/uploads/SHD_PRESS_MAC-1.gif',
@@ -128,9 +132,9 @@ final Map<String, String> exerciseFormGifs = {
   'Landmine Press': 'https://burnfit.io/wp-content/uploads/LAND_PRESS.gif',
   'Seated Dumbbell Shoulder Press': 'https://burnfit.io/wp-content/uploads/SEAT_DB_SHD_PRESS.gif',
   'Push Press': 'https://burnfit.io/wp-content/uploads/PUSH_PRESS.gif',
-  'Deficit Deadlift': 'https://burnfit.io/wp-content/uploads/DEF_DL.gif',
+  'Deficit Deadlift': 'https://burnfit.io/wp-content/uploads/STIFF_DL.gif',
   'Glute Bridge': 'https://burnfit.io/wp-content/uploads/GLUTE_BRDG.gif',
-  'Zercher Squat': 'https://burnfit.io/wp-content/uploads/ZERCHER_SQT.gif',
+  'Zercher Squat': 'https://burnfit.io/wp-content/uploads/GOBLET_SQT.gif',
   'Barbell Hip Thrust': 'https://burnfit.io/wp-content/uploads/WEI_HIP_THRUST.gif',
   'Jump Squat': 'https://burnfit.io/wp-content/uploads/JUMP_SQT.gif',
   'Dumbbell Goblet Squat': 'https://burnfit.io/wp-content/uploads/GOBLET_SQT.gif',
@@ -152,7 +156,7 @@ final Map<String, String> exerciseFormGifs = {
   'Cable Donkey Kick': 'https://burnfit.io/wp-content/uploads/CABLE_DONK_KICK.gif',
   'Dumbbell Bulgarian single squat': 'https://burnfit.io/wp-content/uploads/DB_BULSPLIT_SQT.gif',
   'Climbing Stairs': 'https://burnfit.io/wp-content/uploads/CLIMB_STAIRS.gif',
-  'Weighted Abdominal Hip Thrust': 'https://burnfit.io/wp-content/uploads/WEI_ABS_HIP_THRU.gif',
+  'Weighted Decline Crunch': 'https://burnfit.io/wp-content/uploads/WEI_DEC_CRUNCH.gif',
   '45 Degree Side Bend': 'https://burnfit.io/wp-content/uploads/45_SIDE_BEND.gif',
   'Side Plank': 'https://burnfit.io/wp-content/uploads/SIDE_PLANK.gif',
   'Underhand Lat Pulldown': 'https://burnfit.io/wp-content/uploads/REV_LAT_PULL_DOWN.gif',
@@ -165,7 +169,7 @@ final Map<String, String> exerciseFormGifs = {
   'Underhand Barbell Row': 'https://burnfit.io/wp-content/uploads/REV_BB_ROW.gif',
   'Lat Pull Down': 'https://burnfit.io/wp-content/uploads/LAT_PULL_DOWN.gif',
   'One Arm Dumbbell Row': 'https://burnfit.io/wp-content/uploads/OA_DB_ROW.gif',
-  'Hyperextension': 'https://burnfit.io/wp-content/uploads/HPET.gif',
+  'Hyperextension': 'https://burnfit.io/wp-content/uploads/HPET.png',
   'Smith Machine Overhead Bench Press': 'https://burnfit.io/wp-content/uploads/SM_INC_PRESS.gif',
   'Barbell Pullover': 'https://burnfit.io/wp-content/uploads/BB_PULLOVER.gif',
   'Good-morning': 'https://burnfit.io/wp-content/uploads/GOOD_MORN.gif',
@@ -185,10 +189,10 @@ final Map<String, String> exerciseFormGifs = {
   'dumbbell bench press': 'https://burnfit.io/wp-content/uploads/DB_BP.gif',
   'lunge': 'https://burnfit.io/wp-content/uploads/LUNGE_TWIST.gif',
   'Cable Crossover': 'https://burnfit.io/wp-content/uploads/LP_CABLE_FLY.gif',
-  'Standing DB Lateral Raise': 'https://burnfit.io/wp-content/uploads/DB_LAT_RAISE-1.gif',
+  'Standing DB Lateral Raise': 'https://burnfit.io/wp-content/uploads/DB_LAT_RAISE.gif',
   'Bent-over Lateral Raise': 'https://burnfit.io/wp-content/uploads/DB_REAR_LAT_RAISE.gif',
   'Behind-the-Neck Press': 'https://burnfit.io/wp-content/uploads/BB_PRESS.gif',
-  'Alternating Front Raise': 'https://burnfit.io/wp-content/uploads/BB_FRONT_RAISE.gif',
+  'Alternating Front Raise': 'https://burnfit.io/wp-content/uploads/DB_LAT_RAISE.gif',
   'Cable Pushdowns': 'https://burnfit.io/wp-content/uploads/CABLE_PUSH_DOWN.gif',
   'Standing DB Curls': 'https://burnfit.io/wp-content/uploads/DB_BC_CURL.gif',
   'Skull Crushers': 'https://burnfit.io/wp-content/uploads/SKULL_CRUSH.gif',
@@ -214,12 +218,14 @@ final Map<String, String> exerciseFormGifs = {
   'Medicine Ball Throw': 'https://burnfit.io/wp-content/uploads/MEDICINE_BALL_THROW.gif',
   'Dumbbell Row': 'https://burnfit.io/wp-content/uploads/OA_DB_ROW.gif',
   'Kettlebell Swing': 'https://burnfit.io/wp-content/uploads/KB_SWING.gif',
-  'Cycling': 'https://burnfit.io/wp-content/uploads/CYCLING.gif',
+  'Cycling': 'https://burnfit.io/wp-content/uploads/RUNNING.gif',
   'Heel Touch': 'https://burnfit.io/wp-content/uploads/HEEL_TOUCH.gif',
   'Weighted Dips': 'https://burnfit.io/en/wp-content/uploads/sites/3/2026/01/WEI_DIPS.gif',
   'One Arm Cable Lateral Raise': 'https://burnfit.io/en/wp-content/uploads/sites/3/2026/01/OA_CABLE_LAT_RAISE.gif',
   'Barbell Wrist Curl': 'https://burnfit.io/en/wp-content/uploads/sites/3/2026/01/BB_WRIST_CURL.gif',
-  'Decline Crunch': 'https://burnfit.io/en/wp-content/uploads/sites/3/2026/05/%EB%94%94%ED%81%B4%EB%9D%BC%EC%9D%B8-%ED%81%AC%EB%9F%B0%EC%B9%98.gif',
+  'Decline Crunch': 'https://burnfit.io/wp-content/uploads/CRUNCH.gif',
+  'Glute kickbacks': 'https://burnfit.io/wp-content/uploads/GLUTE_KB_MC.gif',
+  'Seated rows': 'https://burnfit.io/wp-content/uploads/OA_CABLE_SEATED_ROW.gif',
 };
 
 // Helper for creating WorkoutExercise with auto-gif lookup
@@ -240,6 +246,18 @@ WorkoutExercise _we({required String name, required String detail, double progre
       }
     }
   }
+  
+  final String? originalRemoteUrl = gif;
+  if (gif != null && originalRemoteUrl != null && originalRemoteUrl.startsWith('http')) {
+    gif = originalRemoteUrl;
+  } else if (gif != null) {
+    final cleanFilename = gif.split('/').last;
+    gif = AssetResolver.getSupabaseUrl(cleanFilename, bucket: 'exercises');
+  } else {
+    final cleanName = name.toUpperCase().replaceAll(' ', '_').replaceAll('-', '_');
+    gif = AssetResolver.getSupabaseUrl('$cleanName.gif', bucket: 'exercises');
+  }
+
   return WorkoutExercise(
     name: name,
     detail: detail,
@@ -394,7 +412,7 @@ final List<Program> mockFemalePrograms = [
         _we(name: 'Climbing Stairs', detail: '15-20 mins', progress: 0.88),
       ]),
       ScheduleDay(dayNumber: '04', name: 'Core - Strength', description: 'Power & Thrust focus', isTraining: true, exercises: [
-        _we(name: 'Weighted Abdominal Hip Thrust', detail: '3x12-15', progress: 0.85),
+        _we(name: 'Weighted Decline Crunch', detail: '3x12-15', progress: 0.85),
         _we(name: 'Abdominal Hip Thrust', detail: '3x15', progress: 0.88),
         _we(name: 'Side Crunch', detail: '3x15', progress: 0.85),
       ]),

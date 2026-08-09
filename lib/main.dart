@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,19 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: 'AIzaSyAgOjdAGzKO1O7YO6XJCJp5CRjATYxf_JE',
+        appId: '1:377637374809:web:ee1b1f029aedf002f29a48',
+        messagingSenderId: '377637374809',
+        projectId: 'shapeset-e5859',
+        storageBucket: 'shapeset-e5859.firebasestorage.app',
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
 
   // Initialize Supabase
   await Supabase.initialize(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../theme/app_colors.dart';
 import '../models/program.dart';
 import '../screens/detail/program_detail_screen.dart';
 import '../services/localization_service.dart';
+import '../services/asset_resolver.dart';
 
 class SpecialProgramCard extends StatelessWidget {
   final Program program;
@@ -47,11 +49,32 @@ class SpecialProgramCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               // Background Image
-              Image.asset(
-                program.imagePath,
-                fit: BoxFit.cover,
-                alignment: const Alignment(0, -0.3),
-              ),
+              program.imagePath.startsWith('http')
+                  ? CachedNetworkImage(
+                      imageUrl: program.imagePath,
+                      fit: BoxFit.cover,
+                      alignment: const Alignment(0, -0.3),
+                      errorWidget: (ctx, url, err) => Image.asset(
+                        'assets/images/female.png',
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.3),
+                      ),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: AssetResolver.getSupabaseUrl('${program.id}.png', bucket: 'female-special-program'),
+                      fit: BoxFit.cover,
+                      alignment: const Alignment(0, -0.3),
+                      errorWidget: (ctx, url, err) => Image.asset(
+                        program.imagePath,
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.3),
+                        errorBuilder: (c, e, s) => Image.asset(
+                          'assets/images/female.png',
+                          fit: BoxFit.cover,
+                          alignment: const Alignment(0, -0.3),
+                        ),
+                      ),
+                    ),
               
               // Gradient Overlay
               Container(

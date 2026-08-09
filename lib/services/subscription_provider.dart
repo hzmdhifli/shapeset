@@ -15,10 +15,27 @@ class SubscriptionProvider with ChangeNotifier {
     _initSupabaseSync();
   }
 
+  // List of emails that automatically bypass payment/pro checks
+  static const List<String> _adminEmails = [
+    'shapesetsupport@gmail.com',
+    // Add your admin or tester Gmail accounts here
+  ];
+
+  static bool isAdminEmail(String? email) {
+    if (email == null) return false;
+    return _adminEmails.contains(email.trim().toLowerCase());
+  }
+
   // Load status from cache for immediate UI response
   Future<void> _loadLocalStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    _isPro = prefs.getBool('isPro') ?? false;
+    final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    
+    if (currentUser != null && isAdminEmail(currentUser.email)) {
+      _isPro = true;
+    } else {
+      _isPro = prefs.getBool('isPro') ?? false;
+    }
     notifyListeners();
   }
 
@@ -31,6 +48,11 @@ class SubscriptionProvider with ChangeNotifier {
       if (firebaseUser != null && firebaseUser.email != null) {
         final email = firebaseUser.email!;
         
+        if (isAdminEmail(email)) {
+          setPro(true);
+          return;
+        }
+
         // Listen to the 'profiles' table for this email
         _subscription = Supabase.instance.client
             .from('profiles')

@@ -9,7 +9,9 @@ import 'package:supabase_flutter/supabase_flutter.dart' hide User, OAuthProvider
 
 class AuthService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static final GoogleSignIn _googleSignIn = GoogleSignIn();
+  static final GoogleSignIn _googleSignIn = GoogleSignIn(
+    serverClientId: '377637374809-gqfdg7dieumscc535r4618u55ahqqh4j.apps.googleusercontent.com',
+  );
 
   /// Returns the currently signed-in Firebase user, or null.
   static User? get currentUser => _auth.currentUser;

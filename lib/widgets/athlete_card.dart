@@ -163,7 +163,11 @@ class AthleteCard extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            program.alias,
+            L10n.s(context, 'alias_${program.alias}') != 'alias_${program.alias}' 
+                ? L10n.s(context, 'alias_${program.alias}') 
+                : (L10n.s(context, 'alias_${program.id}') != 'alias_${program.id}' 
+                    ? L10n.s(context, 'alias_${program.id}') 
+                    : program.alias),
             style: TextStyle(
               fontSize: 10,
               color: AppColors.text.withOpacity(0.55),

@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart' as gestures;
 import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../theme/app_colors.dart';
 import '../../models/program.dart';
 import '../workout/workout_session_screen.dart';
@@ -78,17 +77,6 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
 
   String _getMuscleForExercise(String exName) {
     return exerciseToMuscle[exName] ?? 'other';
-  }
-
-  Future<void> _launchURL(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not open the link: $url')),
-        );
-      }
-    }
   }
 
   String _getLocalizedDetail(String detail) {
@@ -931,47 +919,48 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                     ),
                   ),
                 ),
-                Consumer<SubscriptionProvider>(
-                  builder: (context, sub, child) {
-                    final isLocked = !sub.isPro;
-                    return InkWell(
-                      onTap: () {
-                        if (isLocked) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const PaywallScreen()),
-                          );
-                        } else {
-                          // Handle Export
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Exporting program as PDF...')),
-                          );
-                        }
-                      },
-                      borderRadius: BorderRadius.circular(100),
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.border, width: 1.5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.15),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                if (!mockFemalePrograms.any((p) => p.id == widget.program.id))
+                  Consumer<SubscriptionProvider>(
+                    builder: (context, sub, child) {
+                      final isLocked = !sub.isPro;
+                      return InkWell(
+                        onTap: () {
+                          if (isLocked) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                            );
+                          } else {
+                            // Handle Export
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Exporting program as PDF...')),
+                            );
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(100),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: AppColors.border, width: 1.5),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.15),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            isLocked ? Icons.lock_outline_rounded : Icons.ios_share_rounded,
+                            color: isLocked ? AppColors.muted : Colors.black,
+                            size: 20,
+                          ),
                         ),
-                        child: Icon(
-                          isLocked ? Icons.lock_outline_rounded : Icons.ios_share_rounded,
-                          color: isLocked ? AppColors.muted : Colors.black,
-                          size: 20,
-                        ),
-                      ),
-                    );
-                  }
-                ),
+                      );
+                    }
+                  ),
               ],
             ),
           ),
@@ -1528,32 +1517,6 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                                       overflow: TextOverflow.visible, // Changed to visible to encourage wrapping
                                     ),
                                   ),
-                                  if (ex.formGifUrl != null && ex.formGifUrl!.isNotEmpty) ...[
-                                    const SizedBox(width: 6),
-                                    Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(
-                                        onTap: () => _launchURL(ex.formGifUrl!),
-                                        borderRadius: BorderRadius.circular(6),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(6),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.gold.withOpacity(0.1),
-                                            borderRadius: BorderRadius.circular(6),
-                                            border: Border.all(
-                                              color: AppColors.gold.withOpacity(0.3),
-                                              width: 0.5,
-                                            ),
-                                          ),
-                                          child: const Icon(
-                                            Icons.play_arrow_rounded,
-                                            color: AppColors.gold,
-                                            size: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
                                 ],
                               ),
                             ),
