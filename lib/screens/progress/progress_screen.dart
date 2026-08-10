@@ -134,7 +134,7 @@ class ProgressScreenState extends State<ProgressScreen> {
     final gender = _prefs?.getString('userGender')?.toLowerCase();
     
     if (isPro && workoutProvider.activeProgramId != null) {
-      activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+      activeProgram = [...mockPrograms, ...mockFemalePrograms, ...mockSixPackPrograms].firstWhere(
         (p) => p.id == workoutProvider.activeProgramId,
         orElse: () => (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0]
       );
@@ -222,7 +222,7 @@ class ProgressScreenState extends State<ProgressScreen> {
     Program? activeProgram;
     final gender = _prefs?.getString('userGender')?.toLowerCase();
     if (isPro && workoutProvider.activeProgramId != null) {
-      activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+      activeProgram = [...mockPrograms, ...mockFemalePrograms, ...mockSixPackPrograms].firstWhere(
         (p) => p.id == workoutProvider.activeProgramId,
         orElse: () => (gender == 'female' || gender == 'woman') ? mockFemalePrograms[0] : mockPrograms[0]
       );
@@ -353,7 +353,7 @@ class ProgressScreenState extends State<ProgressScreen> {
     }
     
     final activeProgramId = workoutProvider.activeProgramId;
-    final activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+    final activeProgram = [...mockPrograms, ...mockFemalePrograms, ...mockSixPackPrograms].firstWhere(
       (p) => p.id == activeProgramId,
       orElse: () => mockPrograms[0]
     );
@@ -755,7 +755,7 @@ class ProgressScreenState extends State<ProgressScreen> {
                 final programId = entry.key;
                 final count = entry.value;
                 
-                final program = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+                final program = [...mockPrograms, ...mockFemalePrograms, ...mockSixPackPrograms].firstWhere(
                   (p) => p.id == programId,
                   orElse: () => mockPrograms[0]
                 );

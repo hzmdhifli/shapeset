@@ -49,23 +49,29 @@ class AssetResolver {
         .replaceAll(RegExp(r'(_pic)?\.(gif|mp4|webm|jpg|jpeg|png|webp)$', caseSensitive: false), '');
     
     final candidates = <String>[
-      // Exact filename candidate
+      // Exact filename candidate — check six-packs bucket first
+      '$supabaseAuthUrl/six-packs/$cleanName',
       '$supabaseAuthUrl/exercises/$cleanName',
       '$supabaseAuthUrl/female-special-program/$cleanName',
       '$supabaseAuthUrl/legend-athletes/$cleanName',
       
       // Video (.mp4) candidates
+      '$supabaseAuthUrl/six-packs/$baseName.mp4',
       '$supabaseAuthUrl/exercises/$baseName.mp4',
       '$supabaseAuthUrl/exercises/videos/$baseName.mp4',
       '$supabaseAuthUrl/female-special-program/$baseName.mp4',
       '$supabaseAuthUrl/legend-athletes/$baseName.mp4',
 
       // GIF (.gif) candidates
+      '$supabaseAuthUrl/six-packs/$baseName.gif',
       '$supabaseAuthUrl/exercises/$baseName.gif',
       '$supabaseAuthUrl/female-special-program/$baseName.gif',
       '$supabaseAuthUrl/legend-athletes/$baseName.gif',
       
       // Public fallbacks
+      '$supabaseUrl/six-packs/$cleanName',
+      '$supabaseUrl/six-packs/$baseName.mp4',
+      '$supabaseUrl/six-packs/$baseName.gif',
       '$supabaseUrl/exercises/$cleanName',
       '$supabaseUrl/exercises/$baseName.mp4',
       '$supabaseUrl/exercises/$baseName.gif',
@@ -118,6 +124,7 @@ class AssetResolver {
         
     return [
       // Pic specific candidates (_pic.jpg, _pic.png, _pic.webp)
+      '$supabaseAuthUrl/six-packs/${baseName}_pic.jpg',
       '$supabaseAuthUrl/exercises/${baseName}_pic.jpg',
       '$supabaseAuthUrl/exercises/${baseName}_pic.png',
       '$supabaseAuthUrl/exercises/${baseName}_pic.webp',
@@ -125,6 +132,8 @@ class AssetResolver {
       '$supabaseAuthUrl/female-special-program/${baseName}_pic.png',
 
       // Standard image candidates (.jpg, .png, .webp)
+      '$supabaseAuthUrl/six-packs/$baseName.jpg',
+      '$supabaseAuthUrl/six-packs/$baseName.gif',
       '$supabaseAuthUrl/exercises/$baseName.jpg',
       '$supabaseAuthUrl/exercises/$baseName.png',
       '$supabaseAuthUrl/exercises/$baseName.webp',
@@ -132,10 +141,12 @@ class AssetResolver {
       '$supabaseAuthUrl/female-special-program/$baseName.png',
 
       // Exact filename candidate
+      '$supabaseAuthUrl/six-packs/$cleanName',
       '$supabaseAuthUrl/exercises/$cleanName',
       '$supabaseAuthUrl/female-special-program/$cleanName',
 
       // Public fallbacks
+      '$supabaseUrl/six-packs/$cleanName',
       '$supabaseUrl/exercises/${baseName}_pic.jpg',
       '$supabaseUrl/exercises/$baseName.jpg',
       '$supabaseUrl/female-special-program/$baseName.jpg',

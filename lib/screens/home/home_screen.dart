@@ -59,6 +59,12 @@ class HomeScreenState extends State<HomeScreen> {
       return matchName;
     }).toList();
 
+    // Six Pack section
+    final sixPackPrograms = mockSixPackPrograms.where((p) {
+      if (query.isEmpty) return true;
+      return p.name.toLowerCase().contains(query);
+    }).toList();
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -82,6 +88,10 @@ class HomeScreenState extends State<HomeScreen> {
                         _buildSectionTitle(L10n.s(context, 'female_special'), true),
                         const SizedBox(height: 18),
                         _buildArchetypeScroll(),
+                        const SizedBox(height: 38),
+                        _buildSixPackSectionTitle(),
+                        const SizedBox(height: 18),
+                        _buildSixPackScroll(sixPackPrograms),
                         const SizedBox(height: 38),
                         _buildSectionTitle(L10n.s(context, 'legendary_athletes'), false),
                         const SizedBox(height: 16),
@@ -286,6 +296,78 @@ class HomeScreenState extends State<HomeScreen> {
                     ? L10n.s(context, 'program_${program.id}') 
                     : program.name,
                 subtitle: subtitle,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildSixPackSectionTitle() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22),
+      child: Row(
+        children: [
+          Container(
+            width: 3,
+            height: 16,
+            decoration: BoxDecoration(
+              color: const Color(0xFFD4A853),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            'SIX PACKS XY XX',
+            style: GoogleFonts.dmSans(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.5,
+              color: const Color(0xFFD4A853),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+            decoration: BoxDecoration(
+              color: const Color(0xFFD4A853).withOpacity(0.15),
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: const Color(0xFFD4A853).withOpacity(0.4)),
+            ),
+            child: Text(
+              'FOR BOTH',
+              style: GoogleFonts.dmSans(
+                fontSize: 8,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+                color: const Color(0xFFD4A853),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSixPackScroll(List<Program> programs) {
+    if (programs.isEmpty) return const SizedBox.shrink();
+    return SizedBox(
+      height: 220,
+      child: ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 22),
+        scrollDirection: Axis.horizontal,
+        itemCount: programs.length,
+        itemBuilder: (context, index) {
+          final program = programs[index];
+          return Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: SizedBox(
+              width: 280,
+              child: SpecialProgramCard(
+                program: program,
+                title: program.name,
+                subtitle: program.alias,
               ),
             ),
           );

@@ -359,7 +359,20 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
   }
 
   bool get _isFemaleProgram {
-    return ['athletic_lean', 'bikini_competition', 'powerlifter_female', 'sculpt_and_cardio'].contains(widget.programId);
+    return [
+      // Female Special Programs
+      'athletic_lean', 'bikini_competition', 'powerlifter_female', 'sculpt_and_cardio',
+      // Six Packs XY XX Programs
+      'six_pack_foundation', 'six_pack_iron_serpent', 'six_pack_gravity_rebels',
+      'six_pack_machine_uprising', 'six_pack_decline_conquer',
+    ].contains(widget.programId);
+  }
+
+  bool get _isSixPackProgram {
+    return [
+      'six_pack_foundation', 'six_pack_iron_serpent', 'six_pack_gravity_rebels',
+      'six_pack_machine_uprising', 'six_pack_decline_conquer',
+    ].contains(widget.programId);
   }
 
   void _updateExerciseIndex(int index) {
@@ -562,6 +575,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
                 exercise: exercises[idx],
                 muscleGroup: muscleGroup,
                 isFemaleProgram: true,
+                showVideoDirectly: _isSixPackProgram,
               );
             },
           ),
@@ -1908,12 +1922,15 @@ class ExerciseMediaWidget extends StatefulWidget {
   final WorkoutExercise exercise;
   final String muscleGroup;
   final bool isFemaleProgram;
+  /// When true, skips the static-image/swipe-to-GIF UI and plays video directly.
+  final bool showVideoDirectly;
   
   const ExerciseMediaWidget({
     super.key,
     required this.exercise,
     required this.muscleGroup,
     this.isFemaleProgram = false,
+    this.showVideoDirectly = false,
   });
 
   @override
@@ -2063,7 +2080,8 @@ class _ExerciseMediaWidgetState extends State<ExerciseMediaWidget> {
     }
 
     // Female Special Program: keep exact original static picture + swipe for gif behavior
-    if (widget.isFemaleProgram) {
+    // Six Pack programs skip this and go straight to video (showVideoDirectly = true)
+    if (widget.isFemaleProgram && !widget.showVideoDirectly) {
       Widget localOrMuscleFallbackPic;
       if (localPicAsset != null) {
         localOrMuscleFallbackPic = Image.asset(
@@ -2579,7 +2597,6 @@ class _SmartExerciseVideoPlayerState extends State<SmartExerciseVideoPlayer> {
   VideoPlayerController? _controller;
   int _currentCandidateIndex = 0;
   bool _isInitializing = true;
-  bool _hasError = false;
 
   @override
   void initState() {
@@ -2599,33 +2616,30 @@ class _SmartExerciseVideoPlayerState extends State<SmartExerciseVideoPlayer> {
   Future<void> _tryNextCandidate() async {
     _disposeController();
 
+    // Skip non-video (gif/image) candidates — they are handled by _buildImageCandidates.
+    // This ensures all .mp4 candidates are tried before falling back to image display.
+    while (_currentCandidateIndex < widget.candidateUrls.length) {
+      final url = widget.candidateUrls[_currentCandidateIndex];
+      final isVideo = url.endsWith('.mp4') || url.endsWith('.webm') || url.contains('/videos/');
+      if (isVideo) break;
+      _currentCandidateIndex++;
+    }
+
     if (_currentCandidateIndex >= widget.candidateUrls.length) {
+      // No more video candidates — fall through to image/gif display.
       if (mounted) {
         setState(() {
           _isInitializing = false;
-          _hasError = true;
         });
       }
       return;
     }
 
     final url = widget.candidateUrls[_currentCandidateIndex];
-    final isVideo = url.endsWith('.mp4') || url.endsWith('.webm') || url.contains('/videos/');
-
-    if (!isVideo) {
-      if (mounted) {
-        setState(() {
-          _isInitializing = false;
-          _hasError = false;
-        });
-      }
-      return;
-    }
 
     if (mounted) {
       setState(() {
         _isInitializing = true;
-        _hasError = false;
       });
     }
 
@@ -2646,7 +2660,6 @@ class _SmartExerciseVideoPlayerState extends State<SmartExerciseVideoPlayer> {
         setState(() {
           _controller = controller;
           _isInitializing = false;
-          _hasError = false;
         });
       } else {
         controller.dispose();
@@ -2672,41 +2685,38 @@ class _SmartExerciseVideoPlayerState extends State<SmartExerciseVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    if (_hasError || widget.candidateUrls.isEmpty) {
+    if (widget.candidateUrls.isEmpty) {
       return widget.fallbackWidget;
     }
 
-    if (_currentCandidateIndex < widget.candidateUrls.length) {
-      final currentUrl = widget.candidateUrls[_currentCandidateIndex];
-      final isVideo = currentUrl.endsWith('.mp4') || currentUrl.endsWith('.webm') || currentUrl.contains('/videos/');
-
-      if (isVideo) {
-        if (_controller != null && _controller!.value.isInitialized) {
-          return SizedBox.expand(
-            child: FittedBox(
-              fit: BoxFit.cover,
-              clipBehavior: Clip.hardEdge,
-              child: SizedBox(
-                width: _controller!.value.size.width,
-                height: _controller!.value.size.height,
-                child: VideoPlayer(_controller!),
-              ),
-            ),
-          );
-        }
-
-        if (_isInitializing) {
-          return SizedBox.expand(
-            child: Image.asset(
-              'assets/images/loading.gif',
-              fit: BoxFit.cover,
-            ),
-          );
-        }
-      }
+    // A video is currently playing — show it.
+    if (_controller != null && _controller!.value.isInitialized) {
+      return SizedBox.expand(
+        child: FittedBox(
+          fit: BoxFit.cover,
+          clipBehavior: Clip.hardEdge,
+          child: SizedBox(
+            width: _controller!.value.size.width,
+            height: _controller!.value.size.height,
+            child: VideoPlayer(_controller!),
+          ),
+        ),
+      );
     }
 
-    return _buildImageCandidates(_currentCandidateIndex);
+    // A video candidate is being initialised — show loading indicator.
+    if (_isInitializing) {
+      return SizedBox.expand(
+        child: Image.asset(
+          'assets/images/loading.gif',
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+
+    // All video candidates exhausted (or none exist) — try image/gif candidates.
+    // Always start from 0 so every gif/image candidate in the list is considered.
+    return _buildImageCandidates(0);
   }
 
   Widget _buildImageCandidates(int startIndex) {
@@ -2714,7 +2724,7 @@ class _SmartExerciseVideoPlayerState extends State<SmartExerciseVideoPlayer> {
     for (int i = widget.candidateUrls.length - 1; i >= startIndex; i--) {
       final url = widget.candidateUrls[i];
       if (url.endsWith('.mp4') || url.endsWith('.webm')) continue;
-      
+
       // Only send Supabase auth headers for Supabase URLs.
       // External hosts like burnfit.io will reject requests with unknown auth headers.
       final httpHeaders = url.contains('supabase.co')

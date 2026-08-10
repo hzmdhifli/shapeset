@@ -195,7 +195,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     final userGender = gender?.toLowerCase();
     
     if (workoutProvider.activeProgramId != null) {
-      _activeProgram = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+      _activeProgram = [...mockPrograms, ...mockFemalePrograms, ...mockSixPackPrograms].firstWhere(
         (p) => p.id == workoutProvider.activeProgramId,
         orElse: () => mockPrograms[0]
       );

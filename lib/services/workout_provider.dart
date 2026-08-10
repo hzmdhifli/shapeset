@@ -83,7 +83,7 @@ class WorkoutProvider with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     
     // Check if program is fully completed
-    final program = [...mockPrograms, ...mockFemalePrograms].firstWhere(
+    final program = [...mockPrograms, ...mockFemalePrograms, ...mockSixPackPrograms].firstWhere(
       (p) => p.id == session.programId,
       orElse: () => mockPrograms[0]
     );

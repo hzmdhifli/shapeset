@@ -919,7 +919,7 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
                     ),
                   ),
                 ),
-                if (!mockFemalePrograms.any((p) => p.id == widget.program.id))
+                if (!mockFemalePrograms.any((p) => p.id == widget.program.id) && !mockSixPackPrograms.any((p) => p.id == widget.program.id))
                   Consumer<SubscriptionProvider>(
                     builder: (context, sub, child) {
                       final isLocked = !sub.isPro;
