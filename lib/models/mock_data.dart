@@ -1690,7 +1690,7 @@ final List<Program> mockPrograms = [
     style: 'PWR',
     intensity: 'MAX',
     tags: ['Heavy Duty', 'Powerlifting', 'Strength'],
-    imagePath: 'assets/images/larry.jpg',
+    imagePath: 'assets/images/larrywheels.jpg',
     initials: 'LW',
     color: const Color(0xFFF1F1F1),
     textColor: const Color(0xFF1A1A1A),

@@ -33,6 +33,54 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   ScrollHoldController? _hold;
   gestures.Drag? _drag;
 
+  static const Map<String, _SixPackInsight> _sixPackInsights = {
+    'six_pack_foundation': _SixPackInsight(
+      purpose: 'Build core control, stability, and anti-movement strength before layering on intensity. This is the prerequisite phase, not a warm-up.',
+      benefits: [
+        'Trains the core to resist unwanted movement rather than just crunching, which builds real functional strength and protects the lower back during heavier lifts.',
+        'Dead Bug and Bird Dog improve coordination between opposite limbs, which carries over to squat and deadlift bracing.',
+        'Hollow Position and Plank build isometric endurance, the foundation for every advanced core move that follows.',
+        'Best for beginners or as a reset week between harder programs.',
+      ],
+    ),
+    'six_pack_iron_serpent': _SixPackInsight(
+      purpose: 'Develop rotational power and oblique strength so the core can twist, resist twisting, and transfer force between the upper and lower body.',
+      benefits: [
+        'Targets the obliques directly, which are undertrained by straight-plane moves like crunches and sit-ups.',
+        'Rotational strength carries over to sports performance and everyday movement.',
+        'Side Plank adds a lateral stability component most abs programs skip entirely.',
+        'Great for athletes or anyone wanting a more defined waistline and V-taper look.',
+      ],
+    ),
+    'six_pack_gravity_rebels': _SixPackInsight(
+      purpose: 'Maximize lower-ab and hip-flexor engagement through hanging and advanced bodyweight work. This is the hardest tier for raw ab strength.',
+      benefits: [
+        'Hanging variations remove momentum and cheating, forcing genuine core-driven leg control.',
+        'Directly targets the lower abs, the region most people struggle to develop with floor exercises alone.',
+        'Builds grip strength and shoulder stability as a side effect of hanging work.',
+        'Best suited for intermediate and advanced lifters, especially as a showcase program for visible progress.',
+      ],
+    ),
+    'six_pack_machine_uprising': _SixPackInsight(
+      purpose: 'Apply progressive overload to the core the same way you would overload any other muscle group, using adjustable resistance instead of only bodyweight.',
+      benefits: [
+        'Machines and cables let users add weight over time, which bodyweight abs work cannot offer past a certain point.',
+        'Ideal for hypertrophy-focused users chasing visible ab thickness and definition.',
+        'Lower skill barrier than hanging or rotational work, so it is accessible to a broader range of app users.',
+        'A strong gym-day program for people with equipment access versus home-workout users.',
+      ],
+    ),
+    'six_pack_decline_conquer': _SixPackInsight(
+      purpose: 'Finish with decline-angle work that increases resistance on classic movements. This is a high-intensity closer that hits the whole rectus abdominis with an emphasis on the lower region.',
+      benefits: [
+        'The decline angle increases range of motion and resistance versus flat-floor versions of the same exercises.',
+        'Great as a finisher session: high fatigue, short program, and ideal for closing out a training week.',
+        'Mixes weighted and bodyweight variations, so it scales from beginner to advanced within the same session.',
+        'Leg Raise closes the loop by targeting the lower abs one more time under fatigue.',
+      ],
+    ),
+  };
+
   @override
   void initState() {
     super.initState();
@@ -77,6 +125,16 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
 
   String _getMuscleForExercise(String exName) {
     return exerciseToMuscle[exName] ?? 'other';
+  }
+
+  bool _isSixPackProgram(String programId) {
+    return [
+      'six_pack_foundation',
+      'six_pack_iron_serpent',
+      'six_pack_gravity_rebels',
+      'six_pack_machine_uprising',
+      'six_pack_decline_conquer',
+    ].contains(programId);
   }
 
   String _getLocalizedDetail(String detail) {
@@ -1069,20 +1127,30 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
 
   Widget _buildStyleBadge() {
     final badge = widget.program.badge;
+    final sixPackInsight = _sixPackInsights[widget.program.id];
+    final bool isSixPackProgram = sixPackInsight != null;
     final bool hasExplanation = [
       'FST-7', 'High Intensity', 'Longevity & Detail', 'Flow & Symmetry',
       'Golden Era / Mass', 'Modern Classic', 'Hardcore Power', 'High Volume',
       'Squat King', 'Dual Split · Power-Physique', 'V-Taper', 'DUP Mastery',
       'Classic Bodybuilding / PPL', 'Modern Aesthetic / PPL', 'Powerbuilding',
       'Classic Physique / High Volume', 'Men\'s Physique / High Volume'
-    ].contains(badge);
+    ].contains(badge) || isSixPackProgram;
 
     final bool isFST7 = badge == 'FST-7';
     final Color badgeColor = isFST7 ? const Color(0xFF008ECC) : AppColors.gold;
     final Color badgeBg = isFST7 ? const Color(0xFF008ECC).withOpacity(0.1) : AppColors.gold3;
 
     return GestureDetector(
-      onTap: hasExplanation ? _showBadgeExplanation : null,
+      onTap: hasExplanation
+          ? () {
+              if (isSixPackProgram) {
+                _showSixPackProgramInsights(sixPackInsight!);
+              } else {
+                _showBadgeExplanation();
+              }
+            }
+          : null,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
@@ -1118,8 +1186,181 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
               ),
             ),
             if (hasExplanation) const SizedBox(width: 6),
-            if (hasExplanation) const Icon(Icons.info_outline_rounded, size: 14, color: AppColors.gold),
+            if (hasExplanation)
+              const Icon(Icons.touch_app_rounded, size: 14, color: AppColors.gold),
           ],
+        ),
+      ),
+    );
+  }
+
+  void _showSixPackProgramInsights(_SixPackInsight insight) {
+    final title = widget.program.name.toUpperCase();
+    final badgeTitle = widget.program.badge;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.72,
+        minChildSize: 0.48,
+        maxChildSize: 0.92,
+        builder: (context, scrollController) => Container(
+          decoration: const BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(28),
+              topRight: Radius.circular(28),
+            ),
+            border: Border(
+              top: BorderSide(color: AppColors.gold, width: 2),
+            ),
+          ),
+          child: SingleChildScrollView(
+            controller: scrollController,
+            padding: const EdgeInsets.fromLTRB(24, 12, 24, 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 24),
+                    decoration: BoxDecoration(
+                      color: AppColors.border,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: AppColors.gold.withOpacity(0.12),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.fitness_center_outlined, color: AppColors.gold, size: 22),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: GoogleFonts.bebasNeue(
+                          fontSize: 28,
+                          color: AppColors.text,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  badgeTitle,
+                  style: GoogleFonts.dmSans(
+                    fontSize: 13,
+                    color: AppColors.muted,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'Purpose',
+                  style: GoogleFonts.dmSans(
+                    fontSize: 10,
+                    color: AppColors.dim,
+                    letterSpacing: 1.4,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  insight.purpose,
+                  style: GoogleFonts.dmSans(
+                    fontSize: 15,
+                    color: AppColors.text.withOpacity(0.8),
+                    height: 1.6,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'Benefits',
+                  style: GoogleFonts.dmSans(
+                    fontSize: 10,
+                    color: AppColors.dim,
+                    letterSpacing: 1.4,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ...insight.benefits.map((benefit) => Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: AppColors.background3,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColors.border),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(top: 5),
+                              width: 8,
+                              height: 8,
+                              decoration: const BoxDecoration(
+                                color: AppColors.gold,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                benefit,
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 13.5,
+                                  height: 1.55,
+                                  color: AppColors.text,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )),
+                const SizedBox(height: 10),
+                InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                      color: AppColors.gold.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: AppColors.gold.withOpacity(0.3)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'CLOSE',
+                        style: GoogleFonts.dmSans(
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.gold,
+                          letterSpacing: 1.4,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -1306,12 +1547,28 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
   }
 
   Widget _buildDayCard(ScheduleDay day, bool isActive, bool isCompleted) {
-    // Group exercises by muscle group using pre-calculated map for O(1) lookup
+    // Six-pack programs use a fixed 3 + 1 structure:
+    // first three exercises are the main ABS block, and the last exercise is OTHER.
+    final bool isSixPackProgram = _isSixPackProgram(widget.program.id);
     final Map<String, List<WorkoutExercise>> groupedExercises = {};
-    for (var ex in day.exercises) {
-      final muscleGroup = _getMuscleForExercise(ex.name);
+
+    for (var i = 0; i < day.exercises.length; i++) {
+      final ex = day.exercises[i];
+      final String muscleGroup = isSixPackProgram
+          ? (i < 3 ? 'abs' : 'other')
+          : _getMuscleForExercise(ex.name);
       groupedExercises.putIfAbsent(muscleGroup, () => []).add(ex);
     }
+
+    final orderedMuscleGroups = isSixPackProgram
+        ? [
+            if (groupedExercises.containsKey('abs')) 'abs',
+            if (groupedExercises.containsKey('other')) 'other',
+          ]
+        : [
+            ...groupedExercises.keys.where((muscle) => muscle != 'other'),
+            if (groupedExercises.containsKey('other')) 'other',
+          ];
 
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
@@ -1425,9 +1682,8 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
           
           if (day.isTraining) ...[
             // Muscles and Exercises
-            ...groupedExercises.entries.map((group) {
-              final muscle = group.key;
-              final exercises = group.value;
+            ...orderedMuscleGroups.map((muscle) {
+              final exercises = groupedExercises[muscle]!;
               final Color muscleBg = _getMuscleColor(muscle);
               final Color muscleText = _getMuscleTextColor(muscle);
 
@@ -2057,4 +2313,14 @@ class _ProgramDetailScreenState extends State<ProgramDetailScreen> {
       ),
     );
   }
+}
+
+class _SixPackInsight {
+  final String purpose;
+  final List<String> benefits;
+
+  const _SixPackInsight({
+    required this.purpose,
+    required this.benefits,
+  });
 }

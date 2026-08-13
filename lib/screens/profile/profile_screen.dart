@@ -720,7 +720,14 @@ class ProfileScreenState extends State<ProfileScreen> {
     final displayEmail = (email != null && email.isNotEmpty) ? email : 'alex_lifts@example.com';
     final photoUrl = _prefs?.getString('userPhoto');
     final level = _prefs?.getString('userLevel');
-    final initials = displayName.isNotEmpty ? displayName.substring(0, 1).toUpperCase() : 'A';
+    final avatarImage = photoUrl != null && photoUrl.isNotEmpty
+        ? (photoUrl.startsWith('/') || photoUrl.contains(':\\'))
+            ? DecorationImage(image: FileImage(File(photoUrl)), fit: BoxFit.cover)
+            : DecorationImage(image: NetworkImage(photoUrl), fit: BoxFit.cover)
+        : const DecorationImage(
+            image: AssetImage('assets/images/larrywheels.jpg'),
+            fit: BoxFit.cover,
+          );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 0),
@@ -741,22 +748,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: photoUrl == null ? AppColors.surface2 : null,
-                    image: photoUrl != null 
-                        ? (photoUrl.startsWith('/') || photoUrl.contains(':\\'))
-                            ? DecorationImage(image: FileImage(File(photoUrl)), fit: BoxFit.cover)
-                            : DecorationImage(image: NetworkImage(photoUrl), fit: BoxFit.cover) 
-                        : null,
+                    color: AppColors.surface2,
+                    image: avatarImage,
                   ),
                   alignment: Alignment.center,
-                  child: photoUrl == null ? Text(
-                    initials,
-                    style: GoogleFonts.bebasNeue(
-                      fontSize: _res(context, 26),
-                      color: AppColors.gold,
-                      letterSpacing: 1,
-                    ),
-                  ) : null,
                 ),
               ),
             ),
@@ -1633,4 +1628,3 @@ class ProfileScreenState extends State<ProfileScreen> {
     return original * scale;
   }
 }
-

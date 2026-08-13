@@ -368,13 +368,6 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
     ].contains(widget.programId);
   }
 
-  bool get _isSixPackProgram {
-    return [
-      'six_pack_foundation', 'six_pack_iron_serpent', 'six_pack_gravity_rebels',
-      'six_pack_machine_uprising', 'six_pack_decline_conquer',
-    ].contains(widget.programId);
-  }
-
   void _updateExerciseIndex(int index) {
     if (index >= 0 && index < widget.exercises.length) {
       setState(() {
@@ -575,7 +568,8 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> with Single
                 exercise: exercises[idx],
                 muscleGroup: muscleGroup,
                 isFemaleProgram: true,
-                showVideoDirectly: _isSixPackProgram,
+                // Female special program now opens straight into the form media.
+                showVideoDirectly: true,
               );
             },
           ),
@@ -2894,4 +2888,3 @@ class NoInternetMediaWidget extends StatelessWidget {
     );
   }
 }
-
